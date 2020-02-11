@@ -4,7 +4,7 @@
  */
 package julian.trackmaterial;
 
-public abstract class Knode {
+public class Knode {
 
     private final Vertex pos;
     private Rail railIn;
@@ -35,5 +35,12 @@ public abstract class Knode {
         return pos;
     }
    
-    
+    public Rail getNext(Rail railone) {
+        if(railone.equals(railIn)) {
+            return railOut;
+        } else if(railone.equals(railOut)) {
+            return railIn;
+        }
+        return null;
+    }
 }

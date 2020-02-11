@@ -4,16 +4,29 @@
  */
 package julian.trackmaterial;
 
-import java.util.HashMap;
+import java.util.LinkedList;
+
 
 public class Railsystem {
-
-    private HashMap<Knode, Integer> knodes;
-    private HashMap<Rail, Integer> rails;
+    
+    private LinkedList<Rail> rails;
     
     public Railsystem() {
-        knodes = new HashMap<Knode, Integer>();
-        rails = new HashMap<Rail, Integer>();
+        rails = new LinkedList<Rail>();
+    }
+    
+    public void addTrack(Vertex start, Vertex end) throws IllegalInputException{
+        if(rails.contains(new Rail(start, end))) {
+            throw new IllegalInputException("rail existing.");
+        }
+        if(!rails.isEmpty()) {
+            for(Rail rail: rails) {
+                if(rail.connectsFreeTo(start) || rail.connectsFreeTo(end)) {
+                    rail.connect(new Rail(start, end));
+                    return;
+                }
+            }
+        }
     }
 
 }

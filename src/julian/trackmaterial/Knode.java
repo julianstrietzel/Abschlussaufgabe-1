@@ -4,15 +4,19 @@
  */
 package julian.trackmaterial;
 
-public class Knode {
+public class Knode extends Vertex{
 
-    private final Vertex pos;
     private Rail railIn;
     private Rail railOut;
     
-    public Knode(Vertex pos, Rail railin) {
-        this.pos = pos;
-        this.railIn = railin;
+    public Knode(int xcoord, int ycoord, Rail railIn) {
+        super(xcoord, ycoord);
+        this.railIn = railIn;
+    }
+    
+    public Knode(Vertex pos, Rail railIn) {
+        super(pos.getXcoord(), pos.getYcoord());
+        this.railIn = railIn;
     }
 
     public Rail getRailIn() {
@@ -31,8 +35,8 @@ public class Knode {
         this.railOut = railOut;
     }
 
-    public Vertex getPos() {
-        return pos;
+    public boolean isFree() {
+        return railOut == null;
     }
    
     public Rail getNext(Rail railone) {

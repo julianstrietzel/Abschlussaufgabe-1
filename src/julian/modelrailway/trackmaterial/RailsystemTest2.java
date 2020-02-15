@@ -17,7 +17,7 @@ public class RailsystemTest2 {
     Railsystem rs;
 
     @Before
-    public void before() throws IllegalInputException {
+    public void before() throws IllegalInputException, LogicalException {
         rs = new Railsystem();
         Vertex one = new Vertex(0, 0);
         Vertex two = new Vertex(10, 0);
@@ -54,7 +54,7 @@ public class RailsystemTest2 {
     public void testMove() throws LogicalException {
         SetTrain one = new SetTrain(1, new DirectionalVertex(1, 0), new Vertex(5, 0), 2);
         assertTrue(rs.addTrain(one).contentEquals("1"));
-        sysout
+
     }
 //
 //    /**

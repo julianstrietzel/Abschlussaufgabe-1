@@ -16,18 +16,8 @@ public class Rail {
     protected final DirectionalVertex direction;
     protected Rail next;
     protected Rail previous;
-//    protected boolean occupied;
     protected final int id;
-//    protected SetTrain currentTrain;
     protected LinkedList<SetTrain> trains;
-    
-//    public SetTrain getCurrentTrain() {
-//        return currentTrain;
-//    }
-//
-//    public void setCurrentTrain(SetTrain currentTrain) {
-//        this.currentTrain = currentTrain;
-//    }
 
     public Rail(Vertex start, Vertex end, int id) throws IllegalInputException {
         this.end = end;

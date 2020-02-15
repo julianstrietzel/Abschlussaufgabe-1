@@ -7,6 +7,7 @@ package julian.modelrailway.trackmaterial;
 import java.util.LinkedList;
 import julian.modelrailway.*;
 import julian.modelrailway.Exceptions.*;
+import julian.modelrailway.events.Crash;
 import julian.modelrailway.rollingmaterial.SetTrain;
 
 public class Railsystem {
@@ -79,7 +80,7 @@ public class Railsystem {
         resetOccupied();
     }
 
-    public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException {
+    public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
         Switch newSw = new Switch(start, endOne, endTwo, idCount++);
         if (newSw.getMinLength() == 0) {
             throw new IllegalInputException("length needs to be not null.");
@@ -91,7 +92,7 @@ public class Railsystem {
             for (int i = 1; i < newSw.getSetLength(); i++) {
                 checker.add(newSw.getDirection());
                 if (knodes.contains(checker)) {
-                    throw new IllegalInputException("Switch cutting another Rail");
+                    throw new LogicalException("Switch cutting another Rail");
                 }
             }
             newSw.setSwitch(newSw.getDirectionTwo());
@@ -144,7 +145,7 @@ public class Railsystem {
         return rails.getLast().getId();
     }
 
-    public int addRail(Vertex start, Vertex end) throws IllegalInputException {
+    public int addRail(Vertex start, Vertex end) throws IllegalInputException, LogicalException {
         Rail newRail = new Rail(start, end, idCount++);
         if (newRail.getLength() == 0) {
             throw new IllegalInputException("length needs to be not null.");
@@ -154,12 +155,12 @@ public class Railsystem {
             for (int i = 1; i < newRail.getLength(); i++) {
                 checker.add(newRail.getDirection());
                 if (knodes.contains(checker)) {
-                    throw new IllegalInputException("Rail cutting another Rail");
+                    throw new LogicalException("rail cutting another Rail");
                 }
                 ;
             }
             if (checkTrackCollision(newRail.getStart(), newRail.getEnd())) {
-                throw new IllegalInputException("Rail cutting another Rail");
+                throw new LogicalException("rail cutting another Rail");
             }
             checkFreeKnodes(newRail.getKnodes());
             for (Knode knode : knodes) {

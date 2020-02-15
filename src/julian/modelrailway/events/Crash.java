@@ -2,7 +2,7 @@
  * 
  * @author Julian Strietzel
  */
-package julian.modelrailway;
+package julian.modelrailway.events;
 
 import java.util.LinkedList;
 

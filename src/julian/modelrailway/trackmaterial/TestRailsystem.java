@@ -24,7 +24,7 @@ static Railsystem model;
     }
     
     @Test
-    public void testAddingTrack() throws IllegalInputException {
+    public void testAddingTrack() throws IllegalInputException, LogicalException {
         Knode one = new Knode(new Vertex(0,0), new Rail(new Vertex(0,0), new Vertex(10,0), 1));
         Vertex two = new Vertex(0,0);
         assertTrue(one.equals(two));
@@ -47,7 +47,7 @@ static Railsystem model;
     }
     
     @Test
-    public void testAddingSwitches() throws IllegalInputException {
+    public void testAddingSwitches() throws IllegalInputException, LogicalException {
         assertTrue(model.rails.size() == 0);
         Knode knodene = new Knode(new Vertex(0,0), new Rail(new Vertex(0,0), new Vertex(10,0), 1));
         Vertex two = new Vertex(0,0);

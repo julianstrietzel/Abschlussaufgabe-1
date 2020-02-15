@@ -81,7 +81,11 @@ public class Railsystem {
     }
 
     public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
-        Switch newSw = new Switch(start, endOne, endTwo, idCount++);
+        
+        Switch newSw = new Switch(start, endOne, endTwo, idCount);
+        if(ListUtility.contains(switches, newSw)) {
+            throw new LogicalException("track existing.");
+        }
         if (newSw.getMinLength() == 0) {
             throw new IllegalInputException("length needs to be not null.");
         }
@@ -142,11 +146,15 @@ public class Railsystem {
         }
         switches.add(newSw);
         rails.add(newSw);
+        idCount++;
         return rails.getLast().getId();
     }
 
     public int addRail(Vertex start, Vertex end) throws IllegalInputException, LogicalException {
-        Rail newRail = new Rail(start, end, idCount++);
+        Rail newRail = new Rail(start, end, idCount);
+        if(ListUtility.contains(rails, newRail)) {
+            throw new LogicalException("track existing.");
+        }
         if (newRail.getLength() == 0) {
             throw new IllegalInputException("length needs to be not null.");
         }
@@ -186,6 +194,7 @@ public class Railsystem {
             knodes.add(new Knode(newRail.getEnd(), newRail));
         }
         rails.add(newRail);
+        idCount++;
         return rails.getLast().getId();
     }
 
@@ -324,7 +333,7 @@ public class Railsystem {
     public boolean markBackOccupied(SetTrain train, Vertex pos, DirectionalVertex dire, Rail rail, boolean breakUp) {
         int i = rail.getSpaceLeftBehind(pos, dire);
         LinkedList<Rail> newlyOccupied = new LinkedList<Rail>();
-        newlyOccupied.add(rail);
+//        newlyOccupied.add(rail);
         train.setRail(rail);
         Rail next = rail;
         Rail previous;
@@ -337,18 +346,27 @@ public class Railsystem {
             }
             dire = next.getDirectionFrom(previous.getEndInDirection(dire.getInverseDirection()));
             i += next.getLength();
-            System.out.println(i);
             if (next.isOccupied() && breakUp) {
                 return true;
             }
             newlyOccupied.add(next);
         }
         occupiedRails.addAll(newlyOccupied);
+        occupiedRails = ListUtility.deleteDuplicates(occupiedRails);
         for (Rail newRail : newlyOccupied) {
             newRail.trains.add(train);
         }
+        
+        
+//        System.out.println("occu" + occupiedRails);
+//        for(Rail r: occupiedRails) {
+//            System.out.println(r.getTrains());
+//        }
+        
+        
+        
+        
         return false;
-
     }
 
     public void move(boolean forwards) throws LogicalException { //TODO backwards driving
@@ -362,6 +380,7 @@ public class Railsystem {
                 markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
             }
         }
+        
         checkCollision();
     }
 
@@ -369,7 +388,8 @@ public class Railsystem {
     public void checkCollision() {
         LinkedList<Rail> workingoccu = (LinkedList<Rail>) occupiedRails.clone();
         for(Rail rs: occupiedRails) {
-            if(rs.getTrains().size() <= 1) {
+//            System.out.println(rs.getTrains());
+            if(rs.getTrains().size() < 2) {
                 workingoccu.remove(rs);
             }
         }

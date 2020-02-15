@@ -24,6 +24,9 @@ public class ModelRailWay {
 
     }
 
+    public Railsystem rs() {
+        return rs;
+    }
     public String addTrack(int startX, int startY, int endX, int endY) throws IllegalInputException, LogicalException {
 
         return "" + rs.addRail(new Vertex(startX, startY), new Vertex(endX, endY));
@@ -62,7 +65,7 @@ public class ModelRailWay {
             for (int i = 0; i < Math.abs(speed); i++) {
                 rs.move(Math.abs(speed) == speed);
             }
-            for (SetTrain t : rs.getTrainsOnTrack()) {
+            for (SetTrain t: rs.getTrainsOnTrack()) {
                 events.add(new TrainMoved(t, ""));
             }
             events.addAll(rs.getCrashes());

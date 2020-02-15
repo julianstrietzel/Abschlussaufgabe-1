@@ -214,6 +214,32 @@ public class Switch extends Rail{
                     + endTwo.toString();
     }
     
+    @Override
+    public boolean equals(Rail r) {
+        try {
+        if(r instanceof Switch) {
+            Switch re = (Switch) r;
+            if(new Rail(re.start, re.end,0).equals(new Rail(this.start, this.end, 0)) 
+                    || new Rail(re.start, re.end,0).equals(new Rail(this.start, this.endTwo, 0))) {
+                return true;
+            }
+            if(new Rail(re.start, re.endTwo,0).equals(new Rail(this.start, this.end, 0)) 
+                    || new Rail(re.start, re.endTwo,0).equals(new Rail(this.start, this.endTwo, 0))) {
+                return true;
+            }
+        } else {
+            
+                if(r.equals(new Rail(start, end, 0)) || r.equals(new Rail(start, endTwo, 0))) {
+                    return true;
+                }
+            
+        }
+        
+        } catch (IllegalInputException e) {
+        }
+        return false;
+    }
+    
 
     
 

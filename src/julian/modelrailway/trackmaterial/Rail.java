@@ -157,8 +157,8 @@ public class Rail {
      * @return
      */
     public boolean equals(Rail rail) {
-        if(!(rail instanceof Rail)) {
-            //TODO check equals Switch
+        if((rail instanceof Switch)) {
+            return rail.equals(this);
         }
         return (this.start.equals(rail.end) && this.end.equals(rail.start) || 
                 this.start.equals(rail.start) && this.end.equals(rail.end));
@@ -223,5 +223,7 @@ public class Rail {
         }
         return i;
     }
+    
+    
 
 }

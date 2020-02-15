@@ -17,6 +17,15 @@ public abstract class ListUtility {
         }
         return false;
     }
+    
+    public static boolean contains(LinkedList<Rail> list, Rail object) {
+        for (Rail obj : list) {
+            if (object.equals(obj)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static <T> boolean contains(LinkedList<Knode> list, Vertex object) {
         for (Knode obj : list) {

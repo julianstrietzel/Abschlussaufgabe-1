@@ -18,8 +18,12 @@ public class UserInterface {
     private Command fail;
     
     public UserInterface(ModelRailWay model) {
-        commands.add(new Quit(model));
+        commands.add(new Exit(model));
         commands.add(new AddTrack(model));
+        commands.add(new Delete(model));
+        commands.add(new AddSwitch(model));
+        commands.add(new ListTracks(model));
+        commands.add(new Step(model));
  
         lastFoundCommand = new Fail(model);
         fail  = new Fail(model);

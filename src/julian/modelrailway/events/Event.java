@@ -14,15 +14,15 @@ public abstract class Event implements Comparable<Event>{
     protected final String message;
 
     public Event(SetTrain invol, String message) {
+        involved = new LinkedList<SetTrain>();
         this.message = message;
         involved.add(invol);
     }
     
     public Event(LinkedList<SetTrain> invol, String message) {
+        involved = new LinkedList<SetTrain>();
         this.message = message;
-        for (SetTrain tr : invol) {
-            involved.add(tr);
-        }
+        involved.addAll(invol);
         involved.sort(null);
     }
     

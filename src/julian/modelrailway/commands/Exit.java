@@ -6,11 +6,11 @@ package julian.modelrailway.commands;
 
 import julian.modelrailway.ModelRailWay;;
 
-public class Quit extends Command{
+public class Exit extends Command{
 
     private static final String REGEX = "(exit)";
     
-    public Quit(ModelRailWay model) {
+    public Exit(ModelRailWay model) {
         super(model, REGEX);
     }
     

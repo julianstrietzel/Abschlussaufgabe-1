@@ -1,0 +1,59 @@
+/**
+ * 
+ * @author Julian Strietzel
+ */
+package julian.modelrailway.trackmaterial;
+
+import static org.junit.Assert.*;
+
+import java.util.LinkedList;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import julian.modelrailway.Exceptions.IllegalInputException;
+
+public class ListUtilityTest {
+
+    /**
+     * @throws java.lang.Exception
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+    }
+
+    /**
+     * Test method for {@link julian.modelrailway.trackmaterial.ListUtility#contains(java.util.LinkedList, java.lang.Object)}.
+     * @throws IllegalInputException 
+     */
+    @Test
+    public void testContainsLinkedListOfTT() throws IllegalInputException {
+        LinkedList<Rail> test = new LinkedList<Rail>();
+        test.add(new Rail(new Vertex(0,0), new Vertex(0,10),0));
+        assertTrue(test.getFirst().equals(new Rail(new Vertex(0,0), new Vertex(0,10),0)));
+        assertTrue(ListUtility.contains(test, new Rail(new Vertex(0,0), new Vertex(0,10),0)));
+     }
+
+    /**
+     * Test method for {@link julian.modelrailway.trackmaterial.ListUtility#contains(java.util.LinkedList, julian.modelrailway.trackmaterial.Vertex)}.
+     */
+    @Test
+    public void testContainsLinkedListOfKnodeVertex() {
+     }
+
+    /**
+     * Test method for {@link julian.modelrailway.trackmaterial.ListUtility#contains(java.util.LinkedList, julian.modelrailway.trackmaterial.Knode)}.
+     */
+    @Test
+    public void testContainsLinkedListOfVertexKnode() {
+     }
+
+    /**
+     * Test method for {@link julian.modelrailway.trackmaterial.ListUtility#deleteDuplicates(java.util.LinkedList)}.
+     */
+    @Test
+    public void testDeleteDuplicates() {
+
+    }
+
+}

@@ -31,7 +31,7 @@ public class ModelRailWay {
     
     public String putTestTrain(int id, Vertex pos, DirectionalVertex direction) {
         try {
-            rs.addTrain(new SetTrain(id,direction, pos));
+            rs.addTrain(new SetTrain(id,direction, pos,10));
             return "OK";
         } catch (LogicalException e) {
             return "Error, " +  e.getMessage();

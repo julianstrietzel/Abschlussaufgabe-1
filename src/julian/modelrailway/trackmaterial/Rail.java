@@ -182,10 +182,10 @@ public class Rail {
     }
     
     public Vertex getEndInDirection(DirectionalVertex direction) {
-        if(direction.equals(this.direction)) {
+        if(direction.equalsDirection(this.direction)) {
             return end;
         } 
-        if(direction.equals(this.direction.getInverseDirection())){
+        if(direction.equalsDirection(this.direction.getInverseDirection())){
             return start;
         }
         return null;
@@ -229,7 +229,7 @@ public class Rail {
         int i = 0;
         while(!posi.equals(getEndInDirection(dire))) {
             i++;
-            posi.add(dire);
+            posi = posi.add(dire);
         }
         return i;
     }

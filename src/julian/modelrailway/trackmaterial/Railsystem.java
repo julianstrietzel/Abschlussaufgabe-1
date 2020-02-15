@@ -302,7 +302,7 @@ public class Railsystem {
 
     }
 
-    public void addTrain(SetTrain train) throws LogicalException {
+    public String addTrain(SetTrain train) throws LogicalException {
         Vertex pos = train.getPosition();
         DirectionalVertex direc  = train.getDirection();
         Rail track = findTrack(pos, direc);
@@ -316,6 +316,7 @@ public class Railsystem {
             train.setPosition(pos);
             train.setDirection(direc);
         }
+        return "" + train.getId();
 
     }
 
@@ -335,6 +336,7 @@ public class Railsystem {
             }
             dire = next.getDirectionFrom(previous.getEndInDirection(dire.getInverseDirection()));
             i += next.getLength();
+            System.out.println(i);
             if (next.isOccupied() && breakUp) {
                 return true;
             }

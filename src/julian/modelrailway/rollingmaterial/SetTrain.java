@@ -17,10 +17,12 @@ public class SetTrain implements Comparable<SetTrain>{
     private DirectionalVertex direction;
     private Vertex position;
     private Rail rail;
+    private int length;
    // private Train model;
     
-    public SetTrain(int id, /**Train model,**/ DirectionalVertex initDdirection, Vertex pos) {
+    public SetTrain(int id, /**Train model,**/ DirectionalVertex initDdirection, Vertex pos, int length) {
 //        wagons = new LinkedList<RollingMaterial>();
+        this.length = length; //TODO delete
         this.id = id;
         this.position = pos;
         this.direction = initDdirection;
@@ -56,7 +58,7 @@ public class SetTrain implements Comparable<SetTrain>{
     public int getLength() {
         
         //TODO äbhängig von Wagon länge
-        return 10;
+        return length;
     }
     
     public boolean move(boolean forwards) { //TODO backwards driving

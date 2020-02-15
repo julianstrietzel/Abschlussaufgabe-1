@@ -16,7 +16,7 @@ import org.junit.rules.ExpectedException;
 import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
 
-public class RailsystemTest {
+public class TestRailsystem {
 static Railsystem model;
     @Before
     public void createSystem() {

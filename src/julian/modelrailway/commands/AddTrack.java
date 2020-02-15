@@ -1,5 +1,5 @@
 /**
- * 
+ * Der Add-Track befehl fügt eine normale Schiene hinzu.
  * @author Julian Strietzel
  */
 package julian.modelrailway.commands;
@@ -12,7 +12,10 @@ import julian.modelrailway.Exceptions.LogicalException;
 public class AddTrack extends Command {
 
 private static final String REGEX = "add track \\((-?\\d+),(-?\\d+)\\) -> \\((-?\\d+),(-?\\d+)\\)"; //TODO Regex für Befehl
-    
+    /**
+     * Erstellt einen neuen Command, der das AddTrack Pattern akzeptiert.
+     * @param model Bezugsmodelleisenbahn
+     */
     public AddTrack(ModelRailWay model) {
         super(model, REGEX);
     }
@@ -38,11 +41,6 @@ private static final String REGEX = "add track \\((-?\\d+),(-?\\d+)\\) -> \\((-?
         } catch (IllegalInputException e) {
             Terminal.printError(e.getMessage());
         }
-    }
-    
-    @Override
-    public boolean isExit() {
-        return false;
     }
 
 }

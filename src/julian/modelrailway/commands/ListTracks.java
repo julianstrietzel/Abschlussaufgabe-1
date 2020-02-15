@@ -1,5 +1,5 @@
 /**
- * 
+ * Der Befehl listet alle vorhanden Scheinen auf.
  * @author Julian Strietzel
  */
 package julian.modelrailway.commands;
@@ -11,6 +11,10 @@ public class ListTracks extends Command {
 
 private static final String REGEX = "list tracks"; 
     
+    /**
+     * Erstellt einen neuen Command mit list tarcks -Pattern
+     * @param model Bezugsmodelleisenbahn
+     */
     public ListTracks(ModelRailWay model) {
         super(model, REGEX);
     }

@@ -5,19 +5,33 @@
 package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
-import julian.modelrailway.*;
 import julian.modelrailway.Exceptions.*;
 import julian.modelrailway.events.Crash;
 import julian.modelrailway.rollingmaterial.SetTrain;
-
+/**
+ * Verwaltet das Streckennetz und fahrende Züge.
+ * 
+ */
 public class Railsystem {
 
-    public LinkedList<Rail> rails; // TODO change to private after testing
-    public LinkedList<Knode> knodes;
+    private LinkedList<Rail> rails; 
+    private LinkedList<Knode> knodes;
     private LinkedList<Switch> switches;
     private LinkedList<Rail> occupiedRails;
     private LinkedList<SetTrain> trainsOnTrack;
     private LinkedList<Crash> crashes;
+    private int idCount;
+    
+    public Railsystem() {
+        rails = new LinkedList<Rail>();
+        knodes = new LinkedList<Knode>();
+        switches = new LinkedList<Switch>();
+        idCount = 1;
+        trainsOnTrack = new LinkedList<SetTrain>();
+        crashes = new LinkedList<Crash>();
+        occupiedRails = new LinkedList<Rail>();
+        resetOccupied();
+    }
     
     public LinkedList<Rail> getRails() {
         return rails;
@@ -25,6 +39,10 @@ public class Railsystem {
 
     public void setRails(LinkedList<Rail> rails) {
         this.rails = rails;
+    }
+    
+    public LinkedList<Crash> getCrashes() {
+        return crashes;
     }
 
     public LinkedList<Knode> getKnodes() {
@@ -67,18 +85,9 @@ public class Railsystem {
         this.crashes = crashes;
     }
 
-    private int idCount;
+    
 
-    public Railsystem() {
-        rails = new LinkedList<Rail>();
-        knodes = new LinkedList<Knode>();
-        switches = new LinkedList<Switch>();
-        idCount = 1;
-        trainsOnTrack = new LinkedList<SetTrain>();
-        crashes = new LinkedList<Crash>();
-        occupiedRails = new LinkedList<Rail>();
-        resetOccupied();
-    }
+    
 
     public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
         
@@ -296,9 +305,7 @@ public class Railsystem {
         }
     }
 
-    public LinkedList<Crash> getCrashes() {
-        return crashes;
-    }
+    
     
     @Override
     public String toString() {
@@ -333,7 +340,6 @@ public class Railsystem {
     public boolean markBackOccupied(SetTrain train, Vertex pos, DirectionalVertex dire, Rail rail, boolean breakUp) {
         int i = rail.getSpaceLeftBehind(pos, dire);
         LinkedList<Rail> newlyOccupied = new LinkedList<Rail>();
-//        newlyOccupied.add(rail);
         train.setRail(rail);
         Rail next = rail;
         Rail previous;
@@ -342,7 +348,6 @@ public class Railsystem {
             try {
                 next = previous.getNextInDirection(dire.getInverseDirection());
             } catch (IllegalInputException e) {
-//                throw new LogicalException("i dont know whjat happend.");
             }
             dire = next.getDirectionFrom(previous.getEndInDirection(dire.getInverseDirection()));
             i += next.getLength();
@@ -356,16 +361,6 @@ public class Railsystem {
         for (Rail newRail : newlyOccupied) {
             newRail.trains.add(train);
         }
-        
-        
-//        System.out.println("occu" + occupiedRails);
-//        for(Rail r: occupiedRails) {
-//            System.out.println(r.getTrains());
-//        }
-        
-        
-        
-        
         return false;
     }
 

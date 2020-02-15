@@ -1,6 +1,7 @@
 /**
- * 
- * @author Julian Strietzel
+ * Erstellt einen neuen Command, der das Delete Pattern akzeptiert. 
+ * Bei der Ausführung wird die entsprechende Schiene gelöscht.
+ * @param model
  */
 package julian.modelrailway.commands;
 
@@ -13,6 +14,10 @@ public class Delete extends Command {
 
 private static final String REGEX = "delete track (\\d+)"; //TODO Regex für Befehl
     
+    /**
+     * Erstellt einen neuen Befehl mit delete-Pattern.
+     * @param model Bezugsmodelleisenbahn
+     */
     public Delete(ModelRailWay model) {
         super(model, REGEX);
     }
@@ -31,11 +36,6 @@ private static final String REGEX = "delete track (\\d+)"; //TODO Regex für Bef
         } catch (IllegalInputException | LogicalException e) {
             Terminal.printError(e.getMessage());
         }
-    }
-    
-    @Override
-    public boolean isExit() {
-        return false;
     }
 
 }

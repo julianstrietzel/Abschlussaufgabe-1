@@ -1,5 +1,5 @@
 /**
- * 
+ * Setzt einene neuen Zug auf die Schienen.
  * @author Julian Strietzel
  */
 package julian.modelrailway.commands;
@@ -15,6 +15,10 @@ public class PutTrain extends Command {
 
 private static final String REGEX = "put train (\\d+) at \\((-?\\d+),(-?\\d+)\\) in direction (-?\\d+),(-?\\d+)";
     
+    /**
+     * Erstellt einen neuen Command mit put train PAttern.
+     * @param model Bezugsmodelleisenbahn
+     */
     public PutTrain(ModelRailWay model) {
         super(model, REGEX);
     }

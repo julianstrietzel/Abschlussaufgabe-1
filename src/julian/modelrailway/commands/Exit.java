@@ -1,5 +1,6 @@
 /**
- * 
+ * Ein Command, der exit akzeptiert.
+ * Er soll das Programm beenden, deshalb gibt er bei isExit() true zurück.
  * @author Julian Strietzel
  */
 package julian.modelrailway.commands;
@@ -10,6 +11,10 @@ public class Exit extends Command{
 
     private static final String REGEX = "(exit)";
     
+    /**
+     * Erstellt einen neuen Befehl mit exit-Pattern.
+     * @param model Bezugsmodelleisenbahn
+     */
     public Exit(ModelRailWay model) {
         super(model, REGEX);
     }

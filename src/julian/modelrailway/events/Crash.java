@@ -1,5 +1,5 @@
 /**
- * 
+ * Event, dass alle bteiligten Züge eines Crashes speichert.
  * @author Julian Strietzel
  */
 package julian.modelrailway.events;
@@ -19,6 +19,7 @@ public class Crash extends Event implements Comparable<Event>{
         involved.sort(null);
     }
     
+    @Override 
     public String getMessage() {
         String output = "Crash of train ";
         for(SetTrain tr: involved) {

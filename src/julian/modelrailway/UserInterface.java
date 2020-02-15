@@ -24,15 +24,12 @@ public class UserInterface {
         commands.add(new AddSwitch(model));
         commands.add(new ListTracks(model));
         commands.add(new Step(model));
- 
         lastFoundCommand = new Fail(model);
         fail  = new Fail(model);
     }
     
     public void executeCommand(String command) {
-        
             getCommand(command).execute(command);
-        
     }
     
     private Command getCommand(String command) {

@@ -1,5 +1,5 @@
 /**
- * 
+ * Befehl, der die Züge fahren lässt
  * @author Julian Strietzel
  */
 package julian.modelrailway.commands;
@@ -13,6 +13,10 @@ public class Step extends Command {
 
 private static final String REGEX = "step (-?\\d+)"; //TODO Regex für Befehl
     
+    /**
+     * Erstellt einen neuen Befehl mit move Pattern
+     * @param model Bezugsmodelleisenbahn
+     */
     public Step(ModelRailWay model) {
         super(model, REGEX);
     }

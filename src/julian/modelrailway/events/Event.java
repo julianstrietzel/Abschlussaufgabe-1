@@ -1,5 +1,5 @@
 /**
- * 
+ * Event speichert ein Geschehniss und die beteiligten Züge.
  * @author Julian Strietzel
  */
 package julian.modelrailway.events;
@@ -13,6 +13,11 @@ public abstract class Event implements Comparable<Event>{
     protected LinkedList<SetTrain> involved;
     protected final String message;
 
+    /**
+     * 
+     * @param invol
+     * @param message
+     */
     public Event(SetTrain invol, String message) {
         involved = new LinkedList<SetTrain>();
         this.message = message;
@@ -37,9 +42,7 @@ public abstract class Event implements Comparable<Event>{
         involved.sort(null);
     }
 
-    public String getMessage() {
-        return message;
-    }
+    public abstract String getMessage();
     
     public boolean isInvolved(SetTrain t) {
         return involved.contains(t);

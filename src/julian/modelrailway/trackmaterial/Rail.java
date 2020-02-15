@@ -2,9 +2,12 @@
  * 
  * @author Julian Strietzel
  */
-package julian.trackmaterial;
+package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
+
+import julian.modelrailway.Exceptions.IllegalInputException;
+import julian.modelrailway.rollingmaterial.SetTrain;
 
 public class Rail {
 
@@ -13,25 +16,41 @@ public class Rail {
     protected final DirectionalVertex direction;
     protected Rail next;
     protected Rail previous;
-    protected boolean occupied;
-//    protected Train currentTrain;
+//    protected boolean occupied;
+    protected final int id;
+//    protected SetTrain currentTrain;
+    protected LinkedList<SetTrain> trains;
     
-//    public Train getCurrentTrain() {
+//    public SetTrain getCurrentTrain() {
 //        return currentTrain;
 //    }
-
-//    public void setCurrentTrain(Train currentTrain) {
+//
+//    public void setCurrentTrain(SetTrain currentTrain) {
 //        this.currentTrain = currentTrain;
 //    }
 
-    public Rail(Vertex start, Vertex end) throws IllegalInputException {
+    public Rail(Vertex start, Vertex end, int id) throws IllegalInputException {
         this.end = end;
+        this.id = id;
         this.start = start;
         if(!(start.getXcoord() - end.getXcoord() == 0 ^ start.getYcoord() - end.getYcoord() == 0)) {
             throw new IllegalInputException("wrong start and end.");
         }
         this.direction = start.normedDirection(end);
-        this.occupied = false;
+//        this.occupied = false;
+        trains = new LinkedList<SetTrain>();
+    }
+
+    public LinkedList<SetTrain> getTrains() {
+        return trains;
+    }
+
+    public void setTrains(LinkedList<SetTrain> trains) {
+        this.trains = trains;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Rail getNextInDirection(DirectionalVertex direction) throws IllegalInputException {
@@ -61,12 +80,8 @@ public class Rail {
         this.previous = previous;
     }
 
-//    public boolean isOccupied() {
-//        return !(this.currentTrain == null);
-//    }
-
-    public void setOccupied(boolean occupied) {
-        this.occupied = occupied;
+    public boolean isOccupied() {
+        return !trains.isEmpty();
     }
     
     public Vertex getStart() {
@@ -78,7 +93,7 @@ public class Rail {
     }
     
     public int getLength() {
-        return Math.max(start.getXcoord() - end.getXcoord(), start.getYcoord() - end.getYcoord());
+        return Math.max(Math.abs(start.getXcoord() - end.getXcoord()), Math.abs(start.getYcoord() - end.getYcoord()));
     }
     
     public DirectionalVertex getDirection() {
@@ -125,6 +140,10 @@ public class Rail {
         }
     }
     
+    public boolean isSetCorrectly(Vertex posiVer) {
+        return true;
+    }
+    
     public void connectEasy(Rail newRail, Vertex point) {
      if(point.equals(this.start)) {
          this.setPrevious(newRail);
@@ -164,11 +183,55 @@ public class Rail {
     
     public Vertex getEndInDirection(DirectionalVertex direction) {
         if(direction.equals(this.direction)) {
-            return start;
-        } else {
             return end;
+        } 
+        if(direction.equals(this.direction.getInverseDirection())){
+            return start;
         }
+        return null;
     }
     
+    public LinkedList<Rail> getConnected(Rail notThisOne) {
+        LinkedList<Rail> list = new LinkedList<Rail>();
+        list.add(next);
+        list.add(previous);
+        list.remove(notThisOne);
+        return list;
+    }
+    
+    @Override
+    public String toString() {
+        return "t " + id + " " + start.toString() + " -> " + end.toString() + " " + this.getLength();
+    }
+    
+    public DirectionalVertex getSetDirection() {
+        return direction;
+    }
+    
+    public boolean contains(Vertex v) {
+        Vertex point = new Vertex(start.getXcoord(), start.getYcoord());
+        for(int i = 0; i <= this.getLength(); i++) {
+            if(point.equals(v)) {
+                return true;
+            }
+            point = point.add(getSetDirection());
+        }
+        return false;
+    }
+    
+    public boolean isCorrectDirec(DirectionalVertex direc) {
+        return direc.compatibleDirection(getSetDirection());
+    }
+    
+    public int getSpaceLeftBehind(Vertex pos, DirectionalVertex direc) {
+        DirectionalVertex dire = direc.getInverseDirection();
+        Vertex posi = pos.clone();
+        int i = 0;
+        while(!posi.equals(getEndInDirection(dire))) {
+            i++;
+            posi.add(dire);
+        }
+        return i;
+    }
 
 }

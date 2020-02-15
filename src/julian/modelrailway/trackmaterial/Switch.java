@@ -2,9 +2,11 @@
  * 
  * @author Julian Strietzel
  */
-package julian.trackmaterial;
+package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
+
+import julian.modelrailway.Exceptions.IllegalInputException;
 
 public class Switch extends Rail{
     private Rail nextTwo;
@@ -14,8 +16,8 @@ public class Switch extends Rail{
     private DirectionalVertex setDirection;
     private DirectionalVertex directionTwo;
     
-    public Switch(Vertex start, Vertex end, Vertex endTwo) throws IllegalInputException {
-        super(start, end);
+    public Switch(Vertex start, Vertex end, Vertex endTwo, int id) throws IllegalInputException {
+        super(start, end, id);
         this.endTwo = endTwo;
         this.set = false;
         if(!(start.getXcoord() - endTwo.getXcoord() == 0 ^ start.getYcoord() - endTwo.getYcoord() == 0)) {
@@ -50,6 +52,11 @@ public class Switch extends Rail{
         
     }
     
+    public int getLengthTwo() {
+        return Math.max(start.getXcoord() - endTwo.getXcoord(), start.getYcoord() 
+                - endTwo.getYcoord());
+    }
+    
     public int getSetLength() {
         if(!set) {
             return getMinLength();
@@ -57,8 +64,7 @@ public class Switch extends Rail{
         if(setDirOne) {
             return getLength();
         }
-        return Math.max(start.getXcoord() - endTwo.getXcoord(), start.getYcoord() 
-                - endTwo.getYcoord());
+        return getLengthTwo();
     }
     
     public Rail getNextTwo() {
@@ -69,6 +75,13 @@ public class Switch extends Rail{
         this.nextTwo = nextTwo;
     }
 
+    public boolean isSetCorrectly(Vertex posiVertex) {
+        if(posiVertex.equals(endTwo) && setDirOne || posiVertex.equals(end) && !setDirOne) {
+            return false;
+        }
+        return set;
+    }
+    
     public boolean isSet() {
         return set;
     }
@@ -106,8 +119,8 @@ public class Switch extends Rail{
     }
 
     public int getMinLength() {
-        return Math.min(getLength(), Math.max(start.getXcoord() - endTwo.getXcoord(), start.getYcoord() 
-                - endTwo.getYcoord()));
+        return Math.min(getLength(), Math.max(Math.abs(start.getXcoord() - endTwo.getXcoord()), Math.abs(start.getYcoord() 
+                - endTwo.getYcoord())));
     }
     
     
@@ -142,6 +155,7 @@ public class Switch extends Rail{
         }
         
     }
+
     
     public boolean connectsFreeTo(Vertex point) {
         return super.connectsFreeTo(point) || (point.equals(endTwo) && this.nextTwo == null );
@@ -160,6 +174,15 @@ public class Switch extends Rail{
         return list;
     }
     
+    public LinkedList<Rail> getConnected(Rail notThisOne) {
+        LinkedList<Rail> list = new LinkedList<Rail>();
+        list.add(next);
+        list.add(previous);
+        list.add(nextTwo);
+        list.remove(notThisOne);
+        return list;
+    }
+    
     public DirectionalVertex getDirectionFrom(Vertex point) {
         if(point.equals(this.start)) {
             return this.setDirection;
@@ -171,6 +194,27 @@ public class Switch extends Rail{
             }
         }
     }
+    
+    public Vertex getEndInDirection(DirectionalVertex direction) throws NullPointerException{
+        if(direction.equals(this.setDirection)) {
+            if(setDirOne) {
+                return end;
+            }
+            return endTwo;
+        } 
+        if(direction.equals(this.setDirection.getInverseDirection())){
+            return start;
+        }
+        return null;
+    }
+    
+    @Override
+    public String toString() {
+        return "t " + id + " " + start.toString() + " -> " + end.toString() + "," 
+                    + endTwo.toString();
+    }
+    
+
     
 
 }

@@ -2,7 +2,7 @@
  * 
  * @author Julian Strietzel
  */
-package julian.rollingmaterial;
+package julian.modelrailway.rollingmaterial;
 
 public abstract class RollingMaterial {
 

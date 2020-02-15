@@ -2,7 +2,7 @@
  * 
  * @author Julian Strietzel
  */
-package julian.trackmaterial;
+package julian.modelrailway.trackmaterial;
 
 public class Knode extends Vertex{
 
@@ -47,4 +47,31 @@ public class Knode extends Vertex{
         }
         return null;
     }
+    
+    public Rail getTrack(DirectionalVertex direc){
+        if(railIn.getEndInDirection(direc).equals(this)) {
+            return railIn;
+        }
+       
+        try {
+            if(railOut.getEndInDirection(direc.getInverseDirection()).equals(this)) {
+                return railIn;
+            }
+        } catch (NullPointerException e) {
+        }
+        if(!isFree()) {
+            try {
+                    if(railOut.getEndInDirection(direc).equals(this) || railIn.getEndInDirection(direc.getInverseDirection()).equals(this)) {
+                        return railOut;
+                    }
+            } catch ( NullPointerException ex) {
+                
+            }
+        }
+        return null;
+    }
+    
+//    public boolean equals(Vertex v) {
+//        return v.getXcoord() == this.xcoord && v.getYcoord() == this.ycoord;
+//    }
 }

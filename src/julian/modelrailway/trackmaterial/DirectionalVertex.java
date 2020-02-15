@@ -2,7 +2,7 @@
  * 
  * @author Julian Strietzel
  */
-package julian.trackmaterial;
+package julian.modelrailway.trackmaterial;
 
 public class DirectionalVertex extends Vertex{
 

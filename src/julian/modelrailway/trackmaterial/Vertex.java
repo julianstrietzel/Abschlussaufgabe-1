@@ -2,7 +2,9 @@
  * 
  * @author Julian Strietzel
  */
-package julian.trackmaterial;
+package julian.modelrailway.trackmaterial;
+
+import julian.modelrailway.Exceptions.IllegalInputException;
 
 public class Vertex {
 
@@ -26,7 +28,7 @@ public class Vertex {
     }
     
     public boolean equals(Vertex vertex) {
-        return (vertex.xcoord == this.xcoord) && (vertex.ycoord == this.ycoord);
+        return (vertex.getXcoord() == this.xcoord) && (vertex.getYcoord() == this.ycoord);
     }
     
     public DirectionalVertex normedDirection(Vertex vertex) {
@@ -45,6 +47,18 @@ public class Vertex {
     
     public int distance(Vertex vert) {
         return Math.min(Math.abs(vert.xcoord - this.xcoord), Math.abs(vert.ycoord - this.ycoord));
+    }
+    
+    public String toString() {
+        return "(" + this.xcoord + "," + this.ycoord + ")";
+    }
+    
+    public Knode toKnode() {
+        try {
+            return new Knode(this, new Rail(new Vertex(0,10), new Vertex(0,0), 100));
+        } catch (IllegalInputException e) {
+            return null;
+        }
     }
     
     

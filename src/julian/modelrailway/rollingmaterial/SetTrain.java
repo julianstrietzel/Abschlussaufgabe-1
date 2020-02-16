@@ -4,29 +4,20 @@
  */
 package julian.modelrailway.rollingmaterial;
 
-import java.util.LinkedList;
-
-import julian.modelrailway.Exceptions.IllegalInputException;
-import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.Exceptions.*;
 import julian.modelrailway.trackmaterial.*;
 
 public class SetTrain implements Comparable<SetTrain>{
 
-//    private LinkedList<RollingMaterial> wagons;
-    private final int id;
     private DirectionalVertex direction;
     private Vertex position;
     private Rail rail;
-    private int length;
-   // private Train model;
+    private final Train model;
     
-    public SetTrain(int id, /**Train model,**/ DirectionalVertex initDdirection, Vertex pos, int length) {
-//        wagons = new LinkedList<RollingMaterial>();
-        this.length = length; //TODO delete
-        this.id = id;
+    public SetTrain(Train model, DirectionalVertex initDdirection, Vertex pos) {
+        this.model = model;
         this.position = pos;
         this.direction = initDdirection;
-//        wagons.add(first);
     }
     
     
@@ -34,6 +25,9 @@ public class SetTrain implements Comparable<SetTrain>{
         return direction;
     }
 
+    public Train getModel() {
+        return model;
+    }
 
     public void setDirection(DirectionalVertex direction) {
         this.direction = direction;
@@ -51,29 +45,26 @@ public class SetTrain implements Comparable<SetTrain>{
 
 
     public int getId() {
-        return id;
+        return model.getID();
     }
 
 
     public int getLength() {
-        
-        //TODO äbhängig von Wagon länge
-        return length;
+        return model.getLength();
     }
     
-    public boolean move(boolean forwards) { //TODO backwards driving
+    public boolean move(boolean forwards) throws LogicalException { //TODO backwards driving
         if(position.equals(rail.getEndInDirection(direction))) {
             try {
                 rail = rail.getNextInDirection(direction);
             } catch (IllegalInputException e) {
-//                throw new LogicalException("dont know whjat happened");
+                throw new LogicalException("dont know whjat happened");
             }
             if(rail == null || !rail.isSetCorrectly(position)) {
               //model.setFree(true);
                 return false;
             }
             direction = rail.getDirectionFrom(position);
-            
         }
         position = position.add(direction);
         

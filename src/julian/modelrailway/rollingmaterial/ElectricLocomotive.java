@@ -4,17 +4,12 @@
  */
 package julian.modelrailway.rollingmaterial;
 
-public class ElectricLocomotive extends Locomotive {
+public class ElectricLocomotive extends Engine {
 
-    /**
-     * @param noC
-     * @param series
-     * @param name
-     * @param length
-     */
-    public ElectricLocomotive(int noC, String series, String name, int length) {
-        super(noC, series, name, length);
-        // TODO Auto-generated constructor stub
+    
+
+    public ElectricLocomotive(String series, String name, int length, boolean clutchFront, boolean clutchBack) {
+        super(series, name, length, clutchFront, clutchBack);
     }
 
     @Override
@@ -25,4 +20,13 @@ public class ElectricLocomotive extends Locomotive {
         return visual;
     }
 
+    @Override
+    public String getType() {
+        return "e";
+    }
+    
+    @Override
+    public String getTypeForAdding() {
+        return "electrical engine";
+    }
 }

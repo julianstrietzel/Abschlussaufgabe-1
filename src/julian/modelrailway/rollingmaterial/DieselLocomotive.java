@@ -4,17 +4,12 @@
  */
 package julian.modelrailway.rollingmaterial;
 
-public class DieselLocomotive extends Locomotive {
+public class DieselLocomotive extends Engine {
 
-    /**
-     * @param noC
-     * @param series
-     * @param name
-     * @param length
-     */
-    public DieselLocomotive(int noC, String series, String name, int length) {
-        super(noC, series, name, length);
-        // TODO Auto-generated constructor stub
+    
+
+    public DieselLocomotive(String series, String name, int length, boolean clutchFront, boolean clutchBack) {
+        super(series, name, length, clutchFront, clutchBack);
     }
 
     @Override
@@ -22,6 +17,16 @@ public class DieselLocomotive extends Locomotive {
         String[] visual = { "  (O)(O)      (O)(O)  ", " \\__________________/ ", "\\                    /",
                 "/   |____________|   \\", " /_| ____________ |_\\ ", "  _____________|____  " };
         return visual;
+    }
+    
+    @Override
+    public String getType() {
+        return "d";
+    }
+    
+    @Override
+    public String getTypeForAdding() {
+        return "diesel engine";
     }
 
 }

@@ -85,10 +85,6 @@ public class Railsystem {
         this.crashes = crashes;
     }
 
-    
-
-    
-
     public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
         
         Switch newSw = new Switch(start, endOne, endTwo, idCount);
@@ -207,7 +203,7 @@ public class Railsystem {
         return rails.getLast().getId();
     }
 
-    public void deleteTrack(int id) throws IllegalInputException, LogicalException {
+    public void deleteTrack(int id) throws  LogicalException {
         Rail delRail = trackOnBoard(id);
         int access = 0;
         for (Rail accessed : delRail.getConnected(null)) {
@@ -257,13 +253,13 @@ public class Railsystem {
         return trainsOnTrack;
     }
     
-    private Rail trackOnBoard(int id) throws IllegalInputException {
+    private Rail trackOnBoard(int id) throws LogicalException {
         for (Rail rail : rails) {
             if (rail.getId() == id) {
                 return rail;
             }
         }
-        throw new IllegalInputException("track not existing");
+        throw new LogicalException("track not existing");
     }
 
     private boolean checkTrackCollision(Vertex start, Vertex end) {
@@ -369,6 +365,7 @@ public class Railsystem {
         resetOccupied();
         for (SetTrain train : trainsOnTrack) {
             if (!train.move(forwards)) {
+                train.getModel().setInUse(false);
                 trainsOnTrack.remove(train);
                 crashes.add(new Crash(train, "rolled into outside"));
             } else {
@@ -383,7 +380,6 @@ public class Railsystem {
     public void checkCollision() {
         LinkedList<Rail> workingoccu = (LinkedList<Rail>) occupiedRails.clone();
         for(Rail rs: occupiedRails) {
-//            System.out.println(rs.getTrains());
             if(rs.getTrains().size() < 2) {
                 workingoccu.remove(rs);
             }
@@ -404,10 +400,10 @@ public class Railsystem {
             } while (!involved.containsAll(newInv));
             crashes.add(new Crash(involved, "crash"));
             for(SetTrain t: involved) {
+                t.getModel().setInUse(false);
                 trainsOnTrack.remove(t);
             }
         }
-//        }
     }
 
     public boolean isAllSet() {
@@ -416,7 +412,7 @@ public class Railsystem {
                 return false;
             }
         }
-        return true;
+        return true; 
     }
     
     public LinkedList<Rail> resetOccupied() {

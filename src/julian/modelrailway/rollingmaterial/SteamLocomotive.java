@@ -4,16 +4,10 @@
  */
 package julian.modelrailway.rollingmaterial;
 
-public class SteamLocomotive extends Locomotive {
+public class SteamLocomotive extends Engine {
 
-    /**
-     * @param noC
-     * @param series
-     * @param name
-     * @param length
-     */
-    public SteamLocomotive(int noC, String series, String name, int length) {
-        super(noC, series, name, length);
+    public SteamLocomotive(String series, String name, int length, boolean clutchFront, boolean clutchBack) {
+        super(series, name, length, clutchFront, clutchBack);
     }
 
     @Override
@@ -22,6 +16,16 @@ public class SteamLocomotive extends Locomotive {
                 "   /---------|| | |", "     ||      |+-+ | ", "     ++      +------" };
         return visual;
 
+    }
+    
+    @Override
+    public String getType() {
+        return "s";
+    }
+    
+    @Override
+    public String getTypeForAdding() {
+        return "steam engine";
     }
 
 }

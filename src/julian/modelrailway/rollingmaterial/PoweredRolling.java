@@ -16,8 +16,8 @@ public abstract class PoweredRolling extends RollingMaterial {
      * @param series
      * @param name
      */
-    public  PoweredRolling(int noC, String series, String name, int length) {
-        super(noC, length);
+    public  PoweredRolling(String series, String name, int length, boolean clutchFront, boolean clutchBack) {
+        super(length, clutchFront, clutchBack);
         this.series = series;
         this.name = name;
     }
@@ -41,6 +41,20 @@ public abstract class PoweredRolling extends RollingMaterial {
             return pr.getID().contentEquals(getID());
         }
         return false;
+    }
+    
+    @Override
+    public int compareTo(RollingMaterial o) {
+        if(!(o instanceof PoweredRolling)) {
+            return 0;
+        }
+        PoweredRolling po = (PoweredRolling) o;
+        return this.getID().compareTo(po.getID());
+    }
+    
+    @Override
+    public String getStringID() {
+        return getID();
     }
 
 }

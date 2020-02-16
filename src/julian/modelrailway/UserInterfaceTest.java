@@ -11,6 +11,9 @@ import org.junit.Test;
 
 import edu.kit.informatik.Terminal;
 import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.rollingmaterial.DieselLocomotive;
+import julian.modelrailway.rollingmaterial.Engine;
+import julian.modelrailway.rollingmaterial.PoweredRolling;
 import julian.modelrailway.trackmaterial.DirectionalVertex;
 import julian.modelrailway.trackmaterial.ListUtility;
 import julian.modelrailway.trackmaterial.Rail;
@@ -34,8 +37,10 @@ public class UserInterfaceTest {
         ui.executeCommand("step 1");
         ui.executeCommand("delete track 3");
         ui.executeCommand("list tracks");
-        model.putTestTrain(0, new Vertex(5, 0), new DirectionalVertex(1, 0));
+//        model.putTestTrain(0, new Vertex(5, 0), new DirectionalVertex(1, 0));
         ui.executeCommand("step 1");
+        PoweredRolling p = new DieselLocomotive("10", "EMma", 3, false, true);
+        assertTrue(p instanceof Engine);
     }
 
 }

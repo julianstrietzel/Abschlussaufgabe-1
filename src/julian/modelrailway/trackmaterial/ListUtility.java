@@ -6,6 +6,9 @@ package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
 
+import julian.modelrailway.rollingmaterial.Coach;
+import julian.modelrailway.rollingmaterial.PoweredRolling;
+
 
 public abstract class ListUtility {
 
@@ -43,6 +46,24 @@ public abstract class ListUtility {
             }
         }
         return false;
+    }
+    
+    public static PoweredRolling exists(Iterable<PoweredRolling> list, String id) {
+        for(PoweredRolling p: list) {
+            if(id.contentEquals(p.getID())) {
+                return p;
+            }
+        }
+        return null;
+    }
+    
+    public static Coach exists(Iterable<Coach> list, int id) {
+        for(Coach c: list) {
+            if(id == c.getID()) {
+                return c;
+            }
+        }
+        return null;
     }
 
     public static <T> LinkedList<T> deleteDuplicates(LinkedList<T> list) {

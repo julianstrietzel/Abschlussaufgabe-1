@@ -42,13 +42,11 @@ static Railsystem model;
         model.addRail(new Vertex(0,-1), new Vertex(20,-1));
         model.addRail(new Vertex(0,0), new Vertex(0,-1));
         model.addRail(new Vertex(0,10), new Vertex(0,0));
-//        System.out.println(model.toString());
-//        System.out.println(model.knodes.toString());
     }
     
     @Test
     public void testAddingSwitches() throws IllegalInputException, LogicalException {
-        assertTrue(model.rails.size() == 0);
+        assertTrue(model.getRails().size() == 0);
         Knode knodene = new Knode(new Vertex(0,0), new Rail(new Vertex(0,0), new Vertex(10,0), 1));
         Vertex two = new Vertex(0,0);
         Vertex one = new Vertex(0,1);
@@ -57,9 +55,9 @@ static Railsystem model;
         assertTrue(test.getKnodes().size() == 3);
 //        System.out.println(test.getKnodes().toString());
         assertTrue(ListUtility.contains(test.getKnodes(), knodene));
-        assertTrue(model.rails.isEmpty());
+        assertTrue(model.getRails().isEmpty());
         model.addSwitch(new Vertex(0,0), new Vertex(0,10), new Vertex(10,0));
-        assertTrue(model.rails.size() == 1);
+        assertTrue(model.getRails().size() == 1);
 //        System.out.println(model.toString());
     }
     
@@ -75,20 +73,16 @@ static Railsystem model;
         model.getRails().remove(null);
         assertTrue(number == model.getRails().size());
         LinkedList<Rail> notUse = new LinkedList<Rail>();
-        notUse.add(model.rails.getFirst());
-        Rail from = model.rails.getFirst().getNext();
-        Rail to = model.rails.getFirst().getPrevious();
-        assertTrue(model.thereIsAWayWithout(notUse, from, to, model.rails.getFirst()));
+        notUse.add(model.getRails().getFirst());
+        Rail from = model.getRails().getFirst().getNext();
+        Rail to = model.getRails().getFirst().getPrevious();
+        assertTrue(model.thereIsAWayWithout(notUse, from, to, model.getRails().getFirst()));
         model.deleteTrack(1);
-        try{
-            model.deleteTrack(1);
-        } catch(IllegalInputException ex) {
-            assertTrue(ex.getMessage().contentEquals("track not existing"));
-        }
+        model.deleteTrack(1);
         model = new Railsystem();
         model.addRail(new Vertex(10,10), new Vertex(0,10));
-        model.deleteTrack(model.rails.getLast().getId());
-        assertTrue(model.rails.isEmpty());
+        model.deleteTrack(model.getRails().getLast().getId());
+        assertTrue(model.getRails().isEmpty());
         
     }
 

@@ -2,7 +2,7 @@
  * 
  * @author Julian Strietzel
  */
-package julian.modelrailway;
+package julian.modelrailway.Tests;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.kit.informatik.Terminal;
+import julian.modelrailway.ModelRailWay;
+import julian.modelrailway.UserInterface;
 import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.rollingmaterial.DieselLocomotive;
 import julian.modelrailway.rollingmaterial.Engine;

@@ -2,7 +2,7 @@
  * 
  * @author Julian Strietzel
  */
-package julian.modelrailway.trackmaterial;
+package julian.modelrailway.Tests;
 
 import static org.junit.Assert.*;
 
@@ -15,6 +15,12 @@ import org.junit.rules.ExpectedException;
 
 import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.trackmaterial.Knode;
+import julian.modelrailway.trackmaterial.ListUtility;
+import julian.modelrailway.trackmaterial.Rail;
+import julian.modelrailway.trackmaterial.Railsystem;
+import julian.modelrailway.trackmaterial.Switch;
+import julian.modelrailway.trackmaterial.Vertex;
 
 public class TestRailsystem {
 static Railsystem model;

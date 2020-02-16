@@ -2,7 +2,7 @@
  * 
  * @author Julian Strietzel
  */
-package julian.modelrailway.trackmaterial;
+package julian.modelrailway.Tests;
 
 
 import static org.junit.Assert.assertTrue;
@@ -10,6 +10,9 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import julian.modelrailway.trackmaterial.DirectionalVertex;
+import julian.modelrailway.trackmaterial.Vertex;
 
 public class DirectionalVertexTest {
 static DirectionalVertex d;

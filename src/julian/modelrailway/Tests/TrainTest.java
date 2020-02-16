@@ -2,7 +2,7 @@
  * 
  * @author Julian Strietzel
  */
-package julian.modelrailway.rollingmaterial;
+package julian.modelrailway.Tests;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.rollingmaterial.DieselLocomotive;
+import julian.modelrailway.rollingmaterial.FreightCar;
+import julian.modelrailway.rollingmaterial.PassengerWagon;
+import julian.modelrailway.rollingmaterial.RollingMaterial;
+import julian.modelrailway.rollingmaterial.Train;
 
 public class TrainTest {
 static Train t;

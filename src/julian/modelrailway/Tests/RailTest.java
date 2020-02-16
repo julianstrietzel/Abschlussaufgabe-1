@@ -2,7 +2,7 @@
  * 
  * @author Julian Strietzel
  */
-package julian.modelrailway.trackmaterial;
+package julian.modelrailway.Tests;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +12,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import julian.modelrailway.Exceptions.IllegalInputException;
+import julian.modelrailway.trackmaterial.DirectionalVertex;
+import julian.modelrailway.trackmaterial.Rail;
+import julian.modelrailway.trackmaterial.Vertex;
 
 public class RailTest {
 Rail t ;

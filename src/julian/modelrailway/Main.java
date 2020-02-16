@@ -1,9 +1,9 @@
 package julian.modelrailway;
+
 /**
  * 
  * @author Julian Strietzel
  */
-
 
 import edu.kit.informatik.Terminal;
 import julian.modelrailway.commands.*;

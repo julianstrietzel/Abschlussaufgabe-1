@@ -27,18 +27,20 @@ public class ModelRailWay {
     public Railsystem rs() {
         return rs;
     }
+
     public String addTrack(int startX, int startY, int endX, int endY) throws IllegalInputException, LogicalException {
 
         return "" + rs.addRail(new Vertex(startX, startY), new Vertex(endX, endY));
 
     }
-    
-    public String addSwitch(int startX, int startY, int endX, int endY, int end2x, int end2y) throws IllegalInputException, LogicalException {
+
+    public String addSwitch(int startX, int startY, int endX, int endY, int end2x, int end2y)
+            throws IllegalInputException, LogicalException {
 
         return "" + rs.addSwitch(new Vertex(startX, startY), new Vertex(endX, endY), new Vertex(end2x, end2y));
 
     }
-    
+
     public String delete(int id) throws IllegalInputException, LogicalException {
         rs.deleteTrack(id);
         return "OK";
@@ -65,7 +67,7 @@ public class ModelRailWay {
             for (int i = 0; i < Math.abs(speed); i++) {
                 rs.move(Math.abs(speed) == speed);
             }
-            for (SetTrain t: rs.getTrainsOnTrack()) {
+            for (SetTrain t : rs.getTrainsOnTrack()) {
                 events.add(new TrainMoved(t, ""));
             }
             events.addAll(rs.getCrashes());
@@ -84,7 +86,7 @@ public class ModelRailWay {
 
     public String listTracks() {
         StringBuilder sb = new StringBuilder();
-        for(Rail r: rs.getRails()) {
+        for (Rail r : rs.getRails()) {
             sb.append(r.toString());
             sb.append("\n");
         }

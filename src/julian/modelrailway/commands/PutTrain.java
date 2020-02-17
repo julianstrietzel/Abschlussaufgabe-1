@@ -49,10 +49,4 @@ private static final String REGEX = "put train (\\d+) at \\((-?\\d+),(-?\\d+)\\)
             Terminal.printError(e.getMessage());
         }
     }
-    
-    @Override
-    public boolean isExit() {
-        return false;
-    }
-
 }

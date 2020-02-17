@@ -16,7 +16,7 @@ public class ModelRailWay {
 
     private final Railsystem rSystem;
     private final TrainStock ts;
-    private final RollingStock rstock;
+    private final RollingStock rstock; 
 
     public ModelRailWay() {
         rSystem = new Railsystem();
@@ -43,7 +43,7 @@ public class ModelRailWay {
 
     }
 
-    public String delete(int id) throws IllegalInputException, LogicalException {
+    public String deleteTrack(int id) throws IllegalInputException, LogicalException {
         rSystem.deleteTrack(id);
         return "OK";
     }
@@ -105,6 +105,9 @@ public class ModelRailWay {
     }
 
     public String listTracks() {
+        if(rSystem.getRails() == null) {
+            return "No track exists";
+        }
         StringBuilder sb = new StringBuilder();
         for (Rail r : rSystem.getRails()) {
             sb.append(r.toString());

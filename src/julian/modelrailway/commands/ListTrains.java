@@ -1,5 +1,5 @@
 /**
- * Der Befehl listet alle vorhanden Scheinen auf.
+ * Der Befehl listet alle vorhanden Züge auf.
  * @author Julian Strietzel
  */
 package julian.modelrailway.commands;
@@ -7,24 +7,21 @@ package julian.modelrailway.commands;
 import edu.kit.informatik.Terminal;
 import julian.modelrailway.ModelRailWay;
 
-public class ListTracks extends Command {
+public class ListTrains extends Command {
 
-private static final String REGEX = "list tracks"; 
+private static final String REGEX = "list trains"; 
     
     /**
-     * Erstellt einen neuen Command mit list tarcks -Pattern
+     * Erstellt einen neuen Command mit list trains -Pattern
      * @param model Bezugsmodelleisenbahn
      */
-    public ListTracks(ModelRailWay model) {
+    public ListTrains(ModelRailWay model) {
         super(model, REGEX);
     }
     
     @Override
     public void execute ( String command) {
-        
-        Terminal.printLine(model.listTracks());
+        Terminal.printLine(model.listTrains());
     }
-    
-
 
 }

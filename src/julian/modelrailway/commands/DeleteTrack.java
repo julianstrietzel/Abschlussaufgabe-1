@@ -1,5 +1,5 @@
 /**
- * Erstellt einen neuen Command, der das Delete Pattern akzeptiert. 
+ * Erstellt einen neuen Command, der das Delete-Track Pattern akzeptiert. 
  * Bei der Ausführung wird die entsprechende Schiene gelöscht.
  * @param model
  */
@@ -10,15 +10,15 @@ import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
 
-public class Delete extends Command {
+public class DeleteTrack extends Command {
 
-private static final String REGEX = "delete track (\\d+)"; //TODO Regex für Befehl
+private static final String REGEX = "delete track (\\d+)"; 
     
     /**
      * Erstellt einen neuen Befehl mit delete-Pattern.
      * @param model Bezugsmodelleisenbahn
      */
-    public Delete(ModelRailWay model) {
+    public DeleteTrack(ModelRailWay model) {
         super(model, REGEX);
     }
     
@@ -31,7 +31,7 @@ private static final String REGEX = "delete track (\\d+)"; //TODO Regex für Bef
             } catch (NumberFormatException e1) {
                 throw new IllegalInputException("input needs to be an Integer.");
             }
-            model.delete(id);
+            model.deleteTrack(id);
             Terminal.printLine("OK");
         } catch (IllegalInputException | LogicalException e) {
             Terminal.printError(e.getMessage());

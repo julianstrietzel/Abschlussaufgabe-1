@@ -39,6 +39,7 @@ public class UserInterfaceTest {
         ui.executeCommand("step 1");
         ui.executeCommand("delete track 3");
         ui.executeCommand("list tracks");
+        model.putTrain(id, pos, direction)
 //        model.putTestTrain(0, new Vertex(5, 0), new DirectionalVertex(1, 0));
         ui.executeCommand("step 1");
         PoweredRolling p = new DieselLocomotive("10", "EMma", 3, false, true);

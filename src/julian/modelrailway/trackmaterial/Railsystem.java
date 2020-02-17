@@ -45,22 +45,6 @@ public class Railsystem {
         return crashes;
     }
 
-    public LinkedList<Knode> getKnodes() {
-        return knodes;
-    }
-
-    public void setKnodes(LinkedList<Knode> knodes) {
-        this.knodes = knodes;
-    }
-
-    public LinkedList<Switch> getSwitches() {
-        return switches;
-    }
-
-    public void setSwitches(LinkedList<Switch> switches) {
-        this.switches = switches;
-    }
-
     public LinkedList<Rail> getOccupiedRails() {
         return occupiedRails;
     }
@@ -437,5 +421,13 @@ public class Railsystem {
         }
         throw new LogicalException("no fitting Track existing.");
 
+    }
+    
+    public void setSwitch(int id, Vertex point) throws IllegalInputException {
+        for(Switch s: switches) {
+            if( id == s.getId()) {
+                s.setSwitch(point);
+            }
+        }
     }
 }

@@ -124,23 +124,20 @@ public class Switch extends Rail{
     }
     
     
-    public void setSwitch(DirectionalVertex newDire) {
-        if(newDire.equals(direction)) {
+    public void setSwitch(Vertex point) throws IllegalInputException {
+        if(end.equals(point)) {
             this.setDirection = direction;
             set = true;
             setDirOne = true;
             return;
         }
-        if(newDire.equals(directionTwo)) {
+        if(endTwo.equals(point)) {
             this.setDirection = directionTwo;
             set = true;
             setDirOne = false;
             return;
         }
-//        if(occupied) {
-//            currentTrain.derail();
-//        }
-        return;
+        throw new IllegalInputException("point is not part of switch.");
     }
     
     public void unSet() {

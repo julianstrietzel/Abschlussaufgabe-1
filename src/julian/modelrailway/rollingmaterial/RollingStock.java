@@ -76,7 +76,7 @@ public class RollingStock {
             try {
                 intID = Integer.parseInt("id");
             } catch (NumberFormatException e) {
-                throw new IllegalInputException("id of Coach need to be an Integer.");
+                throw new IllegalInputException("id of Coach needs to be an Integer.");
             }
             if (!coaches.containsKey(intID)) {
                 throw new LogicalException("coach not existing.");

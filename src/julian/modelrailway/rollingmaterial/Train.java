@@ -56,7 +56,7 @@ public class Train {
         return false;
     }
 
-    protected int getMaxHeight() {
+    public int getMaxHeight() {
         int h = 0;
         for (RollingMaterial r : wagons) {
             h = Math.max(h, r.getVisualHeight());

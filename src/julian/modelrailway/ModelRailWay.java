@@ -62,7 +62,7 @@ public class ModelRailWay {
     }
     
     
-    public String putTrain(int id, Vertex pos, DirectionalVertex direction) throws LogicalException {
+    public String putTrain(int id, Vertex pos, DirectionalVertex direction) throws LogicalException, IllegalInputException {
         Train model = ts.getTrain(id);
         if(model == null) {
             throw new LogicalException("train does not exist.");
@@ -76,7 +76,7 @@ public class ModelRailWay {
     }
 
     public String move(int speed) throws LogicalException {
-        try {
+
             if (!rSystem.isAllSet()) {
                 throw new LogicalException("position of switches not set.");
             }
@@ -99,13 +99,11 @@ public class ModelRailWay {
             }
             sb.substring(0, sb.length() - 1);
             return sb.toString();
-        } catch (LogicalException e) {
-            return "Error, " + e.getMessage();
-        }
+        
     }
 
     public String listTracks() {
-        if(rSystem.getRails() == null) {
+        if(rSystem.getRails().isEmpty()) {
             return "No track exists";
         }
         StringBuilder sb = new StringBuilder();

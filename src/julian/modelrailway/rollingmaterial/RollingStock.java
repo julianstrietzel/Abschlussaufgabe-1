@@ -137,7 +137,7 @@ public class RollingStock {
         powered.sort(null);
         StringBuilder sb = new StringBuilder();
         for (PoweredRolling p : powered) {
-            if (p instanceof Engine) {
+            if (p instanceof Engine && p != null) {
                 sb.append(p.toString() + "\n");
             }
         }
@@ -155,7 +155,7 @@ public class RollingStock {
         powered.sort(null);
         StringBuilder sb = new StringBuilder();
         for (PoweredRolling p : powered) {
-            if (p instanceof TrainSet) {
+            if (p instanceof TrainSet && p != null) {
                 sb.append(p.toString() + "\n");
             }
         }

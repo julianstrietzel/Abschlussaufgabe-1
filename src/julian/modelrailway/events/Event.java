@@ -72,7 +72,7 @@ public abstract class Event implements Comparable<Event>{
 
    @Override 
     public int compareTo(Event e) {
-        return involved.getFirst().compareTo(e.involved.getFirst());
+        return e.involved.getFirst().compareTo(involved.getFirst());
     }
     
 }

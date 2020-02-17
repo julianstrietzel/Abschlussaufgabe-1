@@ -17,7 +17,8 @@ public class Railsystem {
     private LinkedList<Rail> occupiedRails;
     private LinkedList<SetTrain> trainsOnTrack;
     private LinkedList<Crash> crashes;
-    private int idCount;
+    private LinkedList<Knode> occuKnodes;
+//    private int idCount;
 
     /**
      * Erstellt eine neues Schienennetz und initialisiert alle Listen.
@@ -26,10 +27,11 @@ public class Railsystem {
         rails = new LinkedList<Rail>();
         knodes = new LinkedList<Knode>();
         switches = new LinkedList<Switch>();
-        idCount = 1;
+        
         trainsOnTrack = new LinkedList<SetTrain>();
         crashes = new LinkedList<Crash>();
         occupiedRails = new LinkedList<Rail>();
+        occuKnodes = new LinkedList<Knode>();
         resetOccupied();
     }
 
@@ -76,7 +78,8 @@ public class Railsystem {
      *                                Schienennetzkollisioen
      */
     public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
-        Switch newSw = new Switch(start, endOne, endTwo, idCount);
+        
+        Switch newSw = new Switch(start, endOne, endTwo, getNextFreeID());
         if (ListUtility.contains(switches, newSw)) {
             throw new LogicalException("track existing.");
         }
@@ -85,7 +88,7 @@ public class Railsystem {
         }
 
         if (!rails.isEmpty()) {
-            newSw.setSwitch(newSw.getDirection());
+            newSw.setSwitch(newSw.getEnd());
             Vertex checker = newSw.getStart();
             for (int i = 1; i < newSw.getSetLength(); i++) {
                 checker.add(newSw.getDirection());
@@ -93,7 +96,7 @@ public class Railsystem {
                     throw new LogicalException("Switch cutting another Rail");
                 }
             }
-            newSw.setSwitch(newSw.getDirectionTwo());
+            newSw.setSwitch(newSw.getEndTwo());
             checker = newSw.getStart();
             for (int i = 1; i < newSw.getSetLength(); i++) {
                 checker.add(newSw.getDirectionTwo());
@@ -140,7 +143,6 @@ public class Railsystem {
         }
         switches.add(newSw);
         rails.add(newSw);
-        idCount++;
         return rails.getLast().getId();
     }
 
@@ -155,7 +157,7 @@ public class Railsystem {
      *                                Schienennetzkollisioen
      */
     public int addRail(Vertex start, Vertex end) throws IllegalInputException, LogicalException {
-        Rail newRail = new Rail(start, end, idCount);
+        Rail newRail = new Rail(start, end, getNextFreeID());
         if (ListUtility.contains(rails, newRail)) {
             throw new LogicalException("track existing.");
         }
@@ -170,7 +172,7 @@ public class Railsystem {
                     throw new LogicalException("rail cutting another Rail");
                 }
                 ;
-            }
+            } 
             if (checkTrackCollision(newRail.getStart(), newRail.getEnd())) {
                 throw new LogicalException("rail cutting another Rail");
             }
@@ -198,8 +200,25 @@ public class Railsystem {
             knodes.add(new Knode(newRail.getEnd(), newRail));
         }
         rails.add(newRail);
-        idCount++;
         return rails.getLast().getId();
+    }
+    
+    private int getNextFreeID() {
+        int i = 1;
+        while (i > 0) {
+            boolean ex = true;
+            for(Rail r: rails) {
+                if(r.getId() == i) {
+                    i++;
+                    ex = true;
+                    break;
+                }
+            }
+            if(!ex) {
+                return i;
+            }
+        }
+        return rails.size() + 1;
     }
 
     /**
@@ -349,11 +368,15 @@ public class Railsystem {
      * @param train gesetzter Zug
      * @return ZugId
      * @throws LogicalException, wenn einer der benötigten Schienen besetzt ist
+     * @throws IllegalInputException 
      */
-    public String putTrain(SetTrain train) throws LogicalException {
+    public String putTrain(SetTrain train) throws LogicalException, IllegalInputException {
         Vertex pos = train.getPosition();
         DirectionalVertex direc = train.getDirection();
         Rail track = findTrack(pos, direc);
+        if(track == null) {
+            throw new LogicalException("wrong placement");
+        }
         if (track.isOccupied()) {
             throw new LogicalException("track occupied.");
         }
@@ -381,8 +404,12 @@ public class Railsystem {
      * @return
      */
     public boolean markBackOccupied(SetTrain train, Vertex pos, DirectionalVertex dire, Rail rail, boolean breakUp) {
+        //TODO mark first and last if knode as occupied
+        //TODO if knodes occu contains element with more than 2 on -> collision
+        //TODO outsource to settrain
         int i = rail.getSpaceLeftBehind(pos, dire);
         LinkedList<Rail> newlyOccupied = new LinkedList<Rail>();
+        newlyOccupied.add(rail);
         train.setRail(rail);
         Rail next = rail;
         Rail previous;
@@ -414,9 +441,9 @@ public class Railsystem {
      * @throws LogicalException
      */
     public void move(boolean forwards) throws LogicalException { // TODO backwards driving
-        crashes = new LinkedList<Crash>();
         resetOccupied();
         for (SetTrain train : trainsOnTrack) {
+            
             if (!train.move(forwards)) {
                 train.getModel().setInUse(false);
                 trainsOnTrack.remove(train);
@@ -493,8 +520,9 @@ public class Railsystem {
      * @param direc Richtung
      * @return gefunde Schiene
      * @throws LogicalException, wenn Schiene nicht existiert
+     * @throws IllegalInputException, wenn Track nicht da
      */
-    public Rail findTrack(Vertex pos, DirectionalVertex direc) throws LogicalException {
+    public Rail findTrack(Vertex pos, DirectionalVertex direc) throws LogicalException, IllegalInputException {
         for (Knode knode : knodes) {
             if (knode.equals(pos)) {
                 return knode.getTrack(direc);

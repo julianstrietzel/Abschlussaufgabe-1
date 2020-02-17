@@ -38,7 +38,11 @@ public abstract class Coach extends RollingMaterial {
 
     @Override
     public String toString() {
-        return getID() + " " + getTrain().getID() + " " + getType() + " " + getLength() + " " + isClutchFront() + " "
+        String trainID = "none";
+        if(isUsed()) {
+            trainID = "" + getTrain().getID();
+        }
+        return getID() + " " + trainID + " " + getType() + " " + getLength() + " " + isClutchFront() + " "
                 + isClutchBack();
     }
     

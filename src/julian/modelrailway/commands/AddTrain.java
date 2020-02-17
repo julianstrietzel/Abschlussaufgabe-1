@@ -10,7 +10,7 @@ import julian.modelrailway.Exceptions.LogicalException;
 
 public class AddTrain extends Command {
     //TODO try +2 as coordinate in others
-    private static final String REGEX = "add train (\\d+) (W?)(\\w+)"; 
+    private static final String REGEX = "add train (\\d+) (W?)((-|\\w)+)"; 
 
     /**
      * Erstellt einen neuen Command, der das AddTrack Pattern akzeptiert.

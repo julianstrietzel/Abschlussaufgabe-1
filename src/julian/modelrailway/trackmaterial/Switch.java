@@ -278,7 +278,7 @@ public class Switch extends Rail{
     
     @Override
     public String toString() {
-        return "t " + getId() + " " + getStart().toString() + " -> " + getEnd().toString() + "," 
+        return "s " + getId() + " " + getStart().toString() + " -> " + getEnd().toString() + "," 
                     + endTwo.toString();
     }
     

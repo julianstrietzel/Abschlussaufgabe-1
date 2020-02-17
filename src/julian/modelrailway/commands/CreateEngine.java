@@ -23,10 +23,10 @@ private static final String REGEX = "create engine (electrical|steam|diesel) (\\
     @Override
     public void execute ( String command) {
         try {
-            model.getRollStock().createEngine(getMatcher(command).group(1), getMatcher(command).group(2),
+            Terminal.printLine(model.getRollStock().createEngine(getMatcher(command).group(1), getMatcher(command).group(2),
                     getMatcher(command).group(3), Integer.parseInt(getMatcher(command).group(4)),
                     "true".contentEquals(getMatcher(command).group(5)),
-                    "true".contentEquals(getMatcher(command).group(6)));
+                    "true".contentEquals(getMatcher(command).group(6))));
         } catch (NumberFormatException | LogicalException e) {
             Terminal.printError(e.getMessage());
         }

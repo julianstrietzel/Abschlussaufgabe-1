@@ -28,7 +28,11 @@ public class TrainSet extends PoweredRolling {
     
     @Override
     public String toString() {
-        return getTrain().getID() + " " + getSeries() + " " + getName() + " " + getLength() + " "
+        String trainID = "none";
+        if(isUsed()) {
+            trainID = "" + getTrain().getID();
+        }
+        return trainID + " " + getSeries() + " " + getName() + " " + getLength() + " "
                 + isClutchFront() + " " + isClutchBack();
     }
 

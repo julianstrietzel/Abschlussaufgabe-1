@@ -25,7 +25,16 @@ public abstract class Engine extends PoweredRolling {
 
     @Override
     public String toString() {
-        return getTrain().getID() + " " + getType() + " " + getSeries() + " " + getName() + " " + getLength() + " "
+        String trainID = "none";
+        if(isUsed()) {
+            trainID = "" + getTrain().getID();
+        }
+        
+        return  trainID + " " 
+    + getType() + " " 
+                + getSeries() + " " 
+    + getName() + " " 
+                + getLength() + " "
                 + isClutchFront() + " " + isClutchBack();
     }
     

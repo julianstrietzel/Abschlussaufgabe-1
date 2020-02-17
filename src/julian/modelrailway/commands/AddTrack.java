@@ -37,7 +37,7 @@ public class AddTrack extends Command {
             
             Terminal.printLine(model.addTrack(sx, sy, ex, ey));
         } catch (IllegalInputException | LogicalException | NumberFormatException e) {
-            Terminal.printLine(e.getMessage());
+            Terminal.printError(e.getMessage());
         }
 
     }

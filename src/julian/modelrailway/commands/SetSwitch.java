@@ -11,7 +11,7 @@ import julian.modelrailway.trackmaterial.Vertex;
 
 public class SetSwitch extends Command {
 
-private static final String REGEX = "set switch (//d+) position \\\\((-?\\\\d+),(-?\\\\d+)\\\\)"; 
+private static final String REGEX = "set switch (//d+) position \\((-?\\d+),(-?\\d+)\\)"; 
     
     /**
      * Erstellt einen neuen Command, der das set switch Pattern akzeptiert.

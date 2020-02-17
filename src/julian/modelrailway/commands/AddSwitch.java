@@ -11,7 +11,7 @@ import julian.modelrailway.Exceptions.LogicalException;
 
 public class AddSwitch extends Command {
 
-    private static final String REGEX = "add switch \\((-?\\d+),(-?\\d+)\\) -> \\((-?\\d+),(-?\\d+)\\),\\\\((-?\\\\d+),(-?\\\\d+)\\\\)";
+    private static final String REGEX = "add switch \\((-?\\d+),(-?\\d+)\\) -> \\((-?\\d+),(-?\\d+)\\),\\((-?\\d+),(-?\\d+)\\)";
 
     /**
      * Erstellt einen neuen Command, der das AddTrack Pattern akzeptiert.
@@ -44,7 +44,7 @@ public class AddSwitch extends Command {
             }
             Terminal.printLine(model.addSwitch(sx, sy, ex, ey, e2x, e2y));
         } catch (IllegalInputException | LogicalException e) {
-            Terminal.printLine(e.getMessage());
+            Terminal.printError(e.getMessage());
         }
 
     }

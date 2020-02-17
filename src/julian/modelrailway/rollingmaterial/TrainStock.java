@@ -90,10 +90,11 @@ public class TrainStock {
             return "";
         }
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < trains.size(); i = i) {
+        int f = 0;
+        for(int i = 0; f < trains.size(); i++) {
             if(trains.containsKey(i)) {
                 sb.append(trains.get(i).toString() + "\n");
-                i++;
+                f++;
             }
         }
         return sb.substring(0, sb.length() - 1);

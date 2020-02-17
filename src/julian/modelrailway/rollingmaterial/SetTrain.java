@@ -118,8 +118,28 @@ public class SetTrain implements Comparable<SetTrain>{
             direction = rail.getDirectionFrom(position);
         }
         position = position.add(direction);
+//        marcKnodesoccupied();
         return true;
     }
+    
+//    private Vertex getLastPos() throws IllegalInputException {
+//        int i = this.getLength();
+//        i -= this.rail.getSpaceLeftBehind(getPosition(), direction);
+//        Rail current = rail;
+//        Vertex end = current.getEndInDirection(direction.getInverseDirection());
+//        Rail next = current.getNextInDirection(direction.getInverseDirection());
+//        while(i >= 0) {
+//            if(i == 0) {
+//                
+//            }
+//            current = next;
+//            next = current.getNextInDirection(current.getDirectionFrom(end));
+//            end = current.getEndInDirection(current.getDirectionFrom(end));
+//            i -= next.getLength();
+//            
+//        }
+//    }
+
     
     @Override
     public int compareTo(SetTrain o) {

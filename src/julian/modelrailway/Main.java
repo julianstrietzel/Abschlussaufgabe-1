@@ -1,17 +1,17 @@
 package julian.modelrailway;
 
 /**
- * 
+ * Main-Klasse, die die Modelleisenbahn laufen lässt
  * @author Julian Strietzel
  */
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.commands.*;
 
 public class Main {
 
     /**
-     * @param args
+     * Ruft mit dem Konsoleninput immer wieder das Userinterface auf, bis dieses den isExit Befehl zurück gibt.
+     * @param args werden nicht verarbeitet
      */
     public static void main(String[] args) {
         ModelRailWay model = new ModelRailWay();

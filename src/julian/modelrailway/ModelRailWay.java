@@ -70,7 +70,7 @@ public class ModelRailWay {
         if(model.inUse()) {
             throw new LogicalException("train already on track.");
         }
-        rSystem.addTrain(new SetTrain(model, direction, pos));
+        rSystem.putTrain(new SetTrain(model, direction, pos));
         return "OK";
         
     }

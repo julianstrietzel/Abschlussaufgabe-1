@@ -15,6 +15,10 @@ public class UserInterface {
     private Command lastFoundCommand;
     private Command fail;
 
+    /**
+     * Erstellt ein Interface mit allen Befehlen
+     * @param model Bezugseisenbahn
+     */
     public UserInterface(ModelRailWay model) {
         commands.add(new AddTrack(model));
         commands.add(new AddSwitch(model));
@@ -37,10 +41,19 @@ public class UserInterface {
         fail = new Fail(model);
     }
 
+    /**
+     * Führt den Befehl mit dem Userinput aus
+     * @param command
+     */
     public void executeCommand(String command) {
         getCommand(command).execute(command);
     }
 
+    /**
+     * Sucht einen zum Input passenden Befehl raus.
+     * @param command Userinput
+     * @return gefundener Command oder fail-Command
+     */
     private Command getCommand(String command) {
         for (Command found : commands) {
             if (found.matches(command)) {
@@ -51,6 +64,10 @@ public class UserInterface {
         return fail;
     }
 
+    /**
+     * Checkt, ob der letzte Befehl exit war
+     * @return isExit von letztem befehl
+     */
     public boolean isExit() {
         return lastFoundCommand.isExit();
     }

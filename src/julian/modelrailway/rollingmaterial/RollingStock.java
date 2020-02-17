@@ -37,7 +37,7 @@ public class RollingStock {
     public String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
         String id = series + "-" + name;
-        if (ListUtility.exists(powered, id) != null) {
+        if (RollingMaterial.exists(powered, id) != null) {
             throw new LogicalException("Engine already existing.");
         }
         if ("electrical".contentEquals(engineType)) {
@@ -65,7 +65,7 @@ public class RollingStock {
     public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
         String id = series + "-" + name;
-        if (ListUtility.exists(powered, id) != null) {
+        if (RollingMaterial.exists(powered, id) != null) {
             throw new LogicalException("train-set already existing.");
         }
         powered.add(new TrainSet(series, name, length, cFront, cBack));
@@ -103,7 +103,7 @@ public class RollingStock {
      */
     public String delete(boolean isPowered, String id) throws IllegalInputException, LogicalException {
         if (isPowered) {
-            PoweredRolling p = ListUtility.exists(powered, id); // TODO what happens, when Stock in Train
+            PoweredRolling p = RollingMaterial.exists(powered, id); // TODO what happens, when Stock in Train
             if (p == null) {
                 throw new LogicalException("there is no powered stock with that id.");
             }

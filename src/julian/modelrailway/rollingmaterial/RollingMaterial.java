@@ -152,6 +152,21 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
         return getStringID();
     }
     
+    /**
+     * Guckt, ob eine Liste aus PoweredRolling einen Zug mti der ID beinhaltet
+     * @param list zu überpfüfendes ELemnt von Iterable
+     * @param id zu suchende String ID
+     * @return PoweredRolling, falls dieses existiert.
+     */
+    public static PoweredRolling exists(Iterable<PoweredRolling> list, String id) {
+        for(PoweredRolling p: list) {
+            if(id.contentEquals(p.getStringID())) {
+                return p;
+            }
+        }
+        return null;
+    }
+    
     @Override
     public abstract String toString();
     

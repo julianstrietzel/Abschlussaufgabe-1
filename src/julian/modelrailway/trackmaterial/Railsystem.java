@@ -1,27 +1,27 @@
-/**
- * 
- * @author Julian Strietzel
- */
 package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
 import julian.modelrailway.Exceptions.*;
-import julian.modelrailway.events.Crash;
+import julian.modelrailway.events.*;
 import julian.modelrailway.rollingmaterial.SetTrain;
+
 /**
  * Verwaltet das Streckennetz und fahrende Züge.
  * 
+ * @author Julian Strietzel
  */
 public class Railsystem {
-
-    private LinkedList<Rail> rails; 
-    private LinkedList<Knode> knodes;
-    private LinkedList<Switch> switches;
+    private final LinkedList<Rail> rails;
+    private final LinkedList<Knode> knodes;
+    private final LinkedList<Switch> switches;
     private LinkedList<Rail> occupiedRails;
     private LinkedList<SetTrain> trainsOnTrack;
     private LinkedList<Crash> crashes;
     private int idCount;
-    
+
+    /**
+     * Erstellt eine neues Schienennetz und initialisiert alle Listen.
+     */
     public Railsystem() {
         rails = new LinkedList<Rail>();
         knodes = new LinkedList<Knode>();
@@ -32,47 +32,52 @@ public class Railsystem {
         occupiedRails = new LinkedList<Rail>();
         resetOccupied();
     }
-    
+
+    /**
+     * 
+     * @return Alle Schienen im Netz
+     */
     public LinkedList<Rail> getRails() {
         return rails;
     }
 
-    public void setRails(LinkedList<Rail> rails) {
-        this.rails = rails;
+    /**
+     * @return the knodes
+     */
+    public LinkedList<Knode> getKnodes() {
+        return knodes;
     }
-    
+
+    /**
+     * 
+     * @return die aktuellen Kraschs
+     */
     public LinkedList<Crash> getCrashes() {
         return crashes;
     }
 
-    public LinkedList<Rail> getOccupiedRails() {
-        return occupiedRails;
+    /**
+     * 
+     * @return alle Züge auf dem Schienennetz
+     */
+    public LinkedList<SetTrain> getTrainsOnTrack() {
+        return trainsOnTrack;
     }
 
-    public void setOccupiedRails(LinkedList<Rail> occupiedRails) {
-        this.occupiedRails = occupiedRails;
-    }
-
-    public int getIdCount() {
-        return idCount;
-    }
-
-    public void setIdCount(int idCount) {
-        this.idCount = idCount;
-    }
-
-    public void setTrainsOnTrack(LinkedList<SetTrain> trainsOnTrack) {
-        this.trainsOnTrack = trainsOnTrack;
-    }
-
-    public void setCrashes(LinkedList<Crash> crashes) {
-        this.crashes = crashes;
-    }
-
+    /**
+     * Fügt dem Schienennetz eine neue Gleisweiche hinzu
+     * 
+     * @param start  Starpunkt
+     * @param endOne erster Endpunkt
+     * @param endTwo zweiter Endpunkt
+     * @return eindeutige ID der neuen Weiche
+     * @throws IllegalInputException, wenn Länge null
+     * @throws LogicalException,      wenn der Track schon existiert oder bei
+     *                                Schienennetzkollisioen
+     */
     public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
-        
         Switch newSw = new Switch(start, endOne, endTwo, idCount);
-        if(ListUtility.contains(switches, newSw)) {
+        if (ListUtility.contains(switches, newSw)) {
             throw new LogicalException("track existing.");
         }
         if (newSw.getMinLength() == 0) {
@@ -93,13 +98,13 @@ public class Railsystem {
             for (int i = 1; i < newSw.getSetLength(); i++) {
                 checker.add(newSw.getDirectionTwo());
                 if (knodes.contains(checker)) {
-                    throw new IllegalInputException("Switch cutting another Rail");
+                    throw new LogicalException("Switch cutting another Rail");
                 }
             }
             newSw.unSet();
             if (checkTrackCollision(newSw.getStart(), newSw.getEnd())
                     || checkTrackCollision(newSw.getStart(), newSw.getEndTwo())) {
-                throw new IllegalInputException("Switch cutting another Rail.");
+                throw new LogicalException("Switch cutting another Rail.");
             }
             checkFreeKnodes(newSw.getKnodes());
             for (Knode knode : knodes) {
@@ -119,10 +124,10 @@ public class Railsystem {
                     newSw.setNextTwo(knode.getRailIn());
                 }
             }
-            if (!knodes.contains(newSw.start)) {
+            if (!knodes.contains(newSw.getStart())) {
                 knodes.add(new Knode(newSw.getStart(), newSw));
             }
-            if (!knodes.contains(newSw.end)) {
+            if (!knodes.contains(newSw.getEnd())) {
                 knodes.add(new Knode(newSw.getEnd(), newSw));
             }
             if (!knodes.contains(newSw.getEndTwo())) {
@@ -139,9 +144,19 @@ public class Railsystem {
         return rails.getLast().getId();
     }
 
+    /**
+     * Fügt dem Schienennetz ein neues Gleis hinzu
+     * 
+     * @param start Startpunkt
+     * @param end   Endpunkt
+     * @return eindeutige ID der neuen Schiene
+     * @throws IllegalInputException, wenn Länge null
+     * @throws LogicalException,      wenn der Track schon existiert oder bei
+     *                                Schienennetzkollisioen
+     */
     public int addRail(Vertex start, Vertex end) throws IllegalInputException, LogicalException {
         Rail newRail = new Rail(start, end, idCount);
-        if(ListUtility.contains(rails, newRail)) {
+        if (ListUtility.contains(rails, newRail)) {
             throw new LogicalException("track existing.");
         }
         if (newRail.getLength() == 0) {
@@ -187,8 +202,14 @@ public class Railsystem {
         return rails.getLast().getId();
     }
 
-    public void deleteTrack(int id) throws  LogicalException {
-        Rail delRail = trackOnBoard(id);
+    /**
+     * ENtfernt eine Schiene aus dem Netz, wenn diese nicht notwendig ist
+     * 
+     * @param id der Schiene
+     * @throws LogicalException, wenn Schiene notwendig
+     */
+    public void deleteTrack(int id) throws LogicalException {
+        Rail delRail = getRailinSystem(id);
         int access = 0;
         for (Rail accessed : delRail.getConnected(null)) {
             if (accessed != null) {
@@ -203,7 +224,7 @@ public class Railsystem {
         }
         LinkedList<Rail> notUse = new LinkedList<Rail>();
         notUse.add(delRail);
-
+        // TODO löschen von Switches
         if (thereIsAWayWithout(notUse, delRail.getNext(), delRail.getPrevious(), delRail)) {
             rails.remove(delRail);
             switches.remove(delRail);
@@ -212,6 +233,15 @@ public class Railsystem {
         }
     }
 
+    /**
+     * Guckt ob es einen Weg ohne notSUe gibtvon from zu to
+     * 
+     * @param notUse Nicht zu verwendende Scheinewege
+     * @param from   Startpunkt
+     * @param to     Endpunkt
+     * @param now    aktuelle Schiene
+     * @return WW, ob weg ohne
+     */
     public boolean thereIsAWayWithout(LinkedList<Rail> notUse, Rail from, Rail to, Rail now) {
         if (from == null) {
             return false;
@@ -233,11 +263,14 @@ public class Railsystem {
 
     }
 
-    public LinkedList<SetTrain> getTrainsOnTrack() {
-        return trainsOnTrack;
-    }
-    
-    private Rail trackOnBoard(int id) throws LogicalException {
+    /**
+     * sucht eine bestimmte Schiene
+     * 
+     * @param id der Schiene
+     * @return Rail mit id, wenn existend
+     * @throws LogicalException, wenn nicht existend
+     */
+    private Rail getRailinSystem(int id) throws LogicalException {
         for (Rail rail : rails) {
             if (rail.getId() == id) {
                 return rail;
@@ -246,6 +279,13 @@ public class Railsystem {
         throw new LogicalException("track not existing");
     }
 
+    /**
+     * Checkt, ob die Strecke zwischen start und ein eine Schiene kreuzt
+     * 
+     * @param start Startpunkt
+     * @param end   Endpunkt
+     * @return WW, ob Schiene geschnitten
+     */
     private boolean checkTrackCollision(Vertex start, Vertex end) {
         for (Rail rail : rails) {
             Vertex checker = rail.getStart();
@@ -269,6 +309,12 @@ public class Railsystem {
         return false;
     }
 
+    /**
+     * Guckt, ob die Knoten noch frei sind
+     * 
+     * @param knodes Liste an Knoten, die zu überprüfen sind
+     * @throws IllegalInputException, wenn einer der Knoten ncith im System ist
+     */
     private void checkFreeKnodes(LinkedList<Vertex> knodes) throws IllegalInputException {
         int freeKnodes = 0;
         for (Knode knode : this.knodes) {
@@ -285,8 +331,6 @@ public class Railsystem {
         }
     }
 
-    
-    
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -299,9 +343,16 @@ public class Railsystem {
 
     }
 
-    public String addTrain(SetTrain train) throws LogicalException {
+    /**
+     * Setzt einen Zug auf das Schienenetz
+     * 
+     * @param train gesetzter Zug
+     * @return ZugId
+     * @throws LogicalException, wenn einer der benötigten Schienen besetzt ist
+     */
+    public String putTrain(SetTrain train) throws LogicalException {
         Vertex pos = train.getPosition();
-        DirectionalVertex direc  = train.getDirection();
+        DirectionalVertex direc = train.getDirection();
         Rail track = findTrack(pos, direc);
         if (track.isOccupied()) {
             throw new LogicalException("track occupied.");
@@ -317,6 +368,18 @@ public class Railsystem {
 
     }
 
+    /**
+     * Markiert hinter jedem Kopf eines ZUges entsprechend der Länge des Zuges die
+     * Schienen als besetzt.
+     * 
+     * @param train   Zug um den es geht
+     * @param pos     aktuelle Position
+     * @param dire    aktuelle Richtung
+     * @param rail    aktuele Schiene
+     * @param breakUp ob die Funktion bei einer Collision weiter markiere n soll
+     *                oder eben nicht
+     * @return
+     */
     public boolean markBackOccupied(SetTrain train, Vertex pos, DirectionalVertex dire, Rail rail, boolean breakUp) {
         int i = rail.getSpaceLeftBehind(pos, dire);
         LinkedList<Rail> newlyOccupied = new LinkedList<Rail>();
@@ -339,12 +402,18 @@ public class Railsystem {
         occupiedRails.addAll(newlyOccupied);
         occupiedRails = ListUtility.deleteDuplicates(occupiedRails);
         for (Rail newRail : newlyOccupied) {
-            newRail.trains.add(train);
+            newRail.getTrains().add(train);
         }
         return false;
     }
 
-    public void move(boolean forwards) throws LogicalException { //TODO backwards driving
+    /**
+     * Bewegt alle Züge um einen Schritt
+     * 
+     * @param forwards
+     * @throws LogicalException
+     */
+    public void move(boolean forwards) throws LogicalException { // TODO backwards driving
         crashes = new LinkedList<Crash>();
         resetOccupied();
         for (SetTrain train : trainsOnTrack) {
@@ -356,15 +425,18 @@ public class Railsystem {
                 markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
             }
         }
-        
+
         checkCollision();
     }
 
-    @SuppressWarnings("unchecked")
+    /**
+     * sucht nach Collisionen im Schienennetz und fügt diese der Liste an Crashes
+     * hinzu.
+     */
     public void checkCollision() {
         LinkedList<Rail> workingoccu = (LinkedList<Rail>) occupiedRails.clone();
-        for(Rail rs: occupiedRails) {
-            if(rs.getTrains().size() < 2) {
+        for (Rail rs : occupiedRails) {
+            if (rs.getTrains().size() < 2) {
                 workingoccu.remove(rs);
             }
         }
@@ -383,31 +455,45 @@ public class Railsystem {
                 }
             } while (!involved.containsAll(newInv));
             crashes.add(new Crash(involved, "crash"));
-            for(SetTrain t: involved) {
+            for (SetTrain t : involved) {
                 t.getModel().setInUse(false);
                 trainsOnTrack.remove(t);
             }
         }
     }
 
+    /**
+     * Checkt, ob alle Weichen gesetzt sind
+     * 
+     * @return
+     */
     public boolean isAllSet() {
-        for(Switch s:switches) {
-            if(!s.isSet()) {
+        for (Switch s : switches) {
+            if (!s.isSet()) {
                 return false;
             }
         }
-        return true; 
+        return true;
     }
-    
-    public LinkedList<Rail> resetOccupied() {
+
+    /**
+     * resetted alle Crashes und belegten Schienen
+     */
+    public void resetOccupied() {
         for (Rail rail : rails) {
-            rail.trains.clear();
+            rail.getTrains().clear();
         }
         occupiedRails.clear();
         crashes.clear();
-        return occupiedRails;
     }
 
+    /**
+     * Sucht eine Schiene auf dem Schienennetz
+     * @param pos Position der Schiene
+     * @param direc Richtung
+     * @return gefunde Schiene
+     * @throws LogicalException, wenn Schiene nicht existiert
+     */
     public Rail findTrack(Vertex pos, DirectionalVertex direc) throws LogicalException {
         for (Knode knode : knodes) {
             if (knode.equals(pos)) {
@@ -420,12 +506,17 @@ public class Railsystem {
             }
         }
         throw new LogicalException("no fitting Track existing.");
-
     }
-    
+
+    /**
+     * Setzt eine Weiche in Richtung des neuen Punktes
+     * @param id der Weiche
+     * @param point der das neue Ende sein soll
+     * @throws IllegalInputException, wenn Point is not an End of the Switch
+     */
     public void setSwitch(int id, Vertex point) throws IllegalInputException {
-        for(Switch s: switches) {
-            if( id == s.getId()) {
+        for (Switch s : switches) {
+            if (id == s.getId()) {
                 s.setSwitch(point);
             }
         }

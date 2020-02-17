@@ -36,7 +36,7 @@ public class AddTrack extends Command {
                 ey = Integer.parseInt(getMatcher(command).group(7));
             
             Terminal.printLine(model.addTrack(sx, sy, ex, ey));
-        } catch (IllegalInputException | LogicalException e) {
+        } catch (IllegalInputException | LogicalException | NumberFormatException e) {
             Terminal.printLine(e.getMessage());
         }
 

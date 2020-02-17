@@ -10,10 +10,20 @@ import julian.modelrailway.rollingmaterial.SetTrain;
 
 public class Crash extends Event implements Comparable<Event>{
 
+    /**
+     * Erstellt einen neuen Crash mit dem gesetzten Zug invol.
+     * @param invol beteiligter Zug
+     * @param message Beschreibung des Events
+     */
     public Crash(SetTrain invol, String message) {
         super(invol, message);
     }
     
+    /**
+     * Erstellt einen neuen Crash mit allen Zügen aus invol.
+     * @param invol alle involvierten Züge
+     * @param message Beschriebung des Events.
+     */
     public Crash(LinkedList<SetTrain> invol, String message) {
         super(invol, message);
         involved.sort(null);

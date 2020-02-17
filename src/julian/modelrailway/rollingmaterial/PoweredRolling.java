@@ -1,20 +1,21 @@
 /**
- * 
+ * Überklasse für alle Schienenfahrzeuge mit Motor
  * @author Julian Strietzel
  */
 package julian.modelrailway.rollingmaterial;
 
 public abstract class PoweredRolling extends RollingMaterial {
 
-    protected final String series;
-    protected final String name;
+    private final String series;
+    private final String name;
     
     /**
-     * 
-     * @param visual
-     * @param noC
-     * @param series
-     * @param name
+     * Erstellt ein neues Scheinenfahrzeug mit Motor.
+     * @param series    Baureihe
+     * @param name  Name
+     * @param length    Länge
+    * @param clutchFront   Ob Kupplung vorne
+     * @param clutchBack    Ob Kupplung hinten
      */
     public  PoweredRolling(String series, String name, int length, boolean clutchFront, boolean clutchBack) {
         super(length, clutchFront, clutchBack);
@@ -22,14 +23,26 @@ public abstract class PoweredRolling extends RollingMaterial {
         this.name = name;
     }
     
+    /**
+     *          
+     * @return die String ID des Fahrzeugs <Baureihe>-<Name>
+     */
     public String getID() {
         return series + "-" + name;
     }
     
+    /**
+     * 
+     * @return die Baureihe des Fahrzeugs
+     */
     public String getSeries() {
         return series;
     }
 
+    /**
+     * 
+     * @return der Name des Fahrzeugs
+     */
     public String getName() {
         return name;
     }

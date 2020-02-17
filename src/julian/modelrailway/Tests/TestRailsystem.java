@@ -42,7 +42,7 @@ static Railsystem model;
         assertTrue(ListUtility.contains(list, one ));
         assertTrue(ListUtility.contains(list, two));
         model.addRail(new Vertex(10,10), new Vertex(0,10));
-        assertTrue(model.getKnodes().getFirst().isFree());
+//        assertTrue(model.getKnodes().getFirst().isFree());
         model.addRail(new Vertex(10,10), new Vertex(20,10));
         model.addRail(new Vertex(20,10), new Vertex(20,-1));
         model.addRail(new Vertex(0,-1), new Vertex(20,-1));

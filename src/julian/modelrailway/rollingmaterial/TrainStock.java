@@ -1,11 +1,10 @@
 /**
- * 
+ * Verwaltet die zusammengesetzten Züge
  * @author Julian Strietzel
  */
 package julian.modelrailway.rollingmaterial;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 
 import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.Exceptions.LogicalException;
@@ -14,8 +13,10 @@ public class TrainStock {
 
     private final HashMap<Integer, Train> trains;
     private final ModelRailWay model;
+    
     /**
-     * 
+     * Erstellt einen neuen Trainstock mit model als Bezugsobjekt
+     * @param model
      */
     public TrainStock(ModelRailWay model) {
         this.model = model;
@@ -26,6 +27,13 @@ public class TrainStock {
         return model.getRollStock();
     }
     
+    /**
+     * Erstellt einen neuen Zug oder hängt dem entsprechenden hinten ein RollmAterial an.
+     * @param trainID Zug, an den angehöngt wrrden soll
+     * @param rollID    Id des RollMaterials
+     * @return <MatType> <MatID> added to <ZugID>
+     * @throws LogicalException
+     */
     public String addTrain(int trainID, String rollID) throws LogicalException {
         RollingMaterial r = getRollStock().getWagon(rollID);
         if(r == null) {
@@ -51,17 +59,32 @@ public class TrainStock {
         }
     }
     
+    /**
+     * Löscht einen Zug und entfernt ihn vom 
+     * @param id
+     * @return
+     * @throws LogicalException
+     */
     public String deleteTrain(int id) throws LogicalException {
-        if(trains.remove(id) == null) {
+        Train t = trains.get(id);
+        if(t == null) {
             throw new LogicalException("train not existing.");
         }
+        t.markUnUsed();
+        trains.remove(id);
         return "OK";
     }
     
+    /**
+     * 
+     * @param id des gesuchten Zuges
+     * @return gesuchter Zug oder null wenn dieser nicht existiert.
+     */
     public Train getTrain(int id) {
         return trains.get(id);
     }
-    
+   
+    @Override
     public String toString() {
         if(trains.isEmpty()) {
             return "";

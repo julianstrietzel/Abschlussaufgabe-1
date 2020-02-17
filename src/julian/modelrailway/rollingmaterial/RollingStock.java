@@ -1,5 +1,5 @@
 /**
- * Diese Klasse verwaltet alle Züge die Konkatenation von Rollmaterial.
+ * Diese Klasse speichert das gesamte RollMaterial
  * @author Julian Strietzel
  */
 package julian.modelrailway.rollingmaterial;
@@ -15,11 +15,25 @@ public class RollingStock {
     private LinkedList<PoweredRolling> powered;
     private HashMap<Integer, Coach> coaches;
 
+    /**
+     * Erstellt eine neue Verwaltungsklasse
+     */
     public RollingStock() {
         powered = new LinkedList<PoweredRolling>();
         coaches = new HashMap<Integer, Coach>();
     }
 
+    /**
+     * Erstellt eine neue Lokomotive
+     * @param engineType    (electrical|diesel|steam) -> Typ der Lokomotive 
+     * @param series        Baureihe
+     * @param name          Name
+     * @param length        Länge
+     * @param cFront        Ob Kupplung vorne
+     * @param cBack         Ob Kupplung hinten
+     * @return  ID der neuen Lokomotive
+     * @throws LogicalException, wenn Lokomotive schon existiert
+     */
     public String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
         String id = series + "-" + name;
@@ -38,16 +52,34 @@ public class RollingStock {
         return powered.getLast().getID();
     }
 
+    /**
+     * Erstellt einen neuen Triebzug
+     * @param series    Baureihe
+     * @param name      Name
+     * @param length    Länge
+     * @param cFront    Ob Kupplung vorne
+     * @param cBack     Ob Kupplung hinten
+     * @return  ID des neuen Triebzuges
+     * @throws LogicalException, wenn Triebzug schon existiert
+     */
     public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
         String id = series + "-" + name;
         if (ListUtility.exists(powered, id) != null) {
-            throw new LogicalException("Engine already existing.");
+            throw new LogicalException("train-set already existing.");
         }
         powered.add(new TrainSet(series, name, length, cFront, cBack));
         return powered.getLast().getID();
     }
 
+    /**
+     * Erstellt einen neuen Waggon
+     * @param coachType Typ des Waggons
+     * @param length    Länge
+     * @param cFront    Ob Kupplung vorne
+     * @param cBack     Ob Kupplung hinten
+     * @return ID des neuen Waggons
+     */
     public String createCoach(String coachType, int length, boolean cFront, boolean cBack) {
         if ("passenger".contentEquals(coachType)) {
             coaches.put(coaches.size() + 1, new PassengerWagon(length, cFront, cBack, coaches.size() + 1));
@@ -61,6 +93,14 @@ public class RollingStock {
         return "" + coaches.size();
     }
 
+    /**
+     * entfernt das entsprechende RollMaterial
+     * @param isPowered Ob es sich um einen Waggon mit Motor handelt
+     * @param id        Id des Materials
+     * @return  "OK"
+     * @throws IllegalInputException, wenn ID für Coach kein Integer
+     * @throws LogicalException, wenn Material in Nutzung oder nicht existiert.
+     */
     public String delete(boolean isPowered, String id) throws IllegalInputException, LogicalException {
         if (isPowered) {
             PoweredRolling p = ListUtility.exists(powered, id); // TODO what happens, when Stock in Train
@@ -89,6 +129,10 @@ public class RollingStock {
         return "OK";
     }
 
+    /**
+     * 
+     * @return Liste der Lokomotiven
+     */
     public String enginestoString() {
         powered.sort(null);
         StringBuilder sb = new StringBuilder();
@@ -103,6 +147,10 @@ public class RollingStock {
         return sb.substring(0, sb.length() - 1);
     }
 
+    /**
+     * 
+     * @return Liste der Triebzüge
+     */
     public String trainSettoString() {
         powered.sort(null);
         StringBuilder sb = new StringBuilder();
@@ -117,6 +165,10 @@ public class RollingStock {
         return sb.substring(0, sb.length() - 1);
     }
 
+    /**
+     * 
+     * @return Liste der Waggons
+     */
     public String coachestoString() {
         if (coaches.isEmpty()) {
             return "No coach exists";
@@ -130,6 +182,11 @@ public class RollingStock {
 
     }
     
+    /**
+     * Sucht das Material mit der ID
+     * @param id    als String
+     * @return  das gefunden Material oder null, wenn nicht existend
+     */
     public RollingMaterial getWagon(String id) {
         for(PoweredRolling p: powered) {
             if(p.getID().contentEquals(id)) {

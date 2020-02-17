@@ -1,5 +1,5 @@
 /**
- * 
+ * Ein Zug, konkateniert aus Rollmaterial
  * @author Julian Strietzel
  */
 package julian.modelrailway.rollingmaterial;
@@ -14,9 +14,15 @@ public class Train {
     private final int id;
     private boolean inUse;
 
+    /**
+     * Erstellt einen neuen Zug
+     * @param first erstes Rollmaterial
+     * @param id    Id des Zuges
+     * @throws LogicalException, wenn first schon benutzt wird
+     */
     public Train(RollingMaterial first, int id) throws LogicalException {
         wagons = new LinkedList<RollingMaterial>();
-        if (first.used) {
+        if (first.isUsed()) {
             throw new LogicalException("wagon is already in use.");
         }
         wagons.add(first);
@@ -25,6 +31,12 @@ public class Train {
         inUse = false;
     }
 
+    /**
+     * Hängt hinten ein Rollmaterial an
+     * @param newWagon  
+     * @return <newWagon> added to <ZugID>
+     * @throws LogicalException, wenn Kupplungen nicht kompatibel oder falscher Triebzug
+     */
     public String add(RollingMaterial newWagon) throws LogicalException {
         if (!(wagons.getLast().isClutchBack() && newWagon.isClutchFront())) {
             throw new LogicalException("clutches not compatible.");
@@ -39,14 +51,26 @@ public class Train {
         return newWagon.getTypeForAdding() + " " + newWagon.getStringID() + " added to " + getID();
     }
 
+    /**
+     * 
+     * @return die ID des Zuges
+     */
     public int getID() {
         return id;
     }
     
+    /**
+     * Setzt use auf den neuen Wert
+     * @param use
+     */
     public void setInUse(boolean use) {
         this.inUse = use;
     }
 
+    /**
+     * 
+     * @return , ob der Zug ein motorisiertes Element hat
+     */
     public boolean hasPower() {
         for (RollingMaterial p : wagons) {
             if (p instanceof PoweredRolling) {
@@ -55,7 +79,31 @@ public class Train {
         }
         return false;
     }
+   
+    /**
+     * 
+     * @return die Summe der Längen aller Rollmaterialien
+     */
+    public int getLength() {
+        int i = 0;
+        for(RollingMaterial r: wagons) {
+            i += r.getLength();
+        }
+        return i;
+    }
+    
+    /**
+     * 
+     * @return ob Zug in Benutzung
+     */
+    public boolean inUse() {
+        return inUse;
+    }
 
+    /**
+     * 
+     * @return die maximale Höhe der Elemente im Zug
+     */
     public int getMaxHeight() {
         int h = 0;
         for (RollingMaterial r : wagons) {
@@ -64,6 +112,10 @@ public class Train {
         return h;
     }
 
+    /**
+     * 
+     * @return die String Visualisierung des Zuges
+     */
     public String getRepre() {
         StringBuilder[] visualArray = new StringBuilder[getMaxHeight()];
         for(int i = 0; i < visualArray.length; i++) {
@@ -90,18 +142,7 @@ public class Train {
         return sb.substring(0, sb.length() - 1);
     }
     
-    public int getLength() {
-        int i = 0;
-        for(RollingMaterial r: wagons) {
-            i += r.getLength();
-        }
-        return i;
-    }
-    
-    public boolean inUse() {
-        return inUse;
-    }
-    
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(this.id + " ");
@@ -109,6 +150,16 @@ public class Train {
             sb.append(r.getWStringID() + " ");
         }
         return sb.toString().trim();
+    }
+
+    /**
+     * Wenn der Zug gelöscht wird, werden alle verwendeten MAterialien als unused markiert.
+     */
+    public void markUnUsed() {
+        while(!wagons.isEmpty()) {
+            wagons.getFirst().unconcat();
+            wagons.removeFirst();
+        }
     }
 
 }

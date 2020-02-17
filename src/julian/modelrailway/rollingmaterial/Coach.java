@@ -1,13 +1,20 @@
 /**
- * 
+ * Repräsentiert einen Wagon.
  * @author Julian Strietzel
  */
 package julian.modelrailway.rollingmaterial;
 
 public abstract class Coach extends RollingMaterial {
 
-    protected final int id;
+    private final int id;
 
+    /**
+     * Erstellt einen neuen Wagon.
+     * @param length    Läneg des Wagons
+     * @param clutchFront   Ob der Wagon vorne eine Kupplung hat.
+     * @param clutchBack    Ob der Wagon hinten eine Kupplung hat.
+     * @param id    ID des Wagons
+     */
     public Coach(int length, boolean clutchFront, boolean clutchBack, int id) {
         super(length, clutchFront, clutchBack);
         this.id = id;
@@ -35,6 +42,9 @@ public abstract class Coach extends RollingMaterial {
                 + isClutchBack();
     }
     
+    /**
+     * @return erster Buchstabe der TypBeschreibung.
+     */
     public abstract String getType();
     
     @Override

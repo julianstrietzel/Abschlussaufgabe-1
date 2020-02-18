@@ -13,7 +13,7 @@ import julian.modelrailway.trackmaterial.Vertex;
 
 public class PutTrain extends Command {
 
-private static final String REGEX = "put train (\\d+) at \\((-?\\d+),(-?\\d+)\\) in direction (-?\\d+),(-?\\d+)";
+private static final String REGEX = "put train (\\d+) at \\(([-+]?\\d+),([-+]?\\d+)\\) in direction ([+-]?\\d+),([+-]?\\d+)";
     
     /**
      * Erstellt einen neuen Command mit put train PAttern.

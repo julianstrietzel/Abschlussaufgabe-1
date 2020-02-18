@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.UserInterface;
+import julian.modelrailway.rollingmaterial.RollingMaterialComparator;
 
 public class Testing {
     ModelRailWay m = new ModelRailWay();
@@ -61,26 +62,56 @@ UserInterface ui = new UserInterface(m);
     
     @Test
     public void TestAddTracks() throws InterruptedException {
-        e("add track (0,1) -> (0,-2)");
-        e("add track (0,1) -> (0,3)");
-        e("add track (0,3) -> (2,3)");
-        e("add track (0,3) -> (-1,3)"); //F
-        e("add track (0,0) -> (0,1)"); //f
-        e("add track (2,-2) -> (2,3)");
-        e("add track (0,-2) -> (2,-2)");
-        e("create engine steam T3 Emma 1 false true");
-        e("create engine steam T4 Emma 1 true true");
-        e("list engines");
-        e("add train 1 T3-Emma");
-        e("add train 2 T4-Emma");
-        e("list trains");
+        
+        e("add track (0,0) -> (0,-10)");
+        e("add track (0,0) -> (0,10)");
+//        e("add track (0,1) -> (0,3)");
+//        e("add track (0,3) -> (2,3)");
+//        e("add track (0,3) -> (-1,3)"); //F
+//        e("add track (0,0) -> (0,1)"); //f
+//        e("add track (2,-2) -> (2,3)");
+//        e("add track (0,-2) -> (2,-2)");
+        e("create engine steam 119 119 2 true true");
+        e("create engine diesel 119 120 2 true true");
+        e("create engine electrical 119 121 2 true true");
+//        m.getRollStock().getPowered().sort(new RollingMaterialComparator());
+//        System.out.println(m.getRollStock().getPowered());
+//        e("list train-sets");
+//        e("create coach special 1 true true");
+//        e("create coach special 1 true true");
+        e("create coach freight 1 true true");
+        e("create coach passenger 1 true true");
+        e("create coach special 1 true true");
+        e("create train-set 118 118 2 true true");
+        e("create train-set 118 119 2 true true");
+//        
+//        e("list train-sets");
+////        e("add train 1 1");
+//        e("add train 1 119-ae");
+//        e("add train 1 W1");
+//
+//        
+        e("add train 1 119-119");
+        e("add train 1 119-120");
+
+        e("add train 1 W1");
+        e("add train 1 W2");
+        e("add train 1 W3");
+        e("add train 1 W4");
+        e("add train 1 W5");
+        e("add train 1 119-121");
+        e("add train 2 118-118");
+        e("add train 2 118-119");
+        
+//        e("list trains");
         e("show train 1");
-        e("put train 1 at (0,0) in direction 0,1");
-        e("put train 2 at (1,3) in direction 0,1");
-        for(int i = 0; i < 100; i++) {
-            e("step 1");
-//            wait(10);
-        }
+        e("show train 2");
+//        e("put train 1 at (0,2) in direction 0,-1");
+//
+//        for(int i = 0; i < 8; i++) {
+//            e("step 1");
+//            e("step 1");
+//        }
         
     }
 

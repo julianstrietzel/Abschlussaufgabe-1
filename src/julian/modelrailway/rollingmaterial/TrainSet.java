@@ -37,6 +37,11 @@ public class TrainSet extends PoweredRolling {
     }
 
     @Override
+    public String getLeerzeile() {
+        return "                    ";
+    }
+    
+    @Override
     public String getTypeForAdding() {
         return "train-set";
     }

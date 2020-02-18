@@ -30,6 +30,11 @@ public class SpecialCar extends Coach {
     }
     
     @Override
+    public String getLeerzeile() {
+        return "                   ";
+    }
+    
+    @Override
     public String getTypeForAdding() {
         return "special coach";
     }

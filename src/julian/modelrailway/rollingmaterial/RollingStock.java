@@ -4,6 +4,8 @@
  */
 package julian.modelrailway.rollingmaterial;
 
+import java.text.CollationKey;
+import java.text.Collator;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -71,6 +73,10 @@ public class RollingStock {
         powered.add(new TrainSet(series, name, length, cFront, cBack));
         return powered.getLast().getID();
     }
+    
+    public LinkedList<PoweredRolling> getPowered() {
+        return powered;
+    }
 
     /**
      * Erstellt einen neuen Waggon
@@ -134,7 +140,7 @@ public class RollingStock {
      * @return Liste der Lokomotiven
      */
     public String enginestoString() {
-        powered.sort(null);
+        powered.sort(new RollingMaterialComparator());
         StringBuilder sb = new StringBuilder();
         for (PoweredRolling p : powered) {
             if (p instanceof Engine && p != null) {
@@ -152,7 +158,7 @@ public class RollingStock {
      * @return Liste der Triebzüge
      */
     public String trainSettoString() {
-        powered.sort(null);
+        powered.sort(new RollingMaterialComparator());
         StringBuilder sb = new StringBuilder();
         for (PoweredRolling p : powered) {
             if (p instanceof TrainSet && p != null) {

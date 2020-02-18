@@ -70,12 +70,15 @@ public class ModelRailWay {
         if(model.inUse()) {
             throw new LogicalException("train already on track.");
         }
+        if(!model.hasPower()) {
+            throw new LogicalException("train has no power.");
+        }
         rSystem.putTrain(new SetTrain(model, direction, pos));
         return "OK";
         
     }
 
-    public String move(int speed) throws LogicalException {
+    public String move(int speed) throws LogicalException, IllegalInputException {
 
             if (!rSystem.isAllSet()) {
                 throw new LogicalException("position of switches not set.");
@@ -97,8 +100,7 @@ public class ModelRailWay {
                 sb.append(e.getMessage());
                 sb.append("\n");
             }
-            sb.substring(0, sb.length() - 1);
-            return sb.toString();
+            return sb.substring(0, sb.length() - 1).toString();
         
     }
 

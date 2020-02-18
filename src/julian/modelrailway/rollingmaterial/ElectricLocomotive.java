@@ -32,6 +32,11 @@ public class ElectricLocomotive extends Engine {
     }
     
     @Override
+    public String getLeerzeile() {
+        return "                        ";
+    }
+    
+    @Override
     public String getTypeForAdding() {
         return "electrical engine";
     }

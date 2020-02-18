@@ -31,6 +31,11 @@ public class DieselLocomotive extends Engine {
     }
     
     @Override
+    public String getLeerzeile() {
+        return "                      ";
+    }
+    
+    @Override
     public String getTypeForAdding() {
         return "diesel engine";
     }

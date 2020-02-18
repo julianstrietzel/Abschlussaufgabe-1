@@ -21,7 +21,7 @@ public class SteamLocomotive extends Engine {
     @Override
     public String[] getVisual() {
         String[] visual = { "//// \\_/      \\_/   ", " _|--/~\\------/~\\-+ ", "  + ========  +-+ | ",
-                "   /---------|| | |", "     ||      |+-+ | ", "     ++      +------" };
+                "   /---------|| | | ", "     ||      |+-+ | ", "     ++      +------" };
         return visual;
 
     }
@@ -30,6 +30,12 @@ public class SteamLocomotive extends Engine {
     public String getType() {
         return "s";
     }
+    
+    @Override
+    public String getLeerzeile() {
+        return "                    ";
+    }
+    
     
     @Override
     public String getTypeForAdding() {

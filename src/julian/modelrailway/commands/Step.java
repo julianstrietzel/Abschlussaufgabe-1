@@ -11,7 +11,7 @@ import julian.modelrailway.Exceptions.LogicalException;
 
 public class Step extends Command {
 
-private static final String REGEX = "step (-?\\d+)"; //TODO Regex für Befehl
+private static final String REGEX = "step ([+-]?\\d+)"; 
     
     /**
      * Erstellt einen neuen Befehl mit move Pattern

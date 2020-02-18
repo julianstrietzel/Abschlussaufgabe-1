@@ -153,6 +153,20 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
     }
     
     /**
+     * 
+     * @return Die Baureihe des Materials. Bei Wagons gleich null.
+     */
+    public String getSeries() {
+        return null;
+    }
+    
+    /**
+     * 
+     * @return Eine Leerzeile entsprechend der Länge des Models.
+     */
+    public abstract String getLeerzeile();
+    
+    /**
      * Guckt, ob eine Liste aus PoweredRolling einen Zug mti der ID beinhaltet
      * @param list zu überpfüfendes ELemnt von Iterable
      * @param id zu suchende String ID

@@ -105,20 +105,36 @@ public class SetTrain implements Comparable<SetTrain>{
      * @throw wird nicht geworfen 
      */
     public boolean move(boolean forwards) throws LogicalException { //TODO backwards driving
-        if(position.equals(rail.getEndInDirection(direction))) {
-            try {
-                rail = rail.getNextInDirection(direction);
-            } catch (IllegalInputException e) {
-                throw new LogicalException("dont know whjat happened");
+        if (forwards) {
+            if (position.equals(rail.getEndInDirection(direction))) {
+                try {
+                    rail = rail.getNextInDirection(direction);
+                } catch (IllegalInputException e) {
+                    throw new LogicalException("dont know whjat happened");
+                }
+                if (rail == null || !rail.isSetCorrectly(position)) {
+                    model.setInUse(false);
+                    return false;
+                }
+                direction = rail.getDirectionFrom(position);
             }
-            if(rail == null || !rail.isSetCorrectly(position)) {
-                model.setInUse(false);
-                return false;
+            position = position.add(direction);
+        } else {
+            if (position.equals(rail.getEndInDirection(direction.getInverseDirection()))) {
+                try {
+                    rail = rail.getNextInDirection(direction.getInverseDirection());
+                } catch (IllegalInputException e) {
+                    throw new LogicalException("dont know whjat happened");
+                }
+                if (rail == null || !rail.isSetCorrectly(position)) {
+                    model.setInUse(false);
+                    return false;
+                }
+                direction = rail.getDirectionFrom(position).getInverseDirection();
             }
-            direction = rail.getDirectionFrom(position);
+            position = position.add(direction.getInverseDirection());
         }
-        position = position.add(direction);
-//        marcKnodesoccupied();
+        
         return true;
     }
     
@@ -127,10 +143,11 @@ public class SetTrain implements Comparable<SetTrain>{
 //        i -= this.rail.getSpaceLeftBehind(getPosition(), direction);
 //        Rail current = rail;
 //        Vertex end = current.getEndInDirection(direction.getInverseDirection());
-//        Rail next = current.getNextInDirection(direction.getInverseDirection());
+//        current = current.getNextInDirection(direction.getInverseDirection());
 //        while(i >= 0) {
+//            if(end.equals(vertex))
 //            if(i == 0) {
-//                
+//                return end;
 //            }
 //            current = next;
 //            next = current.getNextInDirection(current.getDirectionFrom(end));
@@ -138,12 +155,13 @@ public class SetTrain implements Comparable<SetTrain>{
 //            i -= next.getLength();
 //            
 //        }
+//        return null;
 //    }
 
     
     @Override
     public int compareTo(SetTrain o) {
-        return o.getId() - this.getId();
+        return this.getId() - o.getId();
     }
     
 }

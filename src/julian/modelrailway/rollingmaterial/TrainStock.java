@@ -43,11 +43,11 @@ public class TrainStock {
             throw new LogicalException("rolling material is used.");
         }
         if(trains.containsKey(trainID)) {
-            if(!trains.get(trainID).inUse()) {
-                    return trains.get(trainID).add(r);
-            } else {
-                throw new LogicalException("train on track.");
-            }
+            Train t = trains.get(trainID);
+            if(t.inUse()) {
+                throw new LogicalException("train on track.");    
+            } 
+            return t.add(r);
         } else {
             for(int i = trainID - 1; i > 0; i--) {
                 if(!trains.containsKey(i)) {

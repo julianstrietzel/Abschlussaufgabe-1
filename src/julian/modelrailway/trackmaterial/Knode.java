@@ -24,8 +24,10 @@ public class Knode extends Vertex {
      * @param railIn eingehende Verbindung
      */
     public Knode(int xcoord, int ycoord, Rail railIn) {
+    
         super(xcoord, ycoord);
         this.railIn = railIn;
+        trains = new LinkedList<SetTrain>();
     }
 
     /**
@@ -38,6 +40,7 @@ public class Knode extends Vertex {
     public Knode(Vertex pos, Rail railIn) {
         super(pos.getXcoord(), pos.getYcoord());
         this.railIn = railIn;
+        trains = new LinkedList<SetTrain>();
     }
 
     /**

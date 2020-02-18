@@ -4,6 +4,7 @@
  */
 package julian.modelrailway.rollingmaterial;
 
+
 public abstract class Coach extends RollingMaterial {
 
     private final int id;
@@ -34,6 +35,11 @@ public abstract class Coach extends RollingMaterial {
             return w.getID() == getID();
         }
         return false;
+    }
+    
+    @Override
+    public String getLeerzeile() {
+        return "                    ";
     }
 
     @Override

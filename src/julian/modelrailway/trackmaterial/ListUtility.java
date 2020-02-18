@@ -47,13 +47,13 @@ public abstract class ListUtility {
      * @param object
      * @return
      */
-    public static boolean contains(LinkedList<Knode> list, Vertex object) {
+    public static Knode contains(LinkedList<Knode> list, Vertex object) {
         for (Knode obj : list) {
             if (obj.equals(object)) {
-                return true;
+                return obj;
             }
         }
-        return false;
+        return null;
     }
 
     /**

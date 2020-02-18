@@ -240,6 +240,28 @@ public class Switch extends Rail{
     }
     
     @Override
+    public void deleteConnections(LinkedList<Knode> knodes) {
+        Knode endKTwo = ListUtility.contains(knodes, endTwo);
+        endKTwo.deconnect(this);
+        if(endKTwo.isUseless()) {
+            knodes.remove(endKTwo);
+        }
+        super.deleteConnections(knodes);
+        if(nextTwo != null) {
+            getNextTwo().deleteConnectionsTo(this);
+        }
+    }
+    
+    @Override
+    protected void deleteConnectionsTo(Rail r) {
+        if(r.equals(nextTwo)) {
+            nextTwo = null;
+        }
+
+        super.deleteConnectionsTo(r);
+    }
+    
+    @Override
     public LinkedList<Rail> getConnected(Rail notThisOne) {
         LinkedList<Rail> list = new LinkedList<Rail>();
         list.add(getNext());

@@ -220,6 +220,7 @@ public class Railsystem {
         if (access < 2) { // wenn eine schiene nur einen Anschluss hat, dann kann sie ohne Bedenken
             rails.remove(delRail);
             switches.remove(delRail);
+            delRail.deleteConnections(knodes);
             return;
         }
         LinkedList<Rail> notUse = new LinkedList<Rail>();
@@ -228,6 +229,7 @@ public class Railsystem {
         if (thereIsAWayWithout(notUse, delRail.getNext(), delRail.getPrevious(), delRail)) {
             rails.remove(delRail);
             switches.remove(delRail);
+            delRail.deleteConnections(knodes);
         } else {
             throw new LogicalException("track is necessary.");
         }
@@ -342,9 +344,7 @@ public class Railsystem {
      * @throws LogicalException, wenn einer der benötigten Schienen besetzt ist
      * @throws IllegalInputException 
      */
-    public String putTrain(SetTrain train) throws LogicalException, IllegalInputException {
-        Vertex pos = train.getPosition();
-        DirectionalVertex direc = train.getDirection();
+    public String putTrain(SetTrain train, DirectionalVertex direc, Vertex pos) throws LogicalException, IllegalInputException {
         Rail track = findTrack(pos, direc);
         if(track == null) {
             throw new LogicalException("wrong placement");
@@ -352,12 +352,13 @@ public class Railsystem {
         if (track.isOccupied()) {
             throw new LogicalException("track occupied.");
         }
-        if (markBackOccupied(train, pos, direc, track, true)) {
+        if(ListUtility.contains(knodes, pos) != null) {
+            train.setDirection(track.getDirectionTo(pos)); //Auch wenn an Ecke gesetzt muss die richtige richtung eingespeihcer sein
+        }
+        if (markBackOccupied(train, train.getPosition(), train.getDirection(), track, true)) {
             throw new LogicalException("tracks behind occupied.");
         } else {
             trainsOnTrack.add(train);
-            train.setPosition(pos);
-            train.setDirection(direc);
         }
         return "" + train.getId();
 
@@ -488,7 +489,11 @@ public class Railsystem {
     public Rail findTrack(Vertex pos, DirectionalVertex direc) throws LogicalException, IllegalInputException {
         for (Knode knode : knodes) {
             if (knode.equals(pos)) {
-                return knode.getTrack(direc);
+                Rail r = knode.getTrack(direc);
+                if ( r== null) {
+                    throw new LogicalException("no fitting Track existing.");
+                }
+                return r;
             }
         }
         for (Rail rail : rails) {

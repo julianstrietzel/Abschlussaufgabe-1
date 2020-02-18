@@ -50,6 +50,9 @@ public class Vertex {
      * @return ob gleiche Koordinaten
      */
     public boolean equals(Vertex vertex) {
+        if (vertex == null) {
+            return false;
+        }
         return (vertex.getXcoord() == this.xcoord) && (vertex.getYcoord() == this.ycoord);
     }
     

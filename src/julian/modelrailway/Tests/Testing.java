@@ -6,6 +6,7 @@ package julian.modelrailway.Tests;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import julian.modelrailway.ModelRailWay;
@@ -16,10 +17,10 @@ public class Testing {
     ModelRailWay m = new ModelRailWay();
 UserInterface ui = new UserInterface(m);
 
-//    @Before
-//    public void Reset () {
-//        ui = new
-//    }
+    @Before
+    public void Reset () {
+        m = new ModelRailWay();
+    }
 
     public void Beispielablauf() {
         e("list trains");
@@ -56,15 +57,18 @@ UserInterface ui = new UserInterface(m);
         
     }
     
-    public void e(String command) {
+    private void e(String command) {
         ui.executeCommand(command);
     }
     
+    
+    
     @Test
-    public void TestAddTracks() throws InterruptedException {
+    public void trainandMovement() throws InterruptedException {
         
-        e("add track (0,0) -> (0,-10)");
+        e("add track (0,0) -> (10,0)");
         e("add track (0,0) -> (0,10)");
+        System.out.println( m.getRailSystem().getKnodes());
 //        e("add track (0,1) -> (0,3)");
 //        e("add track (0,3) -> (2,3)");
 //        e("add track (0,3) -> (-1,3)"); //F
@@ -97,21 +101,38 @@ UserInterface ui = new UserInterface(m);
         e("add train 1 W1");
         e("add train 1 W2");
         e("add train 1 W3");
-        e("add train 1 W4");
-        e("add train 1 W5");
-        e("add train 1 119-121");
-        e("add train 2 118-118");
-        e("add train 2 118-119");
+//        e("add train 1 W4");
+//        e("add train 1 W5");
+//        e("add train 1 119-121");
+//        e("add train 2 118-118");
+//        e("add train 2 118-119");
         
 //        e("list trains");
         e("show train 1");
-        e("show train 2");
-//        e("put train 1 at (0,2) in direction 0,-1");
+        e("list trains");
+        e("put train 1 at (0,0) in direction 1,0");
 //
-//        for(int i = 0; i < 8; i++) {
-//            e("step 1");
-//            e("step 1");
-//        }
+        for(int i = 0; i < 8; i++) {
+            e("step 1");
+            e("step 1");
+        }
+        e("step 1");
+        
+        e("step 2");
+        e("step 1");
+        
+        
+        
+    }
+    
+    @Test
+    public void testingRailSystem() {
+        e("add track (0,0) -> (10,0)");
+        e("add track (0,0) -> (0,10)");
+        e("add track (10,10) -> (10,0)");
+        e("add track (10,10) -> (0,10)");
+        e("list tracks");
+       System.out.println( m.getRailSystem().getKnodes());
         
     }
 

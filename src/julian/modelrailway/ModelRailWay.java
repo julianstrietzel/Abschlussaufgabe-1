@@ -73,7 +73,8 @@ public class ModelRailWay {
         if(!model.hasPower()) {
             throw new LogicalException("train has no power.");
         }
-        rSystem.putTrain(new SetTrain(model, direction, pos));
+        rSystem.putTrain(new SetTrain(model, direction, pos), direction, pos);
+        model.setInUse(true);
         return "OK";
         
     }

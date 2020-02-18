@@ -126,7 +126,7 @@ public class Rail {
      */
     public DirectionalVertex getSetDirection() {
         return direction;
-    }
+    } 
     
     /**
      * 
@@ -206,7 +206,20 @@ public class Rail {
      * @return
      */
     public DirectionalVertex getDirectionFrom(Vertex point) {
-        if(point.equals(this.start)) {
+        if(this.start.equals(point)) {
+            return this.direction;
+        } else {
+            return this.direction.getInverseDirection();
+        }
+    }
+    
+    /**
+     * Gibt die Richtungan um nach point zu kommen.
+     * @param point Zielpunkt
+     * @return Richtung zum Zielpunkt
+     */
+    public DirectionalVertex getDirectionTo(Vertex point) {
+        if(this.end.equals(point)) {
             return this.direction;
         } else {
             return this.direction.getInverseDirection();
@@ -348,6 +361,42 @@ public class Rail {
      */
     public boolean isCorrectDirec(DirectionalVertex direc) {
         return direc.compatibleDirection(getSetDirection());
+    }
+    
+    /**
+     * Löscht die Schiene aus allen verbundenen Knoten und Gleisen
+     * @param knodes
+     */
+    public void deleteConnections(LinkedList<Knode> knodes) {
+        Knode endK = ListUtility.contains(knodes, end);
+        endK.deconnect(this);
+        if(endK.isUseless()) {
+            knodes.remove(endK);
+        }
+        Knode startK = ListUtility.contains(knodes, start);
+        startK.deconnect(this);
+        if(startK.isUseless()) {
+            knodes.remove(startK);
+        }
+        if(next != null) {
+            getNext().deleteConnectionsTo(this);
+        }
+        if(previous != null) {
+            getPrevious().deleteConnectionsTo(this);
+        }
+    }
+    
+    /**
+     * Löscht alle Verbindungen zur Übergebenen Schiene
+     * @param r Schiene zu der Verbindungen gelöscht werden sollen
+     */
+    protected void deleteConnectionsTo(Rail r) {
+        if(r.equals(next)) {
+            next = null;
+        }
+        if(r.equals(previous)) {
+            previous = null;
+        }
     }
     
     /**

@@ -7,6 +7,7 @@ package julian.modelrailway.trackmaterial;
 import java.util.LinkedList;
 
 import julian.modelrailway.Exceptions.IllegalInputException;
+import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.rollingmaterial.SetTrain;
 
 public class Knode extends Vertex {
@@ -98,7 +99,25 @@ public class Knode extends Vertex {
     public boolean hasTrain() {
         return !trains.isEmpty();
     }
+    
+    public void deconnect(Rail r) {
+        if(r.equals(railIn)) {
+            railIn = railOut;
+            railOut = null;
+        }
+        if(r.equals(railOut)) {
+            railOut = null;
+        }
+    }
 
+    /**
+     * 
+     * @return true, wenn keine Verbindungen mehr existieren
+     */
+    public boolean isUseless() {
+        return railIn == null && railOut == null;
+    }
+    
     /**
      * 
      * @param railone nciht interessierende Schiene
@@ -119,32 +138,32 @@ public class Knode extends Vertex {
      * @return gesuchter Trakc, bei entsprechneder Richtung, oder null, falls nicht
      *         kompatibel
      * @throws IllegalInputException 
+     * @throws LogicalException 
      */
-    public Rail getTrack(DirectionalVertex direc) throws IllegalInputException {
-        try {
-            if (railIn.getEndInDirection(direc).equals(this)) {
-                return railIn;
-            }
-
-            try {
-                if (railOut.getEndInDirection(direc.getInverseDirection()).equals(this)) {
+    public Rail getTrack(DirectionalVertex direc) throws LogicalException {
+        
+            if (railIn != null) {
+                if (this.equals(railIn.getEndInDirection(direc))) {
                     return railIn;
                 }
-            } catch (NullPointerException e) {
-            }
-            if (!isFree()) {
-                try {
-                    if (railOut.getEndInDirection(direc).equals(this)
-                            || railIn.getEndInDirection(direc.getInverseDirection()).equals(this)) {
+                if (direc.compatibleDirection(railIn.getSetDirection())) {
+                    if (railOut != null) {
                         return railOut;
                     }
-                } catch (NullPointerException ex) {
-
-                }
+                    throw new LogicalException("no fitting Track existing.");
+                } 
             }
-            return null;
-        } catch (NullPointerException e) {
-            throw new IllegalInputException("wrong direction or Position");
-        }
+            if (railOut != null) {
+                if (this.equals(railOut.getEndInDirection(direc))) {
+                    return railOut;
+                }
+                if (direc.compatibleDirection(railOut.getSetDirection())) {
+                    if (railIn != null) {
+                        return railIn;
+                    }
+                    throw new LogicalException("no fitting Track existing.");
+                } 
+            }
+            throw new LogicalException("no fitting Track existing.");        
     }
 }

@@ -13,7 +13,6 @@ import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.rollingmaterial.DieselLocomotive;
 import julian.modelrailway.rollingmaterial.FreightCar;
 import julian.modelrailway.rollingmaterial.PassengerWagon;
-import julian.modelrailway.rollingmaterial.RollingMaterial;
 import julian.modelrailway.rollingmaterial.Train;
 
 public class TrainTest {

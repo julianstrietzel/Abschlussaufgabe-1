@@ -41,6 +41,7 @@ public abstract class Event implements Comparable<Event>{
      * @return Alle beteiligten Züge.
      */
     public LinkedList<SetTrain> getInvolved() {
+        involved.sort(null);
         return involved;
     }
   
@@ -72,7 +73,7 @@ public abstract class Event implements Comparable<Event>{
 
    @Override 
     public int compareTo(Event e) {
-        return e.involved.getFirst().compareTo(involved.getFirst());
+        return getInvolved().getFirst().compareTo(e.getInvolved().getFirst());
     }
     
 }

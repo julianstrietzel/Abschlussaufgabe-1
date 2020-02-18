@@ -213,10 +213,16 @@ public class Switch extends Rail{
     
     @Override
     public void connectEasy(Rail newRail, Vertex point) throws LogicalException {
-        super.connectEasy(newRail, point);
-        if(point.equals(this.endTwo)) {
-            this.nextTwo = newRail;
+        try {
+            super.connectEasy(newRail, point);
+        } catch (LogicalException e) {
+            if(point.equals(this.endTwo)) {
+                this.nextTwo = newRail;
+                return;
+            }
+            throw e;
         }
+        
         
     }
     

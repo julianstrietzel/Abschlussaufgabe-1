@@ -1,29 +1,40 @@
 /**
- * 
+ * Probably marginal changes needed.
  * @author Julian Strietzel
  */
 package julian.modelrailway.Tests;
-
-import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.UserInterface;
-import julian.modelrailway.rollingmaterial.RollingMaterialComparator;
 
 public class Testing {
-    ModelRailWay m = new ModelRailWay();
-UserInterface ui = new UserInterface(m);
+ModelRailWay m;
+UserInterface ui;
 
+    /**
+     * Resets before every Test
+     */
     @Before
     public void Reset () {
         m = new ModelRailWay();
+        ui = new UserInterface(m);
     }
-
+    /**
+     * Helper Method, to simplify writing tests.
+     * @param command
+     */
+    private void e(String command) {
+        ui.executeCommand(command);
+    }
+    
+    /**
+     * Example Commands from Sheet
+     */
+    @Test
     public void Beispielablauf() {
-        e("list trains");
         e("add track (1,1) -> (5,1)");
         e("add track (10,10) -> (10,11)");
         e("list tracks");
@@ -40,12 +51,10 @@ UserInterface ui = new UserInterface(m);
         e("create engine steam T3 Emma 1 false true");
         e("list engines");
         e("create engine electrical 103 118 3 true true");
-        System.out.println("new Side");
         e("list engines");
         e("delete rolling stock 3");
         e("delete rolling stock 103-118");
         e("create coach passenger 1 true true");
-        System.out.println("create coach passenger 1 true true");
         e("create coach passenger 1 true true");
         e("list coaches");
         e("add train 1 W1");
@@ -54,15 +63,30 @@ UserInterface ui = new UserInterface(m);
         e("delete train 1");
         e("list trains");
         e("add train 1 T3-Emma");
+        e("add train 1 W1");
+        e("add train 1 W2");
+        e("list trains");
+        e("show train 01");
+        e("list engines");
+        e("create train-set 403 145 4 true true");
+        e("add train 2 403-145");
+        e("set switch 4 position (10,1)");
+        e("step 1");
+        e("set switch 2 position (8,1)");
+        e("set switch 9 position (12,-3)");
+        e("step 1");
+        e("put train 1 at (1,1) in direction 1,0");
+        e("put train 2 at (10,-2) in direction 0,1");
+        e("step 2");
+        e("step -2");
+        e("step 2");
+        e("step 3");
+        e("step 1");
+        e("put train 1 at (1,1) in direction 0,-1");
+        e("exit");
         
     }
-    
-    private void e(String command) {
-        ui.executeCommand(command);
-    }
-    
-    
-    
+
     @Test
     public void trainandMovement() throws InterruptedException {
         

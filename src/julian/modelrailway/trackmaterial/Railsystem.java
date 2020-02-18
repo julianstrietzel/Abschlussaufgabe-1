@@ -113,13 +113,14 @@ public class Railsystem {
                     newSw.setNextTwo(knode.getRailIn());
                 }
             }
-            if (!knodes.contains(newSw.getStart())) {
+            
+            if (ListUtility.contains(knodes, newSw.getStart()) == null) {
                 knodes.add(new Knode(newSw.getStart(), newSw));
             }
-            if (!knodes.contains(newSw.getEnd())) {
+            if (ListUtility.contains(knodes, newSw.getEnd()) == null) {
                 knodes.add(new Knode(newSw.getEnd(), newSw));
             }
-            if (!knodes.contains(newSw.getEndTwo())) {
+            if (ListUtility.contains(knodes, newSw.getEndTwo()) == null) {
                 knodes.add(new Knode(newSw.getEndTwo(), newSw));
             }
         } else {
@@ -412,7 +413,7 @@ public class Railsystem {
      * @throws LogicalException
      * @throws IllegalInputException 
      */
-    public void move(boolean forwards) throws LogicalException, IllegalInputException { // TODO backwards driving
+    public void move(boolean forwards) throws LogicalException, IllegalInputException {
         resetOccupied();
         for (SetTrain train : trainsOnTrack) {
             
@@ -484,9 +485,8 @@ public class Railsystem {
      * @param direc Richtung
      * @return gefunde Schiene
      * @throws LogicalException, wenn Schiene nicht existiert
-     * @throws IllegalInputException, wenn Track nicht da
      */
-    public Rail findTrack(Vertex pos, DirectionalVertex direc) throws LogicalException, IllegalInputException {
+    public Rail findTrack(Vertex pos, DirectionalVertex direc) throws LogicalException {
         for (Knode knode : knodes) {
             if (knode.equals(pos)) {
                 Rail r = knode.getTrack(direc);
@@ -511,6 +511,7 @@ public class Railsystem {
      * @throws IllegalInputException, wenn Point is not an End of the Switch
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException {
+       
         for (Switch s : switches) {
             if (id == s.getId()) {
                 s.setSwitch(point);

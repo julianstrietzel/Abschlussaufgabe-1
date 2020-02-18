@@ -55,7 +55,7 @@ public class TrainStock {
                 }
             }
             trains.put(trainID, new Train(r, trainID));
-            return r.getTypeForAdding() + " " + r.getStringID() + " added to " + trainID;
+            return r.getTypeForAdding() + " " + r.getWStringID() + " added to train " + trainID;
         }
     }
     
@@ -87,7 +87,7 @@ public class TrainStock {
     @Override
     public String toString() {
         if(trains.isEmpty()) {
-            return "";
+            return "No train exists";
         }
         StringBuilder sb = new StringBuilder();
         int f = 0;

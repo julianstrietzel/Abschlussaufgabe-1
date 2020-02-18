@@ -6,20 +6,13 @@ package julian.modelrailway.Tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.kit.informatik.Terminal;
 import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.UserInterface;
-import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.rollingmaterial.DieselLocomotive;
 import julian.modelrailway.rollingmaterial.Engine;
 import julian.modelrailway.rollingmaterial.PoweredRolling;
-import julian.modelrailway.trackmaterial.DirectionalVertex;
-import julian.modelrailway.trackmaterial.ListUtility;
-import julian.modelrailway.trackmaterial.Rail;
-import julian.modelrailway.trackmaterial.Vertex;
 
 public class UserInterfaceTest {
     ModelRailWay model = new ModelRailWay();

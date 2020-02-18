@@ -38,7 +38,7 @@ private static final String REGEX = "set switch (\\d+) position \\(([-+]?\\d+),(
             model.getRailSystem().setSwitch(id, new Vertex(xcoord, ycoord));
             Terminal.printLine("OK");
         } catch (IllegalInputException e) {
-            Terminal.printLine(e.getMessage());
+            Terminal.printError(e.getMessage());
         }
     }
 

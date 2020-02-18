@@ -48,6 +48,7 @@ UserInterface ui;
         e("add track (10,3) -> (12,3)");
         e("add switch (12,3) -> (12,-3),(14,3)");
         e("add track (14,-1) -> (14,3)");
+//        e("list tracks");
         e("create engine steam T3 Emma 1 false true");
         e("list engines");
         e("create engine electrical 103 118 3 true true");
@@ -87,7 +88,7 @@ UserInterface ui;
         
     }
 
-    @Test
+//    @Test
     public void trainandMovement() throws InterruptedException {
         
         e("add track (0,0) -> (10,0)");
@@ -149,7 +150,7 @@ UserInterface ui;
         
     }
     
-    @Test
+//    @Test
     public void testingRailSystem() {
         e("add track (0,0) -> (10,0)");
         e("add track (0,0) -> (0,10)");

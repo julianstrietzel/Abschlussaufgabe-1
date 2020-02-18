@@ -57,7 +57,7 @@ public class Train {
         }
         newWagon.concat(this);
         wagons.add(newWagon);
-        return newWagon.getTypeForAdding() + " " + newWagon.getStringID() + " added to " + getID();
+        return newWagon.getTypeForAdding() + " " + newWagon.getWStringID() + " added to " + getID();
     }
 
     /**

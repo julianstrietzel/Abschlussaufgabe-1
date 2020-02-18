@@ -7,6 +7,7 @@ package julian.modelrailway.events;
 import java.util.LinkedList;
 
 import julian.modelrailway.rollingmaterial.SetTrain;
+import julian.modelrailway.trackmaterial.ListUtility;
 
 public class Crash extends Event implements Comparable<Event>{
 
@@ -32,6 +33,7 @@ public class Crash extends Event implements Comparable<Event>{
     @Override 
     public String getMessage() {
         String output = "Crash of train ";
+        involved = ListUtility.deleteDuplicates(involved);
         for(SetTrain tr: involved) {
             output += tr.getId() + ",";
         }

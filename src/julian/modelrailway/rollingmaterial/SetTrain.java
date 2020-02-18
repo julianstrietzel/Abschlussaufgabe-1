@@ -7,25 +7,27 @@ package julian.modelrailway.rollingmaterial;
 import julian.modelrailway.Exceptions.*;
 import julian.modelrailway.trackmaterial.*;
 
-public class SetTrain implements Comparable<SetTrain>{
+public class SetTrain implements Comparable<SetTrain> {
 
     private DirectionalVertex direction;
     private Vertex position;
     private Rail rail;
     private final Train model;
-    
+
     /**
-     * Setzt einen neuen Zug nach einem Model auf Position und in bestimmter Richtung.
-     * @param model Model des Zuges
-     * @param initDdirection    Initialrichtung des Zuges
-     * @param pos   Initiale Position des Zuges
+     * Setzt einen neuen Zug nach einem Model auf Position und in bestimmter
+     * Richtung.
+     * 
+     * @param model          Model des Zuges
+     * @param initDdirection Initialrichtung des Zuges
+     * @param pos            Initiale Position des Zuges
      */
     public SetTrain(Train model, DirectionalVertex initDdirection, Vertex pos) {
         this.model = model;
         this.position = pos;
-        this.direction = initDdirection;    
+        this.direction = initDdirection;
     }
-    
+
     /**
      * 
      * @return die Richtung des Zuges
@@ -44,6 +46,7 @@ public class SetTrain implements Comparable<SetTrain>{
 
     /**
      * Setzt die Richtung des Zuges
+     * 
      * @param direction neue Richtung des Zuges
      */
     public void setDirection(DirectionalVertex direction) {
@@ -92,6 +95,7 @@ public class SetTrain implements Comparable<SetTrain>{
 
     /**
      * Setzt die aktuelle Schiene
+     * 
      * @param rail neue Schiene
      */
     public void setRail(Rail rail) {
@@ -100,11 +104,13 @@ public class SetTrain implements Comparable<SetTrain>{
 
     /**
      * Bewegt den Zug um einen Schritt
+     * 
      * @param forwards Richtung des Zuges
-     * @return  Boolean ob erfolgreich
-     * @throw wird nicht geworfen 
+     * @return Boolean ob erfolgreich
+     * @throws IllegalInputException
+     * @throw wird nicht geworfen
      */
-    public boolean move(boolean forwards) throws LogicalException { //TODO backwards driving
+    public boolean move(boolean forwards) throws LogicalException, IllegalInputException { // TODO backwards driving
         if (forwards) {
             if (position.equals(rail.getEndInDirection(direction))) {
                 try {
@@ -121,47 +127,29 @@ public class SetTrain implements Comparable<SetTrain>{
             position = position.add(direction);
         } else {
             if (position.equals(rail.getEndInDirection(direction.getInverseDirection()))) {
-                try {
-                    rail = rail.getNextInDirection(direction.getInverseDirection());
-                } catch (IllegalInputException e) {
-                    throw new LogicalException("dont know whjat happened");
-                }
+
+                rail = rail.getNextInDirection(direction.getInverseDirection());
+
                 if (rail == null || !rail.isSetCorrectly(position)) {
                     model.setInUse(false);
                     return false;
                 }
                 direction = rail.getDirectionFrom(position).getInverseDirection();
             }
+
             position = position.add(direction.getInverseDirection());
+            if (position.equals(rail.getEndInDirection(direction.getInverseDirection()))) {
+                rail.getTrains().remove(this);
+                rail = rail.getNextInDirection(direction.getInverseDirection());
+                direction = rail.getDirectionFrom(position).getInverseDirection();
+            }
         }
-        
         return true;
     }
-    
-//    private Vertex getLastPos() throws IllegalInputException {
-//        int i = this.getLength();
-//        i -= this.rail.getSpaceLeftBehind(getPosition(), direction);
-//        Rail current = rail;
-//        Vertex end = current.getEndInDirection(direction.getInverseDirection());
-//        current = current.getNextInDirection(direction.getInverseDirection());
-//        while(i >= 0) {
-//            if(end.equals(vertex))
-//            if(i == 0) {
-//                return end;
-//            }
-//            current = next;
-//            next = current.getNextInDirection(current.getDirectionFrom(end));
-//            end = current.getEndInDirection(current.getDirectionFrom(end));
-//            i -= next.getLength();
-//            
-//        }
-//        return null;
-//    }
 
-    
     @Override
     public int compareTo(SetTrain o) {
         return this.getId() - o.getId();
     }
-    
+
 }

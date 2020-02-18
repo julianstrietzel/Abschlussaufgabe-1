@@ -101,6 +101,11 @@ public class ModelRailWay {
                 sb.append(e.getMessage());
                 sb.append("\n");
             }
+            rSystem.resetMarkersAndCrashes();
+            for(SetTrain train: rSystem.getTrainsOnTrack()) {
+                    rSystem.markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
+                
+           }
             return sb.substring(0, sb.length() - 1).toString();
         
     }

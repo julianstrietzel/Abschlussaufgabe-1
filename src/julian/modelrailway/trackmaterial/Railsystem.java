@@ -23,7 +23,7 @@ public class Railsystem {
         switches = new LinkedList<Switch>();
         trainsOnTrack = new LinkedList<SetTrain>();
         crashes = new LinkedList<Crash>();
-        resetOccupied();
+        resetMarkersAndCrashes();
     }
 
     /**
@@ -414,7 +414,7 @@ public class Railsystem {
      * @throws IllegalInputException 
      */
     public void move(boolean forwards) throws LogicalException, IllegalInputException {
-        resetOccupied();
+        resetMarkersAndCrashes();
         for (SetTrain train : trainsOnTrack) {
             
             if (!train.move(forwards)) {
@@ -432,8 +432,9 @@ public class Railsystem {
     /**
      * sucht nach Collisionen im Schienennetz und fügt diese der Liste an Crashes
      * hinzu.
+     * @throws IllegalInputException 
      */
-    public void checkCollision() {
+    public void checkCollision() throws IllegalInputException {
         for(Rail r: rails) {
             if (r.getTrains().size() > 1) {
                 crashes.add(new Crash(r.getTrains(), "crash"));
@@ -452,6 +453,7 @@ public class Railsystem {
                 } 
             }
         }
+        
     }
 
     /**
@@ -471,11 +473,13 @@ public class Railsystem {
     /**
      * resetted alle Crashes und belegten Schienen
      */
-    public void resetOccupied() {
+    public void resetMarkersAndCrashes() {
         for (Rail rail : rails) {
             rail.getTrains().clear();
         }
-//        occupiedRails.clear();
+        for (Knode kn : knodes) {
+            kn.getTrains().clear();
+        }
         crashes.clear();
     }
 

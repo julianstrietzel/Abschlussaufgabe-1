@@ -26,7 +26,7 @@ private static final String REGEX = "delete train (\\d+)";
         try {
             Terminal.printLine(model.deleteTrain(Integer.parseInt(getMatcher(command).group(1))));;
         } catch (LogicalException e) {
-            Terminal.printLine(e.getMessage());
+            Terminal.printError(e.getMessage());
         }
     }
 

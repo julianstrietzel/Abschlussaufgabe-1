@@ -13,7 +13,7 @@ public class UserInterface {
 
     private final LinkedList<Command> commands = new LinkedList<Command>();
     private Command lastFoundCommand;
-    private Command fail;
+    private final Command fail;
 
     /**
      * Erstellt ein Interface mit allen Befehlen

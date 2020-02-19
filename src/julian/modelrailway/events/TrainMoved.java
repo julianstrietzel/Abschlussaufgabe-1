@@ -12,15 +12,14 @@ public class TrainMoved extends Event implements Comparable<Event>{
     /**
      * Erstellt eine neue erfolgreiche Bewegung eines Zuges als Event.
      * @param invol betroffener Zug
-     * @param message Beschreibung
      */
-    public TrainMoved(SetTrain invol, String message) {
-        super(invol, message);
+    public TrainMoved(SetTrain invol) {
+        super(invol);
     }
     
     @Override 
     public String getMessage() {
-        return "Train " + involved.getFirst().getId() + " at " + involved.getFirst().getPosition().toString();
+        return "Train " + getInvolved().getFirst().getId() + " at " + getInvolved().getFirst().getPosition().toString();
     }
 
 }

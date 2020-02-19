@@ -20,11 +20,13 @@ public class ModelRailWay {
     private final TrainStock ts;
     private final RollingStock rstock;
 
+    /**
+     * Erstellt eine neue Modelleisenbahn mit allem, was dazu gehört.
+     */
     public ModelRailWay() {
         rSystem = new Railsystem2();
         rstock = new RollingStock();
         ts = new TrainStock(rstock);
-
     }
 
     /**
@@ -213,7 +215,7 @@ public class ModelRailWay {
             rSystem.move(Math.abs(speed) == speed);
         }
         for (SetTrain t : rSystem.getTrainsOnTrack()) {
-            events.add(new TrainMoved(t, ""));
+            events.add(new TrainMoved(t));
         }
         events.addAll(rSystem.getCrashes());
         events.sort(null);

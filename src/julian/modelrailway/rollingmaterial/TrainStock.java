@@ -11,7 +11,6 @@ import julian.modelrailway.Exceptions.LogicalException;
 public class TrainStock {
 
     private final HashMap<Integer, Train> trains;
-//    private final ModelRailWay model;
     private final RollingStock rStock;
     
     /**
@@ -20,13 +19,8 @@ public class TrainStock {
      */
     public TrainStock(RollingStock rStock) {
         this.rStock = rStock;
-//        this.model = model;
         trains = new HashMap<Integer, Train>();
     }
-    
-//    private RollingStock getRollStock() {
-//        return model.getRollStock();
-//    }
     
     /**
      * Erstellt einen neuen Zug oder hängt dem entsprechenden hinten ein RollmAterial an.

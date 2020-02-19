@@ -71,11 +71,6 @@ public class Vertex {
         return new DirectionalVertex(0,0);
     }
     
-    @Override
-    public Vertex clone() {
-        return new Vertex(xcoord, ycoord);
-    }
-    
     /**
      * Gibt die Distanz zwischen zwei Vektoren zurück, bei Vektoren, die horizontal oder vertikal voneienander liegen
      * @param vert anderer Vektor
@@ -88,5 +83,10 @@ public class Vertex {
     @Override
     public String toString() {
         return "(" + this.xcoord + "," + this.ycoord + ")";
+    }
+    
+    @Override
+    public Vertex clone() {
+        return new Vertex(xcoord, ycoord);
     }
 }

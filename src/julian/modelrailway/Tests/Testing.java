@@ -5,15 +5,19 @@
 package julian.modelrailway.Tests;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.UserInterface;
 
+
 public class Testing {
 ModelRailWay m;
 UserInterface ui;
 
+@Rule
+public final Systemout systemOutRule = new SystemOutRule().enableLog();
     /**
      * Resets before every Test
      */
@@ -38,6 +42,7 @@ UserInterface ui;
         System.out.println("EXAMPLE ABLAUF");
 //        e("create train-set 403 145 4 true true");
         e("add track (1,1) -> (5,1)");
+        assertEquals("hello world", systemOutRule.getLog());
         e("add track (10,10) -> (10,11)");
         e("list tracks");
         e("add switch (5,1) -> (8,1),(5,3)");

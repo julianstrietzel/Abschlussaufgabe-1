@@ -16,8 +16,8 @@ public class Crash extends Event implements Comparable<Event>{
      * @param invol beteiligter Zug
      * @param message Beschreibung des Events
      */
-    public Crash(SetTrain invol, String message) {
-        super(invol, message);
+    public Crash(SetTrain invol) {
+        super(invol);
     }
     
     /**
@@ -25,16 +25,16 @@ public class Crash extends Event implements Comparable<Event>{
      * @param invol alle involvierten Züge
      * @param message Beschriebung des Events.
      */
-    public Crash(LinkedList<SetTrain> invol, String message) {
-        super(invol, message);
-        involved.sort(null);
+    public Crash(LinkedList<SetTrain> invol) {
+        super(invol);
+        getInvolved().sort(null);
     }
     
     @Override 
     public String getMessage() {
         String output = "Crash of train ";
-        involved = ListUtility.deleteDuplicates(involved);
-        for(SetTrain tr: involved) {
+        setInvolved(ListUtility.deleteDuplicates(getInvolved()));
+        for(SetTrain tr: getInvolved()) {
             output += tr.getId() + ",";
         }
         output = (String) output.subSequence(0, output.length() - 1);

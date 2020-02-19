@@ -96,7 +96,7 @@ public class Railsystem2 {
             if (!train.move(forwards)) {
                 train.getModel().setInUse(false);
                 trainsOnTrack.remove(train);
-                crashes.add(new Crash(train, "rolled into outside"));
+                crashes.add(new Crash(train));
             } else {
                 railnet.markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
             }
@@ -114,7 +114,7 @@ public class Railsystem2 {
         for (Rail r : railnet.getRails()) {
             LinkedList<SetTrain> workTrains = ListUtility.deleteDuplicates(r.getTrains());
             if (workTrains.size() > 1) {
-                crashes.add(new Crash(r.getTrains(), "crash"));
+                crashes.add(new Crash(r.getTrains()));
                 for (SetTrain t : r.getTrains()) {
                     t.getModel().setInUse(false);
                     trainsOnTrack.remove(t);
@@ -124,7 +124,7 @@ public class Railsystem2 {
         for (Knode k : railnet.getKnodes()) {
             LinkedList<SetTrain> workTrains = ListUtility.deleteDuplicates(k.getTrains());
             if (workTrains.size() > 1) {
-                crashes.add(new Crash(k.getTrains(), "crash"));
+                crashes.add(new Crash(k.getTrains()));
                 for (SetTrain t : k.getTrains()) {
                     t.getModel().setInUse(false);
                     trainsOnTrack.remove(t);

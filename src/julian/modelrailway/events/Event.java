@@ -5,33 +5,29 @@
 package julian.modelrailway.events;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import julian.modelrailway.rollingmaterial.SetTrain;
 
 public abstract class Event implements Comparable<Event>{
 
-    protected LinkedList<SetTrain> involved;
-    protected final String message;
+    private final LinkedList<SetTrain> involved;
 
     /**
      * Erstellt ein neues Event mit dem gesetzten Zug invol.
      * @param invol beteiligter Zug
-     * @param message Beschreibung des Events
      */
-    public Event(SetTrain invol, String message) {
+    public Event(SetTrain invol) {
         involved = new LinkedList<SetTrain>();
-        this.message = message;
         involved.add(invol);
     }
     
     /**
      * Erstellt ein neues Event mit allen Zügen aus invol.
      * @param invol alle involvierten Züge
-     * @param message Beschriebung des Events.
      */
-    public Event(LinkedList<SetTrain> invol, String message) {
+    public Event(List<SetTrain> invol) {
         involved = new LinkedList<SetTrain>();
-        this.message = message;
         involved.addAll(invol);
         involved.sort(null);
     }
@@ -43,6 +39,15 @@ public abstract class Event implements Comparable<Event>{
     public LinkedList<SetTrain> getInvolved() {
         involved.sort(null);
         return involved;
+    }
+    
+    /**
+     * 
+     * @param newly ersetzt die aktuell involvierten Züge
+     */
+    protected void setInvolved(List<SetTrain> newly) {
+        involved.clear();
+        involved.addAll(newly);
     }
   
     /**
@@ -58,7 +63,7 @@ public abstract class Event implements Comparable<Event>{
 
     /**
      * 
-     * @return Die NAchricht des Events
+     * @return Die Nachricht des Events
      */
     public abstract String getMessage();
     
@@ -71,7 +76,7 @@ public abstract class Event implements Comparable<Event>{
         return involved.contains(t);
     }
 
-   @Override 
+    @Override 
     public int compareTo(Event e) {
         return getInvolved().getFirst().compareTo(e.getInvolved().getFirst());
     }

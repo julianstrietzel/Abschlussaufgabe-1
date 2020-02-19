@@ -109,7 +109,7 @@ public class RollingStock {
      */
     public String delete(boolean isPowered, String id) throws IllegalInputException, LogicalException {
         if (isPowered) {
-            PoweredRolling p = RollingMaterial.exists(powered, id); // TODO what happens, when Stock in Train
+            PoweredRolling p = RollingMaterial.exists(powered, id);
             if (p == null) {
                 throw new LogicalException("there is no powered stock with that id.");
             }

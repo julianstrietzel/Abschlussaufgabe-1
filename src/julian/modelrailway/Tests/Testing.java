@@ -88,13 +88,15 @@ UserInterface ui;
         e("step -2");
         e("step 2");
         e("step 3");
+//        e("set switch 2 position (5,3)");
+//        e("set switch 2 position (8,1)");
         e("step 1");
         e("put train 1 at (1,1) in direction 0,-1");
         e("exit");
         
     }
 
-    @Test
+//    @Test
     public void trainandMovement() throws InterruptedException {
         
         e("add track (0,0) -> (10,0)");
@@ -156,7 +158,7 @@ UserInterface ui;
         
     }
     
-    @Test
+//    @Test
     public void testingRailSystem() {
         e("add track (0,0) -> (10,0)");
         e("add track (0,0) -> (0,10)");
@@ -167,7 +169,7 @@ UserInterface ui;
         
     }
     
-    @Test
+//    @Test
     public void testinDeleteTracks() {
         
         e("add track (1,1) -> (5,1)");
@@ -179,15 +181,11 @@ UserInterface ui;
         e("add switch (10,-3) -> (10,1),(12,-3)");
         e("add track (5,3) -> (5,5)");
         e("list tracks");
-        e("delete track 1");
-        e("delete track 5");
-//        e("delete track 2");
+//        e("set s")
         
-        e("delete track 4");
-        e("delete track 3");
-        e("list tracks");
-        e("add track (10,1) -> (8,1)");
-        e("list tracks");
+        e("create engine steam T3 Emma 1 false true");
+        e("add train 1 T3-Emma");
+        e("put train 1 at (1,1) in direction 1,0");
     }
 
 }

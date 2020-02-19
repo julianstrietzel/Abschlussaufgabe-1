@@ -10,7 +10,9 @@ import edu.kit.informatik.Terminal;
 public class Main {
 
     /**
-     * Ruft mit dem Konsoleninput immer wieder das Userinterface auf, bis dieses den isExit Befehl zurück gibt.
+     * Ruft mit dem Konsoleninput immer wieder das Userinterface auf, bis dieses den
+     * isExit Befehl zurück gibt.
+     * 
      * @param args werden nicht verarbeitet
      */
     public static void main(String[] args) {

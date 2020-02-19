@@ -5,6 +5,7 @@
 package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
@@ -37,71 +38,6 @@ public class Rail implements Comparable<Rail>{
         this.direction = start.normedDirection(end);
         trains = new LinkedList<SetTrain>();
     }
-//  /**
-//  * Verbindet zwei Schienen miteinander
-//  * @param rail wird verbunden
-//  */
-// public void connect(Rail rail) {
-//     if(this.start.equals(rail.start)) {
-//         this.previous = rail;
-//         rail.previous = this;
-//     }
-//     if(this.end.equals(rail.end)) {
-//         this.next = rail;
-//         rail.next = this;
-//     }
-//     if(this.end.equals(rail.start)) {
-//         this.next = rail;
-//         rail.previous = this;
-//     }
-//     if(this.start.equals(rail.end)) {
-//         this.previous = rail;
-//         rail.next = this;
-//     }
-// }
-// 
-// /**
-//  * Verbindet eine Schiene mit einer Wecihe 
-//  * @param switch wird verbunden
-//  */
-// public void connect(Switch s) {
-//     if(this.start.equals(s.getStart())) {
-//         this.setPrevious(s);
-//         s.setPrevious(this);
-//     }
-//     if(this.start.equals(s.getEnd())) {
-//         this.setPrevious(s);
-//         s.setNext(this);
-//     }
-//     if(this.start.equals(s.getEndTwo())) {
-//         setPrevious(s);
-//         s.setNextTwo(this);
-//     }
-//     if(this.end.equals(s.getEnd())) {
-//         setNext(s);
-//         s.setNext(this);
-//     }
-//     if(this.end.equals(s.getStart())) {
-//         setNext(s);
-//         s.setPrevious(this);
-//     }
-//     if(this.end.equals(s.getEndTwo())) {
-//         setNext(s);
-//         s.setNextTwo(this);
-//     }
-// }
-    
-    /**
-     * Erstellt einen neuen Knoten am Ende oder Anfang dieser Schiene.
-     * @param start ob ANfang oder ende
-     * @return
-//     */
-//    public Knode createKnode(boolean start) {
-//        if(start) {
-//            return new Knode(this.start.getXcoord(), this.start.getYcoord(), this);
-//        }
-//        return new Knode(this.end.getXcoord(), this.end.getYcoord(), this);
-//    }
 
     /**
      * 
@@ -119,6 +55,13 @@ public class Rail implements Comparable<Rail>{
         return id;
     }
 
+    /**
+     * Setzt alle Züge auf dieser Schiene neu
+     */
+    public void setTrains(List<SetTrain> trains) {
+        this.trains.clear();
+        this.trains.addAll(trains);
+    }
    
     /**
      * 

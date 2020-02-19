@@ -31,8 +31,7 @@ private static final String REGEX = "delete track (\\d+)";
             } catch (NumberFormatException e1) {
                 throw new IllegalInputException("input needs to be an Integer.");
             }
-            model.deleteTrack(id);
-            Terminal.printLine("OK");
+            Terminal.printLine(model.deleteTrack(id));
         } catch (IllegalInputException | LogicalException e) {
             Terminal.printError(e.getMessage());
         }

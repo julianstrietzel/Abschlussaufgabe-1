@@ -16,12 +16,14 @@ public class RailNetwork {
     private final LinkedList<Rail> rails;
     private final LinkedList<Knode> knodes;
     private final LinkedList<Switch> switches;
+    private final Railsystem2 rSys;
 
     /**
      * 
      */
-    public RailNetwork() {
+    public RailNetwork(Railsystem2 rSys) {
         rails = new LinkedList<Rail>();
+        this.rSys = rSys;
         knodes = new LinkedList<Knode>();
         switches = new LinkedList<Switch>();
     }
@@ -62,10 +64,10 @@ public class RailNetwork {
 
         Switch newSw = new Switch(start, endOne, endTwo, getNextFreeID());
         if (ListUtility.contains(switches, newSw)) {
-            throw new LogicalException("track existing.");
+            throw new LogicalException("track existing");
         }
         if (newSw.getMinLength() == 0) {
-            throw new IllegalInputException("length needs to be not null.");
+            throw new IllegalInputException("length needs to be not null");
         }
 
         if (!rails.isEmpty()) {
@@ -184,6 +186,11 @@ public class RailNetwork {
         return rails.getLast().getId();
     }
 
+    /**
+     * Sucht für eine neue Schiene die nächste freie ID raus.
+     * 
+     * @return nächste freie ID
+     */
     private int getNextFreeID() {
         int i = 1;
         while (i > 0) {
@@ -206,13 +213,13 @@ public class RailNetwork {
      * Entfernt eine Schiene aus dem Netz, wenn diese nicht notwendig ist
      * 
      * @param id der Schiene
-     * @throws LogicalException, wenn Schiene notwendig
+     * @throws LogicalException, wenn Schiene notwendig oder besetzt
      */
     public void deleteTrack(int id) throws LogicalException {
         Rail dRail = getRailinSystem(id);
 
         if (dRail.isOccupied()) {
-            // TODO what happens to the train
+            throw new LogicalException("track occupied");
         }
         if (dRail.getConnected(null).size() < 2) {
             rails.remove(dRail);
@@ -222,11 +229,15 @@ public class RailNetwork {
         }
         LinkedList<Rail> notUse = new LinkedList<Rail>();
         notUse.add(dRail);
-        boolean sO;
+        boolean sO = true;
         boolean sT = true;
         if (dRail instanceof Switch) {
-            sO = wayWithout((List<Rail>) notUse.clone(), dRail.getNext(), dRail.getPrevious(), dRail);
-            sT = wayWithout((List<Rail>) notUse.clone(), ((Switch) dRail).getNextTwo(), dRail.getPrevious(), dRail);
+            if(((Switch) dRail).getNext() != null) {
+                sO = wayWithout((List<Rail>) notUse.clone(), dRail.getNext(), dRail.getPrevious(), dRail);
+            }
+            if(((Switch) dRail).getNextTwo() != null) {
+                sT = wayWithout((List<Rail>) notUse.clone(), ((Switch) dRail).getNextTwo(), dRail.getPrevious(), dRail);
+            }
         } else {
             sO = wayWithout((List<Rail>) notUse.clone(), dRail.getNext(), dRail.getPrevious(), dRail);
         }
@@ -235,7 +246,7 @@ public class RailNetwork {
             switches.remove(dRail);
             dRail.deleteConnections(knodes);
         } else {
-            throw new LogicalException("track is necessary.");
+            throw new LogicalException("track necessary");
         }
     }
 
@@ -280,7 +291,7 @@ public class RailNetwork {
                 return rail;
             }
         }
-        throw new LogicalException("track not existing");
+        throw new LogicalException("track not found");
     }
 
     /**
@@ -319,18 +330,18 @@ public class RailNetwork {
      * @param knodes Liste an Knoten, die zu überprüfen sind
      * @throws IllegalInputException, wenn einer der Knoten ncith im System ist
      */
-    private void checkFreeKnodes(List<Vertex> knodes) throws IllegalInputException {
+    private void checkFreeKnodes(List<Vertex> knodes) throws LogicalException {
         int freeKnodes = 0;
         for (Knode knode : this.knodes) {
             if (ListUtility.contains(knodes, knode)) {
                 freeKnodes++;
                 if (!knode.isFree()) {
-                    throw new IllegalInputException("knodes occupied.");
+                    throw new LogicalException("knodes occupied.");
                 }
             }
         }
         if (freeKnodes == 0) {
-            throw new IllegalInputException("knodes not connected.");
+            throw new LogicalException("knodes not connected.");
         }
     }
 
@@ -392,7 +403,7 @@ public class RailNetwork {
             if (knode.equals(pos)) {
                 Rail r = knode.getTrack(direc);
                 if (r == null) {
-                    throw new LogicalException("no fitting Track existing.");
+                    throw new LogicalException("track not found");
                 }
                 return r;
             }
@@ -402,7 +413,7 @@ public class RailNetwork {
                 return rail;
             }
         }
-        throw new LogicalException("no fitting Track existing.");
+        throw new LogicalException("track not found");
     }
 
     /**
@@ -413,10 +424,17 @@ public class RailNetwork {
      * @throws IllegalInputException, wenn Point is not an End of the Switch
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException {
-
         for (Switch s : switches) {
             if (id == s.getId()) {
                 s.setSwitch(point);
+                if (s.isOccupied()) {
+                    for (SetTrain t : s.getTrains()) {
+                        t.getModel().setInUse(false);
+                        rSys.getTrainsOnTrack().remove(t);
+                    }
+                    rSys.renewMarked();
+                    s.setTrains(new LinkedList<SetTrain>());
+                }
             }
         }
     }

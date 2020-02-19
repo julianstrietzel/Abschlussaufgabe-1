@@ -6,26 +6,27 @@ package julian.modelrailway.rollingmaterial;
 
 import java.util.HashMap;
 
-import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.Exceptions.LogicalException;
 
 public class TrainStock {
 
     private final HashMap<Integer, Train> trains;
-    private final ModelRailWay model;
+//    private final ModelRailWay model;
+    private final RollingStock rStock;
     
     /**
      * Erstellt einen neuen Trainstock mit model als Bezugsobjekt
      * @param model
      */
-    public TrainStock(ModelRailWay model) {
-        this.model = model;
+    public TrainStock(RollingStock rStock) {
+        this.rStock = rStock;
+//        this.model = model;
         trains = new HashMap<Integer, Train>();
     }
     
-    private RollingStock getRollStock() {
-        return model.getRollStock();
-    }
+//    private RollingStock getRollStock() {
+//        return model.getRollStock();
+//    }
     
     /**
      * Erstellt einen neuen Zug oder hängt dem entsprechenden hinten ein RollmAterial an.
@@ -35,7 +36,7 @@ public class TrainStock {
      * @throws LogicalException
      */
     public String addTrain(int trainID, String rollID) throws LogicalException {
-        RollingMaterial r = getRollStock().getWagon(rollID);
+        RollingMaterial r = rStock.getWagon(rollID);
         if(r == null) {
             throw new LogicalException("rolling material not existing.");
         }

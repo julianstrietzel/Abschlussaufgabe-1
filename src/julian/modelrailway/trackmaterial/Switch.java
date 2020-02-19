@@ -199,7 +199,7 @@ public class Switch extends Rail{
             setDirOne = false;
             return;
         }
-        //TODO entgleisen, wenn zug auf Gleis
+        
         throw new IllegalInputException("point is not part of switch.");
     }
     

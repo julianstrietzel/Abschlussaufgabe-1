@@ -17,6 +17,7 @@ public class UserInterface {
 
     /**
      * Erstellt ein Interface mit allen Befehlen
+     * 
      * @param model Bezugseisenbahn
      */
     public UserInterface(ModelRailWay model) {
@@ -43,6 +44,7 @@ public class UserInterface {
 
     /**
      * Führt den Befehl mit dem Userinput aus
+     * 
      * @param command
      */
     public void executeCommand(String command) {
@@ -51,6 +53,7 @@ public class UserInterface {
 
     /**
      * Sucht einen zum Input passenden Befehl raus.
+     * 
      * @param command Userinput
      * @return gefundener Command oder fail-Command
      */
@@ -66,6 +69,7 @@ public class UserInterface {
 
     /**
      * Checkt, ob der letzte Befehl exit war
+     * 
      * @return isExit von letztem befehl
      */
     public boolean isExit() {

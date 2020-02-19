@@ -5,6 +5,7 @@
 package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
@@ -14,7 +15,7 @@ public class Knode extends Vertex {
 
     private Rail railIn;
     private Rail railOut;
-    private LinkedList<SetTrain> trains;
+    private List<SetTrain> trains;
 
     /**
      * Erstellt einen neuen Knoten mit einer eingehenden Verbindung und der Position
@@ -92,7 +93,7 @@ public class Knode extends Vertex {
         trains.add(t);
     }
 
-    public LinkedList<SetTrain> getTrains() {
+    public List<SetTrain> getTrains() {
         return trains;
     }
 

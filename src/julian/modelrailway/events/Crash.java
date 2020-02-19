@@ -4,7 +4,7 @@
  */
 package julian.modelrailway.events;
 
-import java.util.LinkedList;
+import java.util.List;
 
 import julian.modelrailway.rollingmaterial.SetTrain;
 import julian.modelrailway.trackmaterial.ListUtility;
@@ -25,7 +25,7 @@ public class Crash extends Event implements Comparable<Event>{
      * @param invol alle involvierten Züge
      * @param message Beschriebung des Events.
      */
-    public Crash(LinkedList<SetTrain> invol) {
+    public Crash(List<SetTrain> invol) {
         super(invol);
         getInvolved().sort(null);
     }

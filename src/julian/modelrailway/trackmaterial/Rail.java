@@ -19,7 +19,7 @@ public class Rail implements Comparable<Rail>{
     private Rail next;
     private Rail previous;
     private final int id;
-    private LinkedList<SetTrain> trains;
+    private List<SetTrain> trains;
 
     /**
      * Erstellt eine neue Schiene mit Start, Ende und ID
@@ -43,7 +43,7 @@ public class Rail implements Comparable<Rail>{
      * 
      * @return alle Züge auf dieser Schiene
      */
-    public LinkedList<SetTrain> getTrains() {
+    public List<SetTrain> getTrains() {
         return trains;
     }
 
@@ -318,7 +318,7 @@ public class Rail implements Comparable<Rail>{
      * Löscht die Schiene aus allen verbundenen Knoten und Gleisen
      * @param knodes
      */
-    public void deleteConnections(LinkedList<Knode> knodes) {
+    public void deleteConnections(List<Knode> knodes) {
         Knode endK = ListUtility.contains(knodes, end);
         endK.deconnect(this);
         if(endK.isUseless()) {

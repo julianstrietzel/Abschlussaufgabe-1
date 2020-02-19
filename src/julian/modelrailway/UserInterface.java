@@ -6,12 +6,14 @@ package julian.modelrailway;
  */
 
 import java.util.LinkedList;
+import java.util.List;
+
 import julian.modelrailway.commands.*;
 import julian.modelrailway.ModelRailWay;
 
 public class UserInterface {
 
-    private final LinkedList<Command> commands = new LinkedList<Command>();
+    private final List<Command> commands;
     private Command lastFoundCommand;
     private final Command fail;
 
@@ -21,6 +23,7 @@ public class UserInterface {
      * @param model Bezugseisenbahn
      */
     public UserInterface(ModelRailWay model) {
+        commands = new LinkedList<Command>();
         commands.add(new AddTrack(model));
         commands.add(new AddSwitch(model));
         commands.add(new DeleteTrack(model));

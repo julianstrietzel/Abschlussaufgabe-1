@@ -251,13 +251,6 @@ public class Switch extends Rail{
         return super.connectsFreeTo(point) || (point.equals(endTwo) && this.nextTwo == null );
     }
     
-//    public Knode createKnode(boolean start) {
-//        if(start) {
-//            return new Knode(this.getStart().getXcoord(), this.getStart().getYcoord(), this);
-//        }
-//        return new Knode(this.getEnd().getXcoord(), this.getEnd().getYcoord(), this);
-//    }
-    
     @Override
     public LinkedList<Vertex> getKnodes() {
         LinkedList<Vertex> list = super.getKnodes();
@@ -266,7 +259,7 @@ public class Switch extends Rail{
     }
     
     @Override
-    public void deleteConnections(LinkedList<Knode> knodes) {
+    public void deleteConnections(List<Knode> knodes) {
         Knode endKTwo = ListUtility.contains(knodes, endTwo);
         endKTwo.deconnect(this);
         if(endKTwo.isUseless()) {

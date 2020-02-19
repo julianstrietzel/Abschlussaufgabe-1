@@ -1,6 +1,7 @@
 package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import julian.modelrailway.Exceptions.*;
 import julian.modelrailway.events.*;
@@ -14,8 +15,8 @@ import julian.modelrailway.rollingmaterial.SetTrain;
  */
 public class Railsystem2 {
     private final RailNetwork railnet;
-    private final LinkedList<SetTrain> trainsOnTrack;
-    private final LinkedList<Crash> crashes;
+    private final List<SetTrain> trainsOnTrack;
+    private final List<Crash> crashes;
 
     /**
      * Erstellt eine neues Schienennetz und initialisiert alle Listen. Erstellt
@@ -31,14 +32,14 @@ public class Railsystem2 {
     /**
      * @return die aktuellen Krasches
      */
-    public LinkedList<Crash> getCrashes() {
+    public List<Crash> getCrashes() {
         return crashes;
     }
 
     /**
      * @return alle Züge auf dem Schienennetz
      */
-    public LinkedList<SetTrain> getTrainsOnTrack() {
+    public List<SetTrain> getTrainsOnTrack() {
         return trainsOnTrack;
     }
 
@@ -112,7 +113,7 @@ public class Railsystem2 {
      */
     public void checkCollision() throws IllegalInputException {
         for (Rail r : railnet.getRails()) {
-            LinkedList<SetTrain> workTrains = ListUtility.deleteDuplicates(r.getTrains());
+            List<SetTrain> workTrains = ListUtility.deleteDuplicates(r.getTrains());
             if (workTrains.size() > 1) {
                 crashes.add(new Crash(r.getTrains()));
                 for (SetTrain t : r.getTrains()) {
@@ -122,7 +123,7 @@ public class Railsystem2 {
             }
         }
         for (Knode k : railnet.getKnodes()) {
-            LinkedList<SetTrain> workTrains = ListUtility.deleteDuplicates(k.getTrains());
+            List<SetTrain> workTrains = ListUtility.deleteDuplicates(k.getTrains());
             if (workTrains.size() > 1) {
                 crashes.add(new Crash(k.getTrains()));
                 for (SetTrain t : k.getTrains()) {

@@ -8,6 +8,7 @@ package julian.modelrailway.rollingmaterial;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import julian.modelrailway.Exceptions.*;
 
@@ -15,7 +16,7 @@ import julian.modelrailway.Exceptions.*;
 public class RollingStock {
 
     private LinkedList<PoweredRolling> powered;
-    private HashMap<Integer, Coach> coaches;
+    private Map<Integer, Coach> coaches;
 
     /**
      * Erstellt eine neue Verwaltungsklasse

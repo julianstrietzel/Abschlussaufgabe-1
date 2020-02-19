@@ -78,8 +78,8 @@ public abstract class ListUtility {
      * @param list  zu bearbeitende Liste
      * @return neue Kopie der Liste ohne Duplikate
      */
-    public static <T> LinkedList<T> deleteDuplicates(List<T> list) {
-        LinkedList<T> workingList = new LinkedList<T>();
+    public static <T> List<T> deleteDuplicates(List<T> list) {
+        List<T> workingList = new LinkedList<T>();
         for(T ts: list) {
             if(!workingList.contains(ts)) {
                 workingList.add(ts);

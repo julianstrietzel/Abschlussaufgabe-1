@@ -14,8 +14,8 @@ import julian.modelrailway.rollingmaterial.SetTrain;
 public class RailNetwork {
 
     private final LinkedList<Rail> rails;
-    private final LinkedList<Knode> knodes;
-    private final LinkedList<Switch> switches;
+    private final List<Knode> knodes;
+    private final List<Switch> switches;
     private final Railsystem2 rSys;
 
     /**
@@ -31,21 +31,21 @@ public class RailNetwork {
     /**
      * @return Alle Schienen im Netz
      */
-    public LinkedList<Rail> getRails() {
+    public List<Rail> getRails() {
         return rails;
     }
 
     /**
      * @return Alle Weichen im Netz
      */
-    public LinkedList<Switch> getSwitches() {
+    public List<Switch> getSwitches() {
         return switches;
     }
 
     /**
      * @return the knodes
      */
-    public LinkedList<Knode> getKnodes() {
+    public List<Knode> getKnodes() {
         return knodes;
     }
 

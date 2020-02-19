@@ -11,7 +11,8 @@ import julian.modelrailway.Exceptions.LogicalException;
 
 public class AddSwitch extends Command {
 
-    private static final String REGEX = "add switch \\(([-+]?\\d+),([-+]?\\d+)\\) -> \\(([-+]?\\d+),([-+]?\\d+)\\),\\(([-+]?\\d+),([-+]?\\d+)\\)";
+    private static final String REGEX = "add switch \\(([-+]?\\d+),([-+]?\\d+)\\) -> \\(([-+]?\\d+),([-+]?\\d+)\\),"
+            + "\\(([-+]?\\d+),([-+]?\\d+)\\)";
 
     /**
      * Erstellt einen neuen Command, der das AddTrack Pattern akzeptiert.
@@ -23,7 +24,7 @@ public class AddSwitch extends Command {
     }
 
     @Override
-    public void execute(String command){
+    public void execute(String command) {
 
         try {
             int sx;

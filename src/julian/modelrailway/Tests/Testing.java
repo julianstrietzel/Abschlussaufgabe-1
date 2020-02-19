@@ -26,7 +26,7 @@ UserInterface ui;
      */
     @Before
     public void Reset () {
-        Terminal.test = true;
+//        Terminal.test = true;
         //Bei Bedarf hier die ausgabe wieder einschalten!
         m = new ModelRailWay();
         ui = new UserInterface(m);
@@ -155,7 +155,7 @@ UserInterface ui;
     
     @Test
     public void testingRailSystem() {
-//        Terminal.test = true;
+        Terminal.test = true;
         e("add track (0,0) -> (10,0)");
         e("add track (0,0) -> (0,10)");
         e("add track (10,10) -> (10,0)");
@@ -169,7 +169,7 @@ UserInterface ui;
     
     @Test
     public void testinDeleteTracks() {
-//        Terminal.test = true;
+        Terminal.test = true;
         e("add track (1,1) -> (5,1)");
 //        e("add track (10,10) -> (10,11)");
 //        e("list tracks");

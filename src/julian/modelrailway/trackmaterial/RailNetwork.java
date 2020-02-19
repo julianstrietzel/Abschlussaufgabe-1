@@ -16,12 +16,12 @@ public class RailNetwork {
     private final LinkedList<Rail> rails;
     private final List<Knode> knodes;
     private final List<Switch> switches;
-    private final Railsystem2 rSys;
+    private final Railsystem rSys;
 
     /**
      * 
      */
-    public RailNetwork(Railsystem2 rSys) {
+    public RailNetwork(Railsystem rSys) {
         rails = new LinkedList<Rail>();
         this.rSys = rSys;
         knodes = new LinkedList<Knode>();

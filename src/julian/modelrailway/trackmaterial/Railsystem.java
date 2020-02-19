@@ -13,7 +13,7 @@ import julian.modelrailway.rollingmaterial.SetTrain;
  * 
  * @author Julian Strietzel
  */
-public class Railsystem2 {
+public class Railsystem {
     private final RailNetwork railnet;
     private final List<SetTrain> trainsOnTrack;
     private final List<Crash> crashes;
@@ -22,7 +22,7 @@ public class Railsystem2 {
      * Erstellt eine neues Schienennetz und initialisiert alle Listen. Erstellt
      * außerdem ein neues Netzwerk.
      */
-    public Railsystem2() {
+    public Railsystem() {
         railnet = new RailNetwork(this);
         trainsOnTrack = new LinkedList<SetTrain>();
         crashes = new LinkedList<Crash>();

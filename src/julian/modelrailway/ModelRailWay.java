@@ -16,7 +16,7 @@ import julian.modelrailway.trackmaterial.*;
 
 public class ModelRailWay {
 
-    private final Railsystem2 rSystem;
+    private final Railsystem rSystem;
     private final TrainStock ts;
     private final RollingStock rstock;
 
@@ -24,7 +24,7 @@ public class ModelRailWay {
      * Erstellt eine neue Modelleisenbahn mit allem, was dazu gehört.
      */
     public ModelRailWay() {
-        rSystem = new Railsystem2();
+        rSystem = new Railsystem();
         rstock = new RollingStock();
         ts = new TrainStock(rstock);
     }

@@ -286,6 +286,9 @@ public class Rail {
      * @return
      */
     public boolean equals(Rail rail) {
+        if(rail == null) {
+            return false;
+        }
         if((rail instanceof Switch)) {
             return rail.equals(this);
         }
@@ -329,6 +332,11 @@ public class Rail {
         list.add(next);
         list.add(previous);
         list.remove(notThisOne);
+        for(Rail r: list) {
+            if(r == null) {
+                list.remove(r);
+            }
+        }
         return list;
     }
     

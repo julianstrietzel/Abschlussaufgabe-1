@@ -35,6 +35,7 @@ UserInterface ui;
      */
     @Test
     public void Beispielablauf() {
+//        e("create train-set 403 145 4 true true");
         e("add track (1,1) -> (5,1)");
         e("add track (10,10) -> (10,11)");
         e("list tracks");
@@ -42,13 +43,17 @@ UserInterface ui;
         e("add track (5,3) -> (8,1)");
         e("add track (10,1) -> (8,1)");
         e("add switch (10,-3) -> (10,1),(12,-3)");
+      
         e("add track (10,-3) -> (1,-3)");
         e("add track (1,-3) -> (1,1)");
         e("add track (5,3) -> (10,3)");
         e("add track (10,3) -> (12,3)");
         e("add switch (12,3) -> (12,-3),(14,3)");
         e("add track (14,-1) -> (14,3)");
-//        e("list tracks");
+        e("list tracks");
+//        e("delete track 1");
+//        e("delete track 6");
+//        e("delete track 5");
         e("create engine steam T3 Emma 1 false true");
         e("list engines");
         e("create engine electrical 103 118 3 true true");
@@ -88,7 +93,7 @@ UserInterface ui;
         
     }
 
-//    @Test
+    @Test
     public void trainandMovement() throws InterruptedException {
         
         e("add track (0,0) -> (10,0)");
@@ -150,7 +155,7 @@ UserInterface ui;
         
     }
     
-//    @Test
+    @Test
     public void testingRailSystem() {
         e("add track (0,0) -> (10,0)");
         e("add track (0,0) -> (0,10)");
@@ -159,6 +164,22 @@ UserInterface ui;
         e("list tracks");
        System.out.println( m.getRailSystem().getKnodes());
         
+    }
+    
+    @Test
+    public void testinDeleteTracks() {
+        
+        e("add track (1,1) -> (5,1)");
+//        e("add track (10,10) -> (10,11)");
+//        e("list tracks");
+        e("add switch (5,1) -> (8,1),(5,3)");
+//        e("add track (5,3) -> (8,1)");
+        e("add track (10,1) -> (8,1)");
+        e("add switch (10,-3) -> (10,1),(12,-3)");
+        e("add track (5,3) -> (5,5)");
+        e("list tracks");
+        e("delete track 4");
+        e("list tracks");
     }
 
 }

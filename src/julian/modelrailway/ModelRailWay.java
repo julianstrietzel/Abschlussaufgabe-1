@@ -42,7 +42,26 @@ public class ModelRailWay {
         return "" + rSystem.addSwitch(new Vertex(startX, startY), new Vertex(endX, endY), new Vertex(end2x, end2y));
 
     }
+    
+    public String createCoach(String coachType, int length, boolean cFront, boolean cBack) {
+       return rstock.createCoach(coachType, length, cFront, cBack);
+    }
+    
+    public String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
+            throws LogicalException {
+        return rstock.createEngine(engineType, series, name, length, cFront, cBack);
+    }
 
+    public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
+            throws LogicalException {
+        return rstock.createTrainSet(series, name, length, cFront, cBack);
+    }
+    
+    public String delete(boolean isPowered, String id) throws IllegalInputException, LogicalException {
+        return rstock.delete(isPowered, id);
+    }
+        
+    
     public String deleteTrack(int id) throws IllegalInputException, LogicalException {
         rSystem.deleteTrack(id);
         return "OK";
@@ -134,6 +153,21 @@ public class ModelRailWay {
         }
     }
     
+    public String coachestoString() {
+        return rstock.coachestoString();
+    }
+    
+    public String enginestoString() {
+        return rstock.enginestoString();
+    }
+    
+    public String trainSettoString() {
+        return rstock.trainSettoString();
+    }
+    
+    public void setSwitch(int id, Vertex point) throws IllegalInputException {
+        rSystem.setSwitch(id, point);
+    }
     
     
     

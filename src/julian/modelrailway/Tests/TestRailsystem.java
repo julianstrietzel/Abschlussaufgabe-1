@@ -82,7 +82,7 @@ static Railsystem model;
         notUse.add(model.getRails().getFirst());
         Rail from = model.getRails().getFirst().getNext();
         Rail to = model.getRails().getFirst().getPrevious();
-        assertTrue(model.thereIsAWayWithout(notUse, from, to, model.getRails().getFirst()));
+        assertTrue(model.wayWithout(notUse, from, to, model.getRails().getFirst()));
         model.deleteTrack(1);
         model.deleteTrack(1);
         model = new Railsystem();

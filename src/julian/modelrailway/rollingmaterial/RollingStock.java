@@ -7,6 +7,7 @@ package julian.modelrailway.rollingmaterial;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import julian.modelrailway.Exceptions.*;
 
@@ -73,7 +74,7 @@ public class RollingStock {
         return powered.getLast().getID();
     }
     
-    public LinkedList<PoweredRolling> getPowered() {
+    public List<PoweredRolling> getPowered() {
         return powered;
     }
 

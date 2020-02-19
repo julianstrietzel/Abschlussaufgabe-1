@@ -105,6 +105,7 @@ public class Knode extends Vertex {
             railIn = railOut;
             railOut = null;
         }
+        
         if(r.equals(railOut)) {
             railOut = null;
         }

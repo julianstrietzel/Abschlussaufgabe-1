@@ -24,7 +24,7 @@ public class CreateTrainSet extends Command {
     @Override
     public void execute(String command) {
         try {
-            Terminal.printLine(model.getRollStock().createTrainSet(getMatcher(command).group(1), getMatcher(command).group(2),
+            Terminal.printLine(model.createTrainSet(getMatcher(command).group(1), getMatcher(command).group(2),
                     Integer.parseInt(getMatcher(command).group(3)), "true".contentEquals(getMatcher(command).group(4)),
                     "true".contentEquals(getMatcher(command).group(5))));
         } catch (NumberFormatException | LogicalException e) {

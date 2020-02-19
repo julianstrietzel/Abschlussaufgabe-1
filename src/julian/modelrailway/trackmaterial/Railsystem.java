@@ -1,5 +1,7 @@
 package julian.modelrailway.trackmaterial;
 import java.util.LinkedList;
+import java.util.List;
+
 import julian.modelrailway.Exceptions.*;
 import julian.modelrailway.events.*;
 import julian.modelrailway.rollingmaterial.SetTrain;
@@ -211,26 +213,27 @@ public class Railsystem {
      * @throws LogicalException, wenn Schiene notwendig
      */
     public void deleteTrack(int id) throws LogicalException {
-        Rail delRail = getRailinSystem(id);
-        int access = 0;
-        for (Rail accessed : delRail.getConnected(null)) {
-            if (accessed != null) {
-                access++;
-            }
-        }
-        if (access < 2) { // wenn eine schiene nur einen Anschluss hat, dann kann sie ohne Bedenken
-            rails.remove(delRail);
-            switches.remove(delRail);
-            delRail.deleteConnections(knodes);
+        Rail dRail = getRailinSystem(id);
+        if (dRail.getConnected(null).size() < 2) { // wenn eine schiene nur einen Anschluss hat, dann kann sie ohne Bedenken
+            rails.remove(dRail);
+            switches.remove(dRail);
+            dRail.deleteConnections(knodes);
             return;
         }
         LinkedList<Rail> notUse = new LinkedList<Rail>();
-        notUse.add(delRail);
-        // TODO löschen von Switches
-        if (thereIsAWayWithout(notUse, delRail.getNext(), delRail.getPrevious(), delRail)) {
-            rails.remove(delRail);
-            switches.remove(delRail);
-            delRail.deleteConnections(knodes);
+        notUse.add(dRail);
+        boolean sO;
+        boolean sT = true;
+        if(dRail instanceof Switch) {
+            sO = wayWithout((List<Rail>) notUse.clone(), dRail.getNext(), dRail.getPrevious(), dRail);
+            sT = wayWithout((List<Rail>) notUse.clone(), ((Switch) dRail).getNextTwo(), dRail.getPrevious(), dRail);
+        } else {
+            sO = wayWithout((List<Rail>) notUse.clone(), dRail.getNext(), dRail.getPrevious(), dRail);
+        }
+        if (sO && sT) {
+            rails.remove(dRail);
+            switches.remove(dRail);
+            dRail.deleteConnections(knodes);
         } else {
             throw new LogicalException("track is necessary.");
         }
@@ -244,7 +247,7 @@ public class Railsystem {
      * @param now    aktuelle Schiene
      * @return WW, ob weg ohne
      */
-    public boolean thereIsAWayWithout(LinkedList<Rail> notUse, Rail from, Rail to, Rail now) {
+    public boolean wayWithout(List<Rail> notUse, Rail from, Rail to, Rail now) {
         if (from == null) {
             return false;
         }
@@ -256,7 +259,7 @@ public class Railsystem {
         boolean yes = false;
         nextOnes.removeAll(notUse);
         for (Rail next : nextOnes) {
-            if (thereIsAWayWithout(notUse, next, to, from)) {
+            if (wayWithout(notUse, next, to, from)) {
                 yes = true;
             }
         }
@@ -313,7 +316,7 @@ public class Railsystem {
      * @param knodes Liste an Knoten, die zu überprüfen sind
      * @throws IllegalInputException, wenn einer der Knoten ncith im System ist
      */
-    private void checkFreeKnodes(LinkedList<Vertex> knodes) throws IllegalInputException {
+    private void checkFreeKnodes(List<Vertex> knodes) throws IllegalInputException {
         int freeKnodes = 0;
         for (Knode knode : this.knodes) {
             if (ListUtility.contains(knodes, knode)) {
@@ -416,7 +419,6 @@ public class Railsystem {
     public void move(boolean forwards) throws LogicalException, IllegalInputException {
         resetMarkersAndCrashes();
         for (SetTrain train : trainsOnTrack) {
-            
             if (!train.move(forwards)) {
                 train.getModel().setInUse(false);
                 trainsOnTrack.remove(train);
@@ -425,7 +427,6 @@ public class Railsystem {
                 markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
             }
         }
-
         checkCollision();
     }
 
@@ -453,12 +454,10 @@ public class Railsystem {
                 } 
             }
         }
-        
     }
 
     /**
      * Checkt, ob alle Weichen gesetzt sind
-     * 
      * @return
      */
     public boolean isAllSet() {

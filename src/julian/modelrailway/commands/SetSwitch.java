@@ -35,7 +35,7 @@ private static final String REGEX = "set switch (\\d+) position \\(([-+]?\\d+),(
                 Terminal.printError("input needs to be an Integer.");
                 return;
             }
-            model.getRailSystem().setSwitch(id, new Vertex(xcoord, ycoord));
+            model.setSwitch(id, new Vertex(xcoord, ycoord));
             Terminal.printLine("OK");
         } catch (IllegalInputException e) {
             Terminal.printError(e.getMessage());

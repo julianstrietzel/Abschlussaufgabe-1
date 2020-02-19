@@ -25,7 +25,7 @@ private static final String REGEX = "delete rolling stock (W?)((-|\\w)+)";
     @Override
     public void execute ( String command) {
         try {
-            Terminal.printLine(model.getRollStock().delete(!"W".contentEquals(getMatcher(command).group(1)), getMatcher(command).group(2)));
+            Terminal.printLine(model.delete(!"W".contentEquals(getMatcher(command).group(1)), getMatcher(command).group(2)));
         } catch (IllegalInputException | LogicalException e) {
             Terminal.printError(e.getMessage());
         }

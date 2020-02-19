@@ -23,7 +23,7 @@ public class CreateCoach extends Command {
     @Override
     public void execute(String command) {
         try {
-            Terminal.printLine(model.getRollStock().createCoach(getMatcher(command).group(1),
+            Terminal.printLine(model.createCoach(getMatcher(command).group(1),
                     Integer.parseInt(getMatcher(command).group(2)), "true".contentEquals(getMatcher(command).group(3)),
                     "true".contentEquals(getMatcher(command).group(4))));
         } catch (NumberFormatException e) {

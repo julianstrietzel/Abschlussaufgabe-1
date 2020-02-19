@@ -272,8 +272,13 @@ public class Switch extends Rail{
         LinkedList<Rail> list = new LinkedList<Rail>();
         list.add(getNext());
         list.add(getPrevious());
-        list.add(nextTwo);
+        list.add(getNextTwo());
         list.remove(notThisOne);
+        for(Rail r: list) {
+            if(r == null) {
+                list.remove(r);
+            }
+        }
         return list;
     }
     
@@ -312,6 +317,9 @@ public class Switch extends Rail{
     
     @Override
     public boolean equals(Rail r) {
+        if(r == null) {
+            return false;
+        }
         try {
         if(r instanceof Switch) {
             Switch re = (Switch) r;

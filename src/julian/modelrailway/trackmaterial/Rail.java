@@ -10,7 +10,7 @@ import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.rollingmaterial.SetTrain;
 
-public class Rail {
+public class Rail implements Comparable<Rail>{
 
     private final Vertex start;
     private final Vertex end;
@@ -422,6 +422,12 @@ public class Rail {
             posi = posi.add(dire);
         }
         return i;
+    }
+
+    @Override
+    public int compareTo(Rail o) {
+        return   this.getId() - ((Rail) o).getId();
+
     }
     
     

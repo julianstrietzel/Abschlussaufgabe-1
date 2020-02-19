@@ -14,32 +14,30 @@ import julian.modelrailway.trackmaterial.*;
 
 public class ModelRailWay {
 
-    private final Railsystem rSystem;
+    private final Railsystem2 rSystem;
     private final TrainStock ts;
     private final RollingStock rstock; 
 
     public ModelRailWay() {
-        rSystem = new Railsystem();
+        rSystem = new Railsystem2();
         ts = new TrainStock(this);
         rstock = new RollingStock();
     }
-
-    public Railsystem getRailSystem() {
-        return rSystem;
-    }
     
+
+
     public RollingStock getRollStock() {
         return rstock;
     }
 
     public String addTrack(int startX, int startY, int endX, int endY) throws IllegalInputException, LogicalException {
-        return "" + rSystem.addRail(new Vertex(startX, startY), new Vertex(endX, endY));
+        return "" + rSystem.getRailNet().addRail(new Vertex(startX, startY), new Vertex(endX, endY));
     }
 
     public String addSwitch(int startX, int startY, int endX, int endY, int end2x, int end2y)
             throws IllegalInputException, LogicalException {
 
-        return "" + rSystem.addSwitch(new Vertex(startX, startY), new Vertex(endX, endY), new Vertex(end2x, end2y));
+        return "" + rSystem.getRailNet().addSwitch(new Vertex(startX, startY), new Vertex(endX, endY), new Vertex(end2x, end2y));
 
     }
     
@@ -63,7 +61,7 @@ public class ModelRailWay {
         
     
     public String deleteTrack(int id) throws IllegalInputException, LogicalException {
-        rSystem.deleteTrack(id);
+        rSystem.getRailNet().deleteTrack(id);
         return "OK";
     }
     
@@ -99,7 +97,6 @@ public class ModelRailWay {
     }
 
     public String move(int speed) throws LogicalException, IllegalInputException {
-
             if (!rSystem.isAllSet()) {
                 throw new LogicalException("position of switches not set.");
             }
@@ -122,7 +119,7 @@ public class ModelRailWay {
             }
             rSystem.resetMarkersAndCrashes();
             for(SetTrain train: rSystem.getTrainsOnTrack()) {
-                    rSystem.markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
+                    rSystem.getRailNet().markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
                 
            }
             return sb.substring(0, sb.length() - 1).toString();
@@ -130,15 +127,7 @@ public class ModelRailWay {
     }
 
     public String listTracks() {
-        if(rSystem.getRails().isEmpty()) {
-            return "No track exists";
-        }
-        StringBuilder sb = new StringBuilder();
-        for (Rail r : rSystem.getRails()) {
-            sb.append(r.toString());
-            sb.append("\n");
-        }
-        return sb.substring(0, sb.length() - 1);
+        return rSystem.getRailNet().toString();
     }
     
     public String listTrains() {
@@ -166,7 +155,7 @@ public class ModelRailWay {
     }
     
     public void setSwitch(int id, Vertex point) throws IllegalInputException {
-        rSystem.setSwitch(id, point);
+        rSystem.getRailNet().setSwitch(id, point);
     }
     
     

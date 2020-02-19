@@ -35,6 +35,7 @@ UserInterface ui;
      */
     @Test
     public void Beispielablauf() {
+        System.out.println("EXAMPLE ABLAUF");
 //        e("create train-set 403 145 4 true true");
         e("add track (1,1) -> (5,1)");
         e("add track (10,10) -> (10,11)");
@@ -98,7 +99,7 @@ UserInterface ui;
         
         e("add track (0,0) -> (10,0)");
         e("add track (0,0) -> (0,10)");
-        System.out.println( m.getRailSystem().getKnodes());
+//        System.out.println( m.getRailSystem().getKnodes());
 //        e("add track (0,1) -> (0,3)");
 //        e("add track (0,3) -> (2,3)");
 //        e("add track (0,3) -> (-1,3)"); //F
@@ -162,7 +163,7 @@ UserInterface ui;
         e("add track (10,10) -> (10,0)");
         e("add track (10,10) -> (0,10)");
         e("list tracks");
-       System.out.println( m.getRailSystem().getKnodes());
+//       System.out.println( m.getRailSystem().getKnodes());
         
     }
     
@@ -178,7 +179,14 @@ UserInterface ui;
         e("add switch (10,-3) -> (10,1),(12,-3)");
         e("add track (5,3) -> (5,5)");
         e("list tracks");
+        e("delete track 1");
+        e("delete track 5");
+//        e("delete track 2");
+        
         e("delete track 4");
+        e("delete track 3");
+        e("list tracks");
+        e("add track (10,1) -> (8,1)");
         e("list tracks");
     }
 

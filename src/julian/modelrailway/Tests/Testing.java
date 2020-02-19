@@ -33,7 +33,7 @@ UserInterface ui;
     /**
      * Example Commands from Sheet
      */
-    @Test
+//    @Test
     public void Beispielablauf() {
         System.out.println("EXAMPLE ABLAUF");
 //        e("create train-set 403 145 4 true true");
@@ -169,7 +169,7 @@ UserInterface ui;
         
     }
     
-//    @Test
+    @Test
     public void testinDeleteTracks() {
         
         e("add track (1,1) -> (5,1)");
@@ -182,10 +182,19 @@ UserInterface ui;
         e("add track (5,3) -> (5,5)");
         e("list tracks");
 //        e("set s")
-        
+        e("delete track 5");
         e("create engine steam T3 Emma 1 false true");
         e("add train 1 T3-Emma");
-        e("put train 1 at (1,1) in direction 1,0");
+        e("put train 1 at (3,1) in direction 1,0");
+        e("delete track 4");
+        e("delete track 3");
+        e("delete track 2");
+        e("step 20");
+        e("delete track 1");
+        e("add track (1,1) -> (5,1)");
+        e("put train 1 at (3,1) in direction 1,0");
+        e("list tracks");
+        
     }
 
 }

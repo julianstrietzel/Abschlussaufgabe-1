@@ -50,143 +50,6 @@ public class RailNetwork {
     }
 
     /**
-     * Fügt dem Schienennetz eine neue Gleisweiche hinzu
-     * 
-     * @param start  Starpunkt
-     * @param endOne erster Endpunkt
-     * @param endTwo zweiter Endpunkt
-     * @return eindeutige ID der neuen Weiche
-     * @throws IllegalInputException, wenn Länge null
-     * @throws LogicalException,      wenn der Track schon existiert oder bei
-     *                                Schienennetzkollisioen
-     */
-    public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
-
-        Switch newSw = new Switch(start, endOne, endTwo, getNextFreeID());
-        if (ListUtility.contains(switches, newSw)) {
-            throw new LogicalException("track existing");
-        }
-        if (newSw.getMinLength() == 0) {
-            throw new IllegalInputException("length needs to be not null");
-        }
-
-        if (!rails.isEmpty()) {
-            newSw.setSwitch(newSw.getEnd());
-            Vertex checker = newSw.getStart();
-            for (int i = 1; i < newSw.getSetLength(); i++) {
-                checker.add(newSw.getDirection());
-                if (knodes.contains(checker)) {
-                    throw new LogicalException("Switch cutting another Rail");
-                }
-            }
-            newSw.setSwitch(newSw.getEndTwo());
-            checker = newSw.getStart();
-            for (int i = 1; i < newSw.getSetLength(); i++) {
-                checker.add(newSw.getDirectionTwo());
-                if (knodes.contains(checker)) {
-                    throw new LogicalException("Switch cutting another Rail");
-                }
-            }
-            newSw.unSet();
-            if (checkTrackCollision(newSw.getStart(), newSw.getEnd())
-                    || checkTrackCollision(newSw.getStart(), newSw.getEndTwo())) {
-                throw new LogicalException("Switch cutting another Rail.");
-            }
-            checkFreeKnodes(newSw.getKnodes());
-            for (Knode knode : knodes) {
-                if (knode.equals(newSw.getStart())) {
-                    knode.setRailOut(newSw);
-                    knode.getRailIn().connectEasy(newSw, newSw.getStart());
-                    newSw.setPrevious(knode.getRailIn());
-                }
-                if (knode.equals(newSw.getEnd())) {
-                    knode.setRailOut(newSw);
-                    knode.getRailIn().connectEasy(newSw, newSw.getEnd());
-                    newSw.setNext(knode.getRailIn());
-                }
-                if (knode.equals(newSw.getEndTwo())) {
-                    knode.setRailOut(newSw);
-                    knode.getRailIn().connectEasy(newSw, newSw.getEndTwo());
-                    newSw.setNextTwo(knode.getRailIn());
-                }
-            }
-
-            if (ListUtility.contains(knodes, newSw.getStart()) == null) {
-                knodes.add(new Knode(newSw.getStart(), newSw));
-            }
-            if (ListUtility.contains(knodes, newSw.getEnd()) == null) {
-                knodes.add(new Knode(newSw.getEnd(), newSw));
-            }
-            if (ListUtility.contains(knodes, newSw.getEndTwo()) == null) {
-                knodes.add(new Knode(newSw.getEndTwo(), newSw));
-            }
-        } else {
-            knodes.add(new Knode(newSw.getStart(), newSw));
-            knodes.add(new Knode(newSw.getEnd(), newSw));
-            knodes.add(new Knode(newSw.getEndTwo(), newSw));
-        }
-        switches.add(newSw);
-        rails.add(newSw);
-        return rails.getLast().getId();
-    }
-
-    /**
-     * Fügt dem Schienennetz ein neues Gleis hinzu
-     * 
-     * @param start Startpunkt
-     * @param end   Endpunkt
-     * @return eindeutige ID der neuen Schiene
-     * @throws IllegalInputException, wenn Länge null
-     * @throws LogicalException,      wenn der Track schon existiert oder bei
-     *                                Schienennetzkollisioen
-     */
-    public int addRail(Vertex start, Vertex end) throws IllegalInputException, LogicalException {
-        Rail newRail = new Rail(start, end, getNextFreeID());
-        if (ListUtility.contains(rails, newRail)) {
-            throw new LogicalException("track existing.");
-        }
-        if (newRail.getLength() == 0) {
-            throw new IllegalInputException("length needs to be not null.");
-        }
-        if (!rails.isEmpty()) {
-            Vertex checker = newRail.getStart();
-            for (int i = 1; i < newRail.getLength(); i++) {
-                checker.add(newRail.getDirection());
-                if (knodes.contains(checker)) {
-                    throw new LogicalException("rail cutting another Rail");
-                }
-            }
-            if (checkTrackCollision(newRail.getStart(), newRail.getEnd())) {
-                throw new LogicalException("rail cutting another Rail");
-            }
-            checkFreeKnodes(newRail.getKnodes());
-            for (Knode knode : knodes) {
-                if (knode.equals(newRail.getStart())) {
-                    knode.setRailOut(newRail);
-                    knode.getRailIn().connectEasy(newRail, newRail.getStart());
-                    newRail.setPrevious(knode.getRailIn());
-                }
-                if (knode.equals(newRail.getEnd())) {
-                    knode.setRailOut(newRail);
-                    knode.getRailIn().connectEasy(newRail, newRail.getEnd());
-                    newRail.setNext(knode.getRailIn());
-                }
-            }
-            if (ListUtility.contains(knodes, newRail.getStart()) == null) {
-                knodes.add(new Knode(newRail.getStart(), newRail));
-            }
-            if (ListUtility.contains(knodes, newRail.getEnd()) == null) {
-                knodes.add(new Knode(newRail.getEnd(), newRail));
-            }
-        } else {
-            knodes.add(new Knode(newRail.getStart(), newRail));
-            knodes.add(new Knode(newRail.getEnd(), newRail));
-        }
-        rails.add(newRail);
-        return rails.getLast().getId();
-    }
-
-    /**
      * Sucht für eine neue Schiene die nächste freie ID raus.
      * 
      * @return nächste freie ID
@@ -217,31 +80,10 @@ public class RailNetwork {
      */
     public void deleteTrack(int id) throws LogicalException {
         Rail dRail = getRailinSystem(id);
-
         if (dRail.isOccupied()) {
             throw new LogicalException("track occupied");
         }
-        if (dRail.getConnected(null).size() < 2) {
-            rails.remove(dRail);
-            switches.remove(dRail);
-            dRail.deleteConnections(knodes);
-            return;
-        }
-        LinkedList<Rail> notUse = new LinkedList<Rail>();
-        notUse.add(dRail);
-        boolean sO = true;
-        boolean sT = true;
-        if (dRail instanceof Switch) {
-            if(((Switch) dRail).getNext() != null) {
-                sO = wayWithout((List<Rail>) notUse.clone(), dRail.getNext(), dRail.getPrevious(), dRail);
-            }
-            if(((Switch) dRail).getNextTwo() != null) {
-                sT = wayWithout((List<Rail>) notUse.clone(), ((Switch) dRail).getNextTwo(), dRail.getPrevious(), dRail);
-            }
-        } else {
-            sO = wayWithout((List<Rail>) notUse.clone(), dRail.getNext(), dRail.getPrevious(), dRail);
-        }
-        if (sO && sT) {
+        if (dRail.wayWithout(this)) {
             rails.remove(dRail);
             switches.remove(dRail);
             dRail.deleteConnections(knodes);
@@ -437,6 +279,143 @@ public class RailNetwork {
                 }
             }
         }
+    }
+
+    /**
+     * Fügt dem Schienennetz eine neue Gleisweiche hinzu
+     * 
+     * @param start  Starpunkt
+     * @param endOne erster Endpunkt
+     * @param endTwo zweiter Endpunkt
+     * @return eindeutige ID der neuen Weiche
+     * @throws IllegalInputException, wenn Länge null
+     * @throws LogicalException,      wenn der Track schon existiert oder bei
+     *                                Schienennetzkollisioen
+     */
+    public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
+
+        Switch newSw = new Switch(start, endOne, endTwo, getNextFreeID());
+        if (ListUtility.contains(switches, newSw)) {
+            throw new LogicalException("track existing");
+        }
+        if (newSw.getMinLength() == 0) {
+            throw new IllegalInputException("length needs to be not null");
+        }
+
+        if (!rails.isEmpty()) {
+            newSw.setSwitch(newSw.getEnd());
+            Vertex checker = newSw.getStart();
+            for (int i = 1; i < newSw.getSetLength(); i++) {
+                checker.add(newSw.getDirection());
+                if (knodes.contains(checker)) {
+                    throw new LogicalException("Switch cutting another Rail");
+                }
+            }
+            newSw.setSwitch(newSw.getEndTwo());
+            checker = newSw.getStart();
+            for (int i = 1; i < newSw.getSetLength(); i++) {
+                checker.add(newSw.getDirectionTwo());
+                if (knodes.contains(checker)) {
+                    throw new LogicalException("Switch cutting another Rail");
+                }
+            }
+            newSw.unSet();
+            if (checkTrackCollision(newSw.getStart(), newSw.getEnd())
+                    || checkTrackCollision(newSw.getStart(), newSw.getEndTwo())) {
+                throw new LogicalException("Switch cutting another Rail.");
+            }
+            checkFreeKnodes(newSw.getKnodes());
+            for (Knode knode : knodes) {
+                if (knode.equals(newSw.getStart())) {
+                    knode.setRailOut(newSw);
+                    knode.getRailIn().connectEasy(newSw, newSw.getStart());
+                    newSw.setPrevious(knode.getRailIn());
+                }
+                if (knode.equals(newSw.getEnd())) {
+                    knode.setRailOut(newSw);
+                    knode.getRailIn().connectEasy(newSw, newSw.getEnd());
+                    newSw.setNext(knode.getRailIn());
+                }
+                if (knode.equals(newSw.getEndTwo())) {
+                    knode.setRailOut(newSw);
+                    knode.getRailIn().connectEasy(newSw, newSw.getEndTwo());
+                    newSw.setNextTwo(knode.getRailIn());
+                }
+            }
+
+            if (ListUtility.contains(knodes, newSw.getStart()) == null) {
+                knodes.add(new Knode(newSw.getStart(), newSw));
+            }
+            if (ListUtility.contains(knodes, newSw.getEnd()) == null) {
+                knodes.add(new Knode(newSw.getEnd(), newSw));
+            }
+            if (ListUtility.contains(knodes, newSw.getEndTwo()) == null) {
+                knodes.add(new Knode(newSw.getEndTwo(), newSw));
+            }
+        } else {
+            knodes.add(new Knode(newSw.getStart(), newSw));
+            knodes.add(new Knode(newSw.getEnd(), newSw));
+            knodes.add(new Knode(newSw.getEndTwo(), newSw));
+        }
+        switches.add(newSw);
+        rails.add(newSw);
+        return rails.getLast().getId();
+    }
+
+    /**
+     * Fügt dem Schienennetz ein neues Gleis hinzu
+     * 
+     * @param start Startpunkt
+     * @param end   Endpunkt
+     * @return eindeutige ID der neuen Schiene
+     * @throws IllegalInputException, wenn Länge null
+     * @throws LogicalException,      wenn der Track schon existiert oder bei
+     *                                Schienennetzkollisioen
+     */
+    public int addRail(Vertex start, Vertex end) throws IllegalInputException, LogicalException {
+        Rail newRail = new Rail(start, end, getNextFreeID());
+        if (ListUtility.contains(rails, newRail)) {
+            throw new LogicalException("track existing.");
+        }
+        if (newRail.getLength() == 0) {
+            throw new IllegalInputException("length needs to be not null.");
+        }
+        if (!rails.isEmpty()) {
+            Vertex checker = newRail.getStart();
+            for (int i = 1; i < newRail.getLength(); i++) {
+                checker.add(newRail.getDirection());
+                if (knodes.contains(checker)) {
+                    throw new LogicalException("rail cutting another Rail");
+                }
+            }
+            if (checkTrackCollision(newRail.getStart(), newRail.getEnd())) {
+                throw new LogicalException("rail cutting another Rail");
+            }
+            checkFreeKnodes(newRail.getKnodes());
+            for (Knode knode : knodes) {
+                if (knode.equals(newRail.getStart())) {
+                    knode.setRailOut(newRail);
+                    knode.getRailIn().connectEasy(newRail, newRail.getStart());
+                    newRail.setPrevious(knode.getRailIn());
+                }
+                if (knode.equals(newRail.getEnd())) {
+                    knode.setRailOut(newRail);
+                    knode.getRailIn().connectEasy(newRail, newRail.getEnd());
+                    newRail.setNext(knode.getRailIn());
+                }
+            }
+            if (ListUtility.contains(knodes, newRail.getStart()) == null) {
+                knodes.add(new Knode(newRail.getStart(), newRail));
+            }
+            if (ListUtility.contains(knodes, newRail.getEnd()) == null) {
+                knodes.add(new Knode(newRail.getEnd(), newRail));
+            }
+        } else {
+            knodes.add(new Knode(newRail.getStart(), newRail));
+            knodes.add(new Knode(newRail.getEnd(), newRail));
+        }
+        rails.add(newRail);
+        return rails.getLast().getId();
     }
 
     @Override

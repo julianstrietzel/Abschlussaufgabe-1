@@ -30,11 +30,10 @@ public abstract class Coach extends RollingMaterial {
 
     @Override
     public boolean equals(RollingMaterial p) {
-        if (p instanceof Coach) {
-            Coach w = (Coach) p;
-            return w.getID() == getID();
+        if(p == null) {
+            return false;
         }
-        return false;
+        return p.getWStringID().equals(this.getWStringID());
     }
     
     @Override

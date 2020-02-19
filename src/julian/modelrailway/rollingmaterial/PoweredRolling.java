@@ -49,13 +49,16 @@ public abstract class PoweredRolling extends RollingMaterial {
     
     @Override
     public boolean equals(RollingMaterial p) {
-        if(p instanceof PoweredRolling) {
-            PoweredRolling pr = (PoweredRolling) p;
-            return pr.getID().contentEquals(getID());
+        if(p == null) {
+            return false;
         }
-        return false;
+        return this.getWStringID().contentEquals(p.getWStringID());
     }
     
+    @Override
+    public boolean hasPower() {
+        return true;
+    }
     @Override
     public int compareTo(RollingMaterial o) {
         if(!(o instanceof PoweredRolling)) {

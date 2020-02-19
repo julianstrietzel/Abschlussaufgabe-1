@@ -81,17 +81,6 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
     public Train getTrain() {
         return train;
     }
-
-//    public int getNumberOfClutches() {
-//        int i = 0;
-//        if(clutchFront) {
-//            i++;
-//        }
-//        if(clutchBack) {
-//            i++;
-//        }
-//        return i;
-//    }
     
     /**
      * 
@@ -108,14 +97,6 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
     public boolean isClutchBack() {
         return clutchBack;
     }
-
-//    /**
-//     * Setzt, ob
-//     * @param used
-//     */
-//    public void setUsed(boolean used) {
-//        this.used = used;
-//    }
     
     /**
      * 
@@ -179,6 +160,14 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
             }
         }
         return null;
+    }
+    
+    /**
+     * 
+     * @return Ob das Material motorisiert ist.
+     */
+    public boolean hasPower() {
+        return false;
     }
     
     @Override

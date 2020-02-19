@@ -5,6 +5,7 @@
 package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
@@ -91,6 +92,25 @@ public class Switch extends Rail{
      */
     public Rail getNextTwo() {
         return nextTwo;
+    }
+    
+    @Override
+    public boolean wayWithout(RailNetwork rn) {
+        LinkedList<Rail> notUse = new LinkedList<Rail>();
+        notUse.add(this);
+        if(getConnected(null).size() < 2) {
+            return true;
+        }
+        if(getNext() == null && getPrevious() != null) {
+            return rn.wayWithout((List<Rail>) notUse.clone(), this.getNextTwo(), this.getPrevious(), this);
+        }
+        if(getNextTwo() == null && getPrevious() != null) {
+            return rn.wayWithout((List<Rail>) notUse.clone(), this.getNext(), this.getPrevious(), this);
+        }
+        if(getPrevious() == null) {
+            return rn.wayWithout((List<Rail>) notUse.clone(), this.getNext(), this.getNextTwo(), this);
+        }
+        return rn.wayWithout((List<Rail>) notUse.clone(), this.getNext(), this.getPrevious(), this) && rn.wayWithout((List<Rail>) notUse.clone(), this.getNextTwo(), this.getPrevious(), this);
     }
 
     /**

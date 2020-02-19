@@ -27,10 +27,6 @@ public class ModelRailWay {
 
     }
 
-//    public RollingStock getRollStock() {
-//        return rstock;
-//    }
-
     /**
      * Setzt im Schienennetzwerk eine neue normale Schiene
      * 

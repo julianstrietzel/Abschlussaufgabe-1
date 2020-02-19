@@ -337,6 +337,15 @@ public class Rail implements Comparable<Rail>{
         }
     }
     
+    public boolean wayWithout(RailNetwork rn) {
+        if(getConnected(null).size() < 2) {
+            return true;
+        }
+        LinkedList<Rail> notUse = new LinkedList<Rail>();
+        notUse.add(this);
+        return rn.wayWithout(notUse, this.getNext(), this.getPrevious(), this);
+    }
+    
     /**
      * Löscht alle Verbindungen zur Übergebenen Schiene
      * @param r Schiene zu der Verbindungen gelöscht werden sollen

@@ -111,8 +111,10 @@ public class SetTrain implements Comparable<SetTrain> {
      * @throw wird nicht geworfen
      */
     public boolean move(boolean forwards) throws LogicalException, IllegalInputException { // TODO backwards driving
+
         if (forwards) {
             if (position.equals(rail.getEndInDirection(direction))) {
+                Rail now = rail;
                 try {
                     rail = rail.getNextInDirection(direction);
                 } catch (IllegalInputException e) {
@@ -120,18 +122,24 @@ public class SetTrain implements Comparable<SetTrain> {
                 }
                 if (rail == null || !rail.isSetCorrectly(position)) {
                     model.setInUse(false);
+                    if (this.getLength() > 1) {
+                        now.addTrain(this);
+                    }
                     return false;
                 }
                 direction = rail.getDirectionFrom(position);
             }
             position = position.add(direction);
         } else {
-            if (position.equals(rail.getEndInDirection(direction.getInverseDirection()))) {
+            Rail now = rail;
+            if (position.equals(rail.getEndInDirection(direction.getInverseDirection()))) { // TODO change to last
+                                                                                            // position
 
                 rail = rail.getNextInDirection(direction.getInverseDirection());
 
                 if (rail == null || !rail.isSetCorrectly(position)) {
                     model.setInUse(false);
+                    position = position.add(direction.getInverseDirection());
                     return false;
                 }
                 direction = rail.getDirectionFrom(position).getInverseDirection();
@@ -139,8 +147,16 @@ public class SetTrain implements Comparable<SetTrain> {
 
             position = position.add(direction.getInverseDirection());
             if (position.equals(rail.getEndInDirection(direction.getInverseDirection()))) {
-                rail.getTrains().remove(this);
+                rail.removeTrain(this);
                 rail = rail.getNextInDirection(direction.getInverseDirection());
+                if (rail == null || !rail.isSetCorrectly(position)) {
+                    model.setInUse(false);
+                    if (this.getLength() > 1) {
+                        now.addTrain(this);
+                    }
+                    return false;
+                }
+
                 direction = rail.getDirectionFrom(position).getInverseDirection();
             }
         }

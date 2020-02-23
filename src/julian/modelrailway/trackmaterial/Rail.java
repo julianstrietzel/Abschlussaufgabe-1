@@ -41,10 +41,12 @@ public class Rail implements Comparable<Rail>{
 
     /**
      * 
-     * @return alle Züge auf dieser Schiene
+     * @return Eine Kopie der Liste an Zügen, die auf dem Gleis stehen.
      */
-    public List<SetTrain> getTrains() {
-        return trains;
+    public List<SetTrain> getCopyTrains() {
+        List<SetTrain> l = new LinkedList<SetTrain>();
+        l.addAll(trains);
+        return l;
     }
 
     /**
@@ -54,6 +56,22 @@ public class Rail implements Comparable<Rail>{
     public int getId() {
         return id;
     }
+    
+    /**
+     * Fügt einen Zug zu dem Knoten hinzu
+     * @param t neuer Zug
+     */
+    public void addTrain(SetTrain t) {
+        trains.add(t);
+    }
+    
+    /**
+     * Entfernt den gewünschten Zug aus der Schiene
+     * @param t zu entfernender Zug
+     */
+    public void removeTrain(SetTrain t) {
+        trains.remove(t);
+    }
 
     /**
      * Setzt alle Züge auf dieser Schiene neu
@@ -61,6 +79,13 @@ public class Rail implements Comparable<Rail>{
     public void setTrains(List<SetTrain> trains) {
         this.trains.clear();
         this.trains.addAll(trains);
+    }
+    
+    /**
+     * Löscht die Liste an Zügen
+     */
+    public void clearTrains() {
+        trains.clear();
     }
    
     /**

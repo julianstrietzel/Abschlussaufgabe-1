@@ -160,12 +160,12 @@ public class ModelRailWay {
      * @throws LogicalException, wenn Zug nicht existiert.
      */
     public String deleteTrain(int id) throws LogicalException {
-        for (SetTrain s : rSystem.getTrainsOnTrack()) {
+        for (SetTrain s : rSystem.getToTCopy()) {
             if (s.getId() == id) {
-                rSystem.getTrainsOnTrack().remove(s);
+                rSystem.removeTrain(s);
             }
         }
-        rSystem.resetMarkersAndCrashes();
+        rSystem.resetMArkers();
         rSystem.renewMarked();
         return ts.deleteTrain(id);
     }
@@ -205,18 +205,18 @@ public class ModelRailWay {
      * @throws IllegalInputException, wenn Fehler im Schienennetz
      */
     public String move(short speed) throws LogicalException, IllegalInputException {
-        rSystem.getCrashes().clear();
+        rSystem.clearCrashes();
         if (!rSystem.isAllSet()) {
             throw new LogicalException("position of switches not set.");
         }
-        if (rSystem.getTrainsOnTrack().isEmpty()) {
+        if (!rSystem.trainsOn()) {
             return "OK";
         }
         LinkedList<Event> events = new LinkedList<Event>();
         for (int i = 0; i < Math.abs(speed); i++) {
             rSystem.move(Math.abs(speed) == speed);
         }
-        for (SetTrain t : rSystem.getTrainsOnTrack()) {
+        for (SetTrain t : rSystem.getToTCopy()) {
             events.add(new TrainMoved(t));
         }
         events.addAll(rSystem.getCrashes());
@@ -226,8 +226,8 @@ public class ModelRailWay {
             sb.append(e.getMessage());
             sb.append("\n");
         }
-        rSystem.resetMarkersAndCrashes();
-        for (SetTrain train : rSystem.getTrainsOnTrack()) {
+        rSystem.resetMArkers();
+        for (SetTrain train : rSystem.getToTCopy()) {
             rSystem.getRailNet().markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(),
                     false);
 

@@ -10,7 +10,7 @@ import julian.modelrailway.Exceptions.LogicalException;
 
 public class Train {
 
-    private LinkedList<RollingMaterial> wagons;
+    private final LinkedList<RollingMaterial> wagons;
     private final int id;
     private boolean inUse;
 

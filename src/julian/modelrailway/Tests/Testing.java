@@ -313,7 +313,7 @@ public class Testing {
         assertTrue(Terminal.buffer.equals("OK"));
         e("create engine electrical T4 Emma 1 true true");
         assertTrue(Terminal.buffer.equals("T4-Emma"));
-        e("create train-set T5 Emma 1 true true");
+        e("create train-set T5 Emma 10 true true");
         e("create train-set T6 Emma 1 true true");
         e("create coach special 1 true true");
         e("create coach passenger 1 true true");
@@ -360,7 +360,7 @@ public class Testing {
         e("step -50");
         assertTrue(Terminal.buffer.equals("Train 1 at (30,0)"));
         e("step -1");
-        assertTrue(Terminal.buffer.contains("Error, "));
+        assertTrue(Terminal.buffer.contains("Crash of train 1"));
         e("list trains");
         assertTrue(Terminal.buffer.equals("1 W1 W2 W3 T4-Emma 1-Tom T3-Emma\n" + 
                 "2 T5-Emma T5-Emma2"));
@@ -371,12 +371,72 @@ public class Testing {
                 "1 s T3 Emma 20 true false\n" + 
                 "1 e T4 Emma 1 true true"));
         e("list train-sets");
-        assertTrue(Terminal.buffer.equals("2 T5 Emma 1 true true\n" + 
-                "2 T5 Emma2 1 true true\n" + 
-                "none T6 Emma 1 true true"));
+//        assertTrue(Terminal.buffer.equals("2 T5 Emma 1 true true\n" + 
+//                "2 T5 Emma2 1 true true\n" + 
+//                "none T6 Emma 1 true true"));
         e("list coaches");
         assertTrue(Terminal.buffer.equals("1 1 s 1 true true\n2 1 p 1 true true\n3 1 f 1 true true"));
+        e("add track (0,0) -> (-100,0)");
+        assertTrue(Terminal.buffer.equals("2"));
+        e("step 0");
+        assertTrue(Terminal.buffer.equals("OK"));
+        e("step -220"); //TODO entgleisen bei ende vom Track
+        assertTrue(Terminal.buffer.equals("OK"));
+        e("put train 1 at (-100,0) in direction -1,0");
+        assertTrue(Terminal.buffer.equals("OK"));
+        e("put train 2 at (0,0) in direction -1,0");
+        assertTrue(Terminal.buffer.equals("OK"));
+        e("step 0");
+        assertTrue(Terminal.buffer.equals("Train 1 at (-100,0)\n" + 
+                "Train 2 at (0,0)"));
+        e("step 1"); 
+        assertTrue(Terminal.buffer.equals("Crash of train 1,2"));
+//        assertTrue("Crash of train 1,2".contentEquals(Terminal.buffer));
+        /*ZWei Fehler
+         * 1. Train 2 bewegt sich bei step 1 nicht
+         * 2. Crash müsste beide betreffen
+         */
+        //TODO getList überall entfernen
+        
     }
+    
+    
+    /**
+     * Wenn einn Zug entgleist ist das Gleis immernoch besetzt
+     */
+    @Test 
+    public void backwardsANDEntgleisem() {
+//        Terminal.silent = false;
+        e("add track (0,0) -> (100,0)");
+        e("add track (0,0) -> (-100,0)");
+        e("create engine steam T3 Emma 10 true false");
+        e("add train 1 T3-Emma");
+        e("put train 1 at (-100,0) in direction -1,0");
+        e("create engine steam T4 Emma 10 true false");
+        e("add train 2 T4-Emma");
+        e("put train 2 at (0,0) in direction -1,0");
+        e("step 1");
+        assertTrue("Crash of train 1,2".contentEquals(Terminal.buffer));
+        m = new ModelRailWay();
+        ui = new UserInterface(m);
+        e("add track (0,0) -> (100,0)");
+        e("add track (0,0) -> (-100,0)");
+        e("create engine steam T3 Emma 1 true false"); //only change
+        e("add train 1 T3-Emma");
+        e("put train 1 at (-100,0) in direction -1,0");
+        e("create engine steam T4 Emma 10 true false");
+        e("add train 2 T4-Emma");
+        e("put train 2 at (0,0) in direction -1,0");
+        e("step 1");
+        assertTrue("Crash of train 1\nTrain 2 at (-1,0)".contentEquals(Terminal.buffer));
+//        e("put train 1 at (0,0) in direction 1,0");
+        
+    }
+    
+//    @Test
+//    public void findError() {
+//        
+//    }
     
     
     

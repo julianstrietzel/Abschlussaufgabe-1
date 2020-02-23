@@ -26,21 +26,40 @@ public class Railsystem {
         railnet = new RailNetwork(this);
         trainsOnTrack = new LinkedList<SetTrain>();
         crashes = new LinkedList<Crash>();
-        resetMarkersAndCrashes();
+        resetMArkers();
     }
 
     /**
      * @return die aktuellen Krasches
      */
     public List<Crash> getCrashes() {
-        return crashes;
+        LinkedList<Crash> workCrashes = new LinkedList<Crash>();
+        for (Crash c : crashes) {
+            boolean there = false;
+            for (Crash wc : workCrashes) {
+                for (SetTrain s : c.getInvolved()) {
+                    if (wc.isInvolved(s)) {
+                        there = true;
+                        wc.addInvolved(c.getInvolved());
+                    }
+                }
+            }
+            if (!there) {
+                workCrashes.add(c);
+            }
+        }
+        return workCrashes;
     }
 
     /**
-     * @return alle Züge auf dem Schienennetz
+     * @return Eine Kopie der Liste aller Züge auf dem Schienennetz
      */
-    public List<SetTrain> getTrainsOnTrack() {
-        return trainsOnTrack;
+    public List<SetTrain> getToTCopy() {
+
+        List<SetTrain> l = new LinkedList<SetTrain>();
+        l.addAll(trainsOnTrack);
+        return l;
+
     }
 
     /**
@@ -56,10 +75,9 @@ public class Railsystem {
      * 
      * @param train gesetzter Zug
      * @return ZugId als Nutzerausgabe
-     * @throws LogicalException,     wenn einer der benötigten Schienen besetzt ist
+     * @throws LogicalException, wenn einer der benötigten Schienen besetzt ist
      */
-    public String putTrain(SetTrain train, DirectionalVertex direc, Vertex pos)
-            throws LogicalException {
+    public String putTrain(SetTrain train, DirectionalVertex direc, Vertex pos) throws LogicalException {
         Rail track = railnet.findTrack(pos, direc);
         if (track == null) {
             throw new LogicalException("wrong placement");
@@ -67,7 +85,7 @@ public class Railsystem {
         if (track.isOccupied()) {
             throw new LogicalException("track occupied.");
         }
-        if (ListUtility.contains(railnet.getKnodes(), pos) != null) {
+        if (ListUtility.contains(railnet.getCopyKnodes(), pos) != null) {
             train.setDirection(track.getDirectionTo(pos)); // Auch wenn an Ecke gesetzt muss die richtige richtung
                                                            // eingespeihcer sein
         }
@@ -92,14 +110,23 @@ public class Railsystem {
      * @throws IllegalInputException
      */
     public void move(boolean forwards) throws LogicalException, IllegalInputException {
-        resetMarkersAndCrashes();
-        for (SetTrain train : trainsOnTrack) {
+        resetMArkers();
+        List<SetTrain> workTrains = new LinkedList<SetTrain>();
+        for (SetTrain s : trainsOnTrack) {
+            workTrains.add(s);
+        }
+        for (SetTrain train : workTrains) {
             if (!train.move(forwards)) {
-                train.getModel().setInUse(false);
                 trainsOnTrack.remove(train);
                 crashes.add(new Crash(train));
             } else {
-                railnet.markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
+                try {
+                    railnet.markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
+                } catch (LogicalException e) {
+                    train.getModel().setInUse(false);
+                    trainsOnTrack.remove(train);
+                    crashes.add(new Crash(train));
+                }
             }
         }
         checkCollision();
@@ -112,17 +139,17 @@ public class Railsystem {
      * @throws IllegalInputException
      */
     public void checkCollision() throws IllegalInputException {
-        for (Rail r : railnet.getRails()) {
-            List<SetTrain> workTrains = ListUtility.deleteDuplicates(r.getTrains());
+        for (Rail r : railnet.getCopyRails()) {
+            List<SetTrain> workTrains = ListUtility.deleteDuplicates(r.getCopyTrains());
             if (workTrains.size() > 1) {
-                crashes.add(new Crash(r.getTrains()));
-                for (SetTrain t : r.getTrains()) {
+                crashes.add(new Crash(r.getCopyTrains()));
+                for (SetTrain t : r.getCopyTrains()) {
                     t.getModel().setInUse(false);
                     trainsOnTrack.remove(t);
                 }
             }
         }
-        for (Knode k : railnet.getKnodes()) {
+        for (Knode k : railnet.getCopyKnodes()) {
             List<SetTrain> workTrains = ListUtility.deleteDuplicates(k.getTrains());
             if (workTrains.size() > 1) {
                 crashes.add(new Crash(k.getTrains()));
@@ -140,22 +167,22 @@ public class Railsystem {
      * @return
      */
     public boolean isAllSet() {
-        for (Switch s : railnet.getSwitches()) {
+        for (Switch s : railnet.getCopySwitches()) {
             if (!s.isSet()) {
                 return false;
             }
         }
         return true;
     }
-    
-    
+
     /**
      * Erneuert alle Marker auf dem Schienennetz
+     * 
      * @throws LogicalException, wenn interner Fehler
      */
     public void renewMarked() throws LogicalException {
-        
-        for(SetTrain s: trainsOnTrack) {
+
+        for (SetTrain s : trainsOnTrack) {
             try {
                 railnet.markBackOccupied(s, s.getPosition(), s.getDirection(), s.getRail(), false);
             } catch (IllegalInputException e) {
@@ -165,16 +192,40 @@ public class Railsystem {
     }
 
     /**
-     * resetted alle Crashes und belegten Schienen
+     * resetted belegten Schienen
      */
-    public void resetMarkersAndCrashes() {
-        for (Rail rail : railnet.getRails()) {
-            rail.getTrains().clear();
+    public void resetMArkers() {
+        for (Rail rail : railnet.getCopyRails()) {
+            rail.clearTrains();
         }
-        for (Knode kn : railnet.getKnodes()) {
-            kn.getTrains().clear();
+        for (Knode kn : railnet.getCopyKnodes()) {
+            kn.clearTrains();
         }
 //        crashes.clear();
+    }
+
+    /**
+     * Löscht das Crash-Protokoll.
+     */
+    public void clearCrashes() {
+        this.crashes.clear();
+    }
+
+    /**
+     * 
+     * @return Ob ein Zug auf der Strecke steht
+     */
+    public boolean trainsOn() {
+        return !trainsOnTrack.isEmpty();
+    }
+
+    /**
+     * Entfernt einen Zug vom Netz
+     * 
+     * @param train dieser Zug wird entfernt, wenn existierend.
+     */
+    public void removeTrain(SetTrain train) {
+        trainsOnTrack.remove(train);
     }
 
 }

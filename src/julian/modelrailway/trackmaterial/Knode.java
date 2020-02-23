@@ -47,7 +47,7 @@ public class Knode extends Vertex {
 
     /**
      * 
-     * @return dei eingehende Verbindung
+     * @return die eingehende Verbindung
      */
     public Rail getRailIn() {
         return railIn;
@@ -85,22 +85,43 @@ public class Knode extends Vertex {
         return railOut == null || railIn == null;
     }
 
-    public void resetTrains() {
-        trains.clear();
-    }
-
+    /**
+     * Fügt einen Zug zu dem Knoten hinzu
+     * @param t neuer Zug
+     */
     public void addTrain(SetTrain t) {
         trains.add(t);
     }
 
+    /**
+     * 
+     * @return die Lise an Zügen, die auf dem Gleis stehen.
+     */
     public List<SetTrain> getTrains() {
-        return trains;
+        List<SetTrain> l = new LinkedList<SetTrain>();
+        l.addAll(trains);
+        return l;
     }
 
+    /**
+     * Löscht die Liste an Zügen
+     */
+    public void clearTrains() {
+        trains.clear();
+    }
+    
+    /**
+     * 
+     * @return Ob Knoten mit Zug besetzt ist.
+     */
     public boolean hasTrain() {
         return !trains.isEmpty();
     }
     
+    /**
+     * ENtfernt die Schiene aus den Verbindungen des Knotens
+     * @param r
+     */
     public void deconnect(Rail r) {
         if(r.equals(railIn)) {
             railIn = railOut;

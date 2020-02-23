@@ -31,22 +31,28 @@ public class RailNetwork {
     /**
      * @return Alle Schienen im Netz
      */
-    public List<Rail> getRails() {
-        return rails;
+    public List<Rail> getCopyRails() {
+        LinkedList<Rail> wcRails = new LinkedList<Rail>();
+        wcRails.addAll(rails);
+        return wcRails;
     }
 
     /**
      * @return Alle Weichen im Netz
      */
-    public List<Switch> getSwitches() {
-        return switches;
+    public List<Switch> getCopySwitches() {
+        LinkedList<Switch> wcSwitch = new LinkedList<Switch>();
+        wcSwitch.addAll(switches);
+        return wcSwitch;
     }
 
     /**
      * @return the knodes
      */
-    public List<Knode> getKnodes() {
-        return knodes;
+    public List<Knode> getCopyKnodes() {
+        LinkedList<Knode> wcKnode = new LinkedList<Knode>();
+        wcKnode.addAll(knodes);
+        return wcKnode;
     }
 
     /**
@@ -202,7 +208,7 @@ public class RailNetwork {
      * @throws LogicalException, wenn Zug zu lang für Schienennetz
      */
     public boolean markBackOccupied(SetTrain train, Vertex pos, DirectionalVertex dire, Rail rail, boolean breakUp)
-            throws IllegalInputException, LogicalException {
+            throws IllegalInputException, LogicalException  {
 
         if (ListUtility.contains(knodes, train.getPosition()) != null) {
             Knode newLy = ListUtility.contains(knodes, train.getPosition());
@@ -231,7 +237,7 @@ public class RailNetwork {
             }
         }
         for (Rail newRail : newlyOccupied) {
-            newRail.getTrains().add(train);
+            newRail.addTrain(train);
         }
         return false;
     }
@@ -275,11 +281,11 @@ public class RailNetwork {
             if (id == s.getId()) {
                 s.setSwitch(point);
                 if (s.isOccupied()) {
-                    for (SetTrain t : s.getTrains()) {
+                    for (SetTrain t : s.getCopyTrains()) {
                         t.getModel().setInUse(false);
-                        rSys.getTrainsOnTrack().remove(t);
+                        rSys.removeTrain(t);
                     }
-                    rSys.resetMarkersAndCrashes();
+                    rSys.resetMArkers();
                     rSys.renewMarked();
                     s.setTrains(new LinkedList<SetTrain>());
                 }

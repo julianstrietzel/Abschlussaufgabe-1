@@ -60,6 +60,19 @@ public abstract class Event implements Comparable<Event>{
         }
         involved.sort(null);
     }
+    
+    /**
+     * Fügt mehrere neue Züge zu den beteiligten hinzu.
+     * @param tr neuer gesetzter Zug
+     */
+    public void addInvolved(List<SetTrain> trs) {
+        for (SetTrain train: trs) {
+            if (!involved.contains(train)) {
+                involved.add(train);
+            } 
+        }
+        involved.sort(null);
+    }
 
     /**
      * 

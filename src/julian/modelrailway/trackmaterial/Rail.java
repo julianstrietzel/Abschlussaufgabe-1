@@ -72,14 +72,6 @@ public class Rail implements Comparable<Rail>{
     public void removeTrain(SetTrain t) {
         trains.remove(t);
     }
-
-    /**
-     * Setzt alle Züge auf dieser Schiene neu
-     */
-    public void setTrains(List<SetTrain> trains) {
-        this.trains.clear();
-        this.trains.addAll(trains);
-    }
     
     /**
      * Löscht die Liste an Zügen
@@ -209,15 +201,6 @@ public class Rail implements Comparable<Rail>{
         } else { 
             return previous;
         }
-    }
-
-    /**
-     * Prüft, ob die Schiene zu dem Punkt eine freie Verbindung hat.
-     * @param point überprüfender Punkt.
-     * @return boolean, ob freie Verbindung
-     */
-    public boolean connectsFreeTo(Vertex point) {
-        return (point.equals(end) && this.next == null ) || (point.equals(start) && this.previous == null);
     }
     
     /**

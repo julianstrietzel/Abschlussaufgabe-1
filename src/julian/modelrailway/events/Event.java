@@ -37,8 +37,10 @@ public abstract class Event implements Comparable<Event>{
      * @return Alle beteiligten Züge.
      */
     public LinkedList<SetTrain> getInvolved() {
-        involved.sort(null);
-        return involved;
+        
+        LinkedList<SetTrain> involnew = new LinkedList<SetTrain>();
+        involnew.addAll(involved);
+        return involnew;
     }
     
     /**

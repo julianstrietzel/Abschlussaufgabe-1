@@ -287,7 +287,7 @@ public class RailNetwork {
                     }
                     rSys.resetMArkers();
                     rSys.renewMarked();
-                    s.setTrains(new LinkedList<SetTrain>());
+                    s.clearTrains();
                 }
             }
         }

@@ -1,5 +1,6 @@
 /**
  * Utility-Klasse für Operationen auf einer Liste
+ * Ist gerechtfertigt, da mehrere voneinander unabhängige Klassen sehr ähnliche Funktionen brauchen
  * @author Julian Strietzel
  */
 package julian.modelrailway.trackmaterial;
@@ -7,14 +8,14 @@ package julian.modelrailway.trackmaterial;
 import java.util.LinkedList;
 import java.util.List;
 
-
-
 public abstract class ListUtility {
 
     /**
-     * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der entsorechenden equals Funktion.
-     * @param <T> Objekttyp
-     * @param list  Liste die durchsucht werden soll
+     * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der
+     * entsorechenden equals Funktion.
+     * 
+     * @param <T>    Objekttyp
+     * @param list   Liste die durchsucht werden soll
      * @param object nach dem gesucht werden soll
      * @return
      */
@@ -26,9 +27,11 @@ public abstract class ListUtility {
         }
         return false;
     }
-    
+
     /**
-     * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der entsorechenden equals Funktion.
+     * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der
+     * entsorechenden equals Funktion.
+     * 
      * @param list
      * @param object
      * @return
@@ -43,7 +46,9 @@ public abstract class ListUtility {
     }
 
     /**
-     * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der entsorechenden equals Funktion.
+     * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der
+     * entsorechenden equals Funktion.
+     * 
      * @param list
      * @param object
      * @return
@@ -58,7 +63,9 @@ public abstract class ListUtility {
     }
 
     /**
-     * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der entsorechenden equals Funktion.
+     * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der
+     * entsorechenden equals Funktion.
+     * 
      * @param list
      * @param object
      * @return
@@ -74,19 +81,20 @@ public abstract class ListUtility {
 
     /**
      * Löscht Duplikate aus einer Líste, ohne diese zu verändern
-     * @param <T>   Typparameter für die Objekte
-     * @param list  zu bearbeitende Liste
+     * 
+     * @param <T>  Typparameter für die Objekte
+     * @param list zu bearbeitende Liste
      * @return neue Kopie der Liste ohne Duplikate
      */
     public static <T> List<T> deleteDuplicates(List<T> list) {
         List<T> workingList = new LinkedList<T>();
-        for(T ts: list) {
-            if(!workingList.contains(ts)) {
+        for (T ts : list) {
+            if (!workingList.contains(ts)) {
                 workingList.add(ts);
             }
         }
         return workingList;
-        
+
     }
 
 }

@@ -19,21 +19,6 @@ public class Knode extends Vertex {
 
     /**
      * Erstellt einen neuen Knoten mit einer eingehenden Verbindung und der Position
-     * aus den Koordinaten
-     * 
-     * @param xcoord
-     * @param ycoord
-     * @param railIn eingehende Verbindung
-     */
-    public Knode(int xcoord, int ycoord, Rail railIn) {
-    
-        super(xcoord, ycoord);
-        this.railIn = railIn;
-        trains = new LinkedList<SetTrain>();
-    }
-
-    /**
-     * Erstellt einen neuen Knoten mit einer eingehenden Verbindung und der Position
      * des Vektors.
      * 
      * @param pos    Position als Vektor
@@ -120,7 +105,7 @@ public class Knode extends Vertex {
     
     /**
      * ENtfernt die Schiene aus den Verbindungen des Knotens
-     * @param r
+     * @param r, Schiene deren Verbindung entfernt werden soll.
      */
     public void deconnect(Rail r) {
         if(r.equals(railIn)) {
@@ -160,8 +145,7 @@ public class Knode extends Vertex {
      * @param direc Ricchtung, zu der der Track passen soll
      * @return gesuchter Trakc, bei entsprechneder Richtung, oder null, falls nicht
      *         kompatibel
-     * @throws IllegalInputException 
-     * @throws LogicalException 
+     * @throws LogicalException , wenn kein entsporechender Track verbunden ist
      */
     public Rail getTrack(DirectionalVertex direc) throws LogicalException {
         

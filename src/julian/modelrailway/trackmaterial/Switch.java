@@ -138,42 +138,10 @@ public class Switch extends Rail{
     }
 
     /**
-     * 
-     * @return Ob in richtung eins gesetzt ist
-     */
-    public boolean isSetDirOne() {
-        return setDirOne;
-    }
-
-    /**
-     * bei true wird Richtung eins gesetzt, sonst zwei
-     * @param setDirOne ob Richtung eins gesetzt werdne soll
-     */
-    public void setSetDirOne(boolean setDirOne) {
-        this.setDirOne = setDirOne;
-    }
-
-    /**
      * @return die aktuellgeesetzte Richtung
      */
     public DirectionalVertex getSetDirection() {
         return setDirection;
-    }
-
-    /**
-     * 
-     * @param setDirection Richtung wird auf diese gesetzt
-     */
-    public void setSetDirection(DirectionalVertex setDirection) {
-        if(setDirection.equals(directionTwo)) {
-            this.setDirection = directionTwo;
-            setDirOne = false;
-        }
-        if(setDirection.equals(getDirection())) {
-            this.setDirection = getDirection();
-            setDirOne = true;
-        }
-       
     }
 
     /**
@@ -244,11 +212,6 @@ public class Switch extends Rail{
         }
         
         
-    }
-    
-    @Override
-    public boolean connectsFreeTo(Vertex point) {
-        return super.connectsFreeTo(point) || (point.equals(endTwo) && this.nextTwo == null );
     }
     
     @Override

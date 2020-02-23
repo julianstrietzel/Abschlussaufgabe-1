@@ -59,9 +59,10 @@ public abstract class PoweredRolling extends RollingMaterial {
     public boolean hasPower() {
         return true;
     }
+    
     @Override
     public int compareTo(RollingMaterial o) {
-        if(!(o instanceof PoweredRolling)) {
+        if(!o.hasPower()) {
             return 0;
         }
         PoweredRolling po = (PoweredRolling) o;

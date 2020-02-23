@@ -22,7 +22,7 @@ import java.io.InputStreamReader;
 public final class Terminal {
 
     public static String buffer;
-    public static boolean test;
+    public static boolean silent;
     /**
      * Reads text from the "standard" input stream, buffering characters so as to
      * provide for the efficient reading of characters, arrays, and lines. This
@@ -73,7 +73,7 @@ public final class Terminal {
      * @see String#valueOf(Object)
      */
     public static void printLine(final Object object) {
-        if(!test) {
+        if(!silent) {
             System.out.println(object); 
         }
         buffer = object.toString();

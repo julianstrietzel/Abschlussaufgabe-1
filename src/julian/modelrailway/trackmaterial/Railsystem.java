@@ -148,7 +148,13 @@ public class Railsystem {
         return true;
     }
     
-    public void renewMarked() {
+    
+    /**
+     * Erneuert alle Marker auf dem Schienennetz
+     * @throws LogicalException, wenn interner Fehler
+     */
+    public void renewMarked() throws LogicalException {
+        
         for(SetTrain s: trainsOnTrack) {
             try {
                 railnet.markBackOccupied(s, s.getPosition(), s.getDirection(), s.getRail(), false);

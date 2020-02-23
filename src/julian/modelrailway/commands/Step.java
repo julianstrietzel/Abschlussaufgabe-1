@@ -24,11 +24,11 @@ private static final String REGEX = "step ([+-]?\\d+)";
     @Override
     public void execute ( String command) {
         try {
-            int step;
+            short step;
             try {
-                step = Integer.parseInt(getMatcher(command).group(1));
+                step = Short.parseShort(getMatcher(command).group(1));
             } catch (NumberFormatException e1) {
-                throw new IllegalInputException("input is not a valid number.");
+                throw new IllegalInputException("input is not a short number.");
             }
             Terminal.printLine(model.move(step));
         }   catch (LogicalException ea) {

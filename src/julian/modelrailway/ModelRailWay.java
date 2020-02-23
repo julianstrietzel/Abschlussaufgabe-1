@@ -165,6 +165,8 @@ public class ModelRailWay {
                 rSystem.getTrainsOnTrack().remove(s);
             }
         }
+        rSystem.resetMarkersAndCrashes();
+        rSystem.renewMarked();
         return ts.deleteTrain(id);
     }
 
@@ -202,7 +204,7 @@ public class ModelRailWay {
      * @throws LogicalException,      wenn Weichen noch nicht gesetzt wurden
      * @throws IllegalInputException, wenn Fehler im Schienennetz
      */
-    public String move(int speed) throws LogicalException, IllegalInputException {
+    public String move(short speed) throws LogicalException, IllegalInputException {
         rSystem.getCrashes().clear();
         if (!rSystem.isAllSet()) {
             throw new LogicalException("position of switches not set.");
@@ -296,8 +298,9 @@ public class ModelRailWay {
      * @param point neue Einstellung der Weiche
      * @throws IllegalInputException, wenn Weiche nicht existiert oder der Punkt
      *                                nicht auf der Weiche lilegt.
+     * @throws LogicalException 
      */
-    public void setSwitch(int id, Vertex point) throws IllegalInputException {
+    public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
         rSystem.getRailNet().setSwitch(id, point);
     }
 

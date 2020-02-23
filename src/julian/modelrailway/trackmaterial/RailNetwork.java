@@ -198,10 +198,11 @@ public class RailNetwork {
      * @param breakUp ob die Funktion bei einer Collision weiter markiere n soll
      *                oder eben nicht
      * @return
-     * @throws IllegalInputException
+     * @throws IllegalInputException, wenn interner Fehler
+     * @throws LogicalException, wenn Zug zu lang für Schienennetz
      */
     public boolean markBackOccupied(SetTrain train, Vertex pos, DirectionalVertex dire, Rail rail, boolean breakUp)
-            throws IllegalInputException {
+            throws IllegalInputException, LogicalException {
 
         if (ListUtility.contains(knodes, train.getPosition()) != null) {
             Knode newLy = ListUtility.contains(knodes, train.getPosition());
@@ -216,6 +217,9 @@ public class RailNetwork {
         while (i < train.getLength()) {
             previous = next;
             next = previous.getNextInDirection(dire.getInverseDirection());
+            if(next == null) {
+                throw new LogicalException("train to long for rails");
+            }
             dire = next.getDirectionFrom(previous.getEndInDirection(dire.getInverseDirection()));
             i += next.getLength();
             if (next.isOccupied() && breakUp) {
@@ -264,8 +268,9 @@ public class RailNetwork {
      * @param id    der Weiche
      * @param point der das neue Ende sein soll
      * @throws IllegalInputException, wenn Point is not an End of the Switch
+     * @throws LogicalException 
      */
-    public void setSwitch(int id, Vertex point) throws IllegalInputException {
+    public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
         for (Switch s : switches) {
             if (id == s.getId()) {
                 s.setSwitch(point);
@@ -274,6 +279,7 @@ public class RailNetwork {
                         t.getModel().setInUse(false);
                         rSys.getTrainsOnTrack().remove(t);
                     }
+                    rSys.resetMarkersAndCrashes();
                     rSys.renewMarked();
                     s.setTrains(new LinkedList<SetTrain>());
                 }

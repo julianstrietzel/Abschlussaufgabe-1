@@ -82,7 +82,7 @@ public class Train {
      * @return , ob der Zug ein motorisiertes Element hat
      */
     public boolean hasPower() {
-        return wagons.getFirst() instanceof PoweredRolling || wagons.getLast() instanceof PoweredRolling;
+        return wagons.getFirst().hasPower() || wagons.getLast().hasPower();
 
     }
 

@@ -7,6 +7,7 @@ package julian.modelrailway.commands;
 import edu.kit.informatik.Terminal;
 import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.Exceptions.IllegalInputException;
+import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.trackmaterial.Vertex;
 
 public class SetSwitch extends Command {
@@ -39,6 +40,8 @@ private static final String REGEX = "set switch (\\d+) position \\(([-+]?\\d+),(
             Terminal.printLine("OK");
         } catch (IllegalInputException e) {
             Terminal.printError(e.getMessage());
+        } catch (LogicalException e) {
+            Terminal.printError(e.getMessage()); 
         }
     }
 

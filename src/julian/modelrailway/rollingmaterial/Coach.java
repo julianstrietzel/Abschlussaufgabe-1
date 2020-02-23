@@ -58,7 +58,7 @@ public abstract class Coach extends RollingMaterial {
     
     @Override
     public int compareTo(RollingMaterial o) {
-        if(!(o instanceof Coach)) {
+        if(o.hasPower()) {
             return 0;
         }
         Coach po = (Coach) o;

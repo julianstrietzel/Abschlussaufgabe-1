@@ -1,11 +1,13 @@
-/**
- * Allgemeine Klasse für ein rollendes Objekt.
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.rollingmaterial;
 
-public abstract class RollingMaterial implements Comparable<RollingMaterial>{
-    
+/**
+ * Allgemeine Klasse für ein rollendes Objekt.
+ * 
+ * @author Julian Strietzel
+ */
+public abstract class RollingMaterial implements Comparable<RollingMaterial> {
+
     private boolean used;
     private final int length;
     private final boolean clutchFront;
@@ -14,9 +16,10 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
 
     /**
      * Erstellt ein neues rollendes Objekt
-     * @param length    Länge
-     * @param clutchFront   Ob Kupplung vorne
-     * @param clutchBack    Ob Kupplung hinten
+     * 
+     * @param length      Länge
+     * @param clutchFront Ob Kupplung vorne
+     * @param clutchBack  Ob Kupplung hinten
      */
     public RollingMaterial(int length, boolean clutchFront, boolean clutchBack) {
         this.length = length;
@@ -24,7 +27,7 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
         this.clutchFront = clutchFront;
         used = false;
     }
-    
+
     /**
      * 
      * @return Die höhe der Stringrepräsentation des Materials
@@ -32,7 +35,7 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
     public int getVisualHeight() {
         return getVisual().length;
     }
-    
+
     /**
      * 
      * @return Ob das Material schon genutzt
@@ -40,16 +43,17 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
     public boolean isUsed() {
         return used;
     }
-    
+
     /**
      * Baut das Material in einen Zug ein
+     * 
      * @param t neuer Zug
      */
     public void concat(Train t) {
         this.used = true;
-        SetTrain(t);
+        setTrain(t);
     }
-    
+
     /**
      * Baut das Material aus dem Zug wieder aus.
      */
@@ -57,7 +61,7 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
         this.used = false;
         this.train = null;
     }
-    
+
     /**
      * 
      * @return die Länge des Zuges
@@ -65,15 +69,16 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
     public int getLength() {
         return length;
     }
-    
+
     /**
      * Setzt den Zug zudem das Material zugehörig
+     * 
      * @param t neuer Zug
      */
-    public void SetTrain(Train t) {
+    public void setTrain(Train t) {
         this.train = t;
     }
-    
+
     /**
      * 
      * @return der Zug zudem das Material zugehörig ist.
@@ -81,7 +86,7 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
     public Train getTrain() {
         return train;
     }
-    
+
     /**
      * 
      * @return ob vorne eine Kupplung
@@ -97,42 +102,45 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
     public boolean isClutchBack() {
         return clutchBack;
     }
-    
+
     /**
      * 
      * @return die ID des Materials als String
      */
     public abstract String getStringID();
-    
+
     /**
      * Bsp. "special coach"
+     * 
      * @return String Beschreibung des Types
      */
     public abstract String getTypeForAdding();
 
-    
     /**
      * Vergleicht, ob es sich nach der ID um das gleiche Material handelt.
+     * 
      * @param o anderes Material
      * @return boolean, ob das gleiche Material
      */
-    public abstract boolean equals(RollingMaterial o);
-    
+    public abstract boolean equalsRollingMat(RollingMaterial o);
+
     /**
      * Gibt ein Feld mit den Spalten der visuellen Repräsentation zurück.
+     * 
      * @return visuelle Repr als String Feld
      */
     public abstract String[] getVisual();
-    
+
     /**
-     * Gibt die String ID bei normalen Waggons mit W davor zurück.
-     * Bei anderen genauso, wie getStringID()
+     * Gibt die String ID bei normalen Waggons mit W davor zurück. Bei anderen
+     * genauso, wie getStringID()
+     * 
      * @return die String ID repräsentation
      */
     public String getWStringID() {
         return getStringID();
     }
-    
+
     /**
      * 
      * @return Die Baureihe des Materials. Bei Wagons gleich null.
@@ -140,28 +148,29 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
     public String getSeries() {
         return null;
     }
-    
+
     /**
      * 
      * @return Eine Leerzeile entsprechend der Länge des Models.
      */
     public abstract String getLeerzeile();
-    
+
     /**
      * Guckt, ob eine Liste aus PoweredRolling einen Zug mti der ID beinhaltet
+     * 
      * @param list zu überpfüfendes ELemnt von Iterable
-     * @param id zu suchende String ID
+     * @param id   zu suchende String ID
      * @return PoweredRolling, falls dieses existiert.
      */
     public static PoweredRolling exists(Iterable<PoweredRolling> list, String id) {
-        for(PoweredRolling p: list) {
-            if(id.contentEquals(p.getStringID())) {
+        for (PoweredRolling p : list) {
+            if (id.contentEquals(p.getStringID())) {
                 return p;
             }
         }
         return null;
     }
-    
+
     /**
      * 
      * @return Ob das Material motorisiert ist.
@@ -169,10 +178,10 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial>{
     public boolean hasPower() {
         return false;
     }
-    
+
     @Override
     public abstract String toString();
-    
-    @Override    
+
+    @Override
     public abstract int compareTo(RollingMaterial o);
 }

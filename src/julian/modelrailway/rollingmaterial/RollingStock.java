@@ -1,9 +1,5 @@
-/**
- * Diese Klasse speichert das gesamte RollMaterial
- * @author Julian Strietzel
- */
-package julian.modelrailway.rollingmaterial;
 
+package julian.modelrailway.rollingmaterial;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -12,7 +8,11 @@ import java.util.Map;
 
 import julian.modelrailway.Exceptions.*;
 
-
+/**
+ * Diese Klasse speichert das gesamte RollMaterial
+ * 
+ * @author Julian Strietzel
+ */
 public class RollingStock {
 
     private LinkedList<PoweredRolling> powered;
@@ -28,14 +28,15 @@ public class RollingStock {
 
     /**
      * Erstellt eine neue Lokomotive
-     * @param engineType    (electrical|diesel|steam) -> Typ der Lokomotive 
-     * @param series        Baureihe
-     * @param name          Name
-     * @param length        Länge
-     * @param cFront        Ob Kupplung vorne
-     * @param cBack         Ob Kupplung hinten
-     * @return  ID der neuen Lokomotive
-     * @throws LogicalException, wenn Lokomotive schon existiert
+     * 
+     * @param engineType (electrical|diesel|steam) -> Typ der Lokomotive
+     * @param series     Baureihe
+     * @param name       Name
+     * @param length     Länge
+     * @param cFront     Ob Kupplung vorne
+     * @param cBack      Ob Kupplung hinten
+     * @return ID der neuen Lokomotive
+     * @throws LogicalException , wenn Lokomotive schon existiert
      */
     public String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
@@ -57,13 +58,14 @@ public class RollingStock {
 
     /**
      * Erstellt einen neuen Triebzug
-     * @param series    Baureihe
-     * @param name      Name
-     * @param length    Länge
-     * @param cFront    Ob Kupplung vorne
-     * @param cBack     Ob Kupplung hinten
-     * @return  ID des neuen Triebzuges
-     * @throws LogicalException, wenn Triebzug schon existiert
+     * 
+     * @param series Baureihe
+     * @param name   Name
+     * @param length Länge
+     * @param cFront Ob Kupplung vorne
+     * @param cBack  Ob Kupplung hinten
+     * @return ID des neuen Triebzuges
+     * @throws LogicalException , wenn Triebzug schon existiert
      */
     public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
@@ -74,13 +76,14 @@ public class RollingStock {
         powered.add(new TrainSet(series, name, length, cFront, cBack));
         return powered.getLast().getID();
     }
-    
+
     public List<PoweredRolling> getPowered() {
         return powered;
     }
 
     /**
      * Erstellt einen neuen Waggon
+     * 
      * @param coachType Typ des Waggons
      * @param length    Länge
      * @param cFront    Ob Kupplung vorne
@@ -102,11 +105,13 @@ public class RollingStock {
 
     /**
      * entfernt das entsprechende RollMaterial
+     * 
      * @param isPowered Ob es sich um einen Waggon mit Motor handelt
      * @param id        Id des Materials
-     * @return  "OK"
-     * @throws IllegalInputException, wenn ID für Coach kein Integer
-     * @throws LogicalException, wenn Material in Nutzung oder nicht existiert.
+     * @return "OK"
+     * @throws IllegalInputException , wenn ID für Coach kein Integer
+     * @throws LogicalException      , wenn Material in Nutzung oder nicht
+     *                               existiert.
      */
     public String delete(boolean isPowered, String id) throws IllegalInputException, LogicalException {
         if (isPowered) {
@@ -188,15 +193,16 @@ public class RollingStock {
         return sb.substring(0, sb.length() - 1);
 
     }
-    
+
     /**
      * Sucht das Material mit der ID
-     * @param id    als String
-     * @return  das gefunden Material oder null, wenn nicht existend
+     * 
+     * @param id als String
+     * @return das gefunden Material oder null, wenn nicht existend
      */
     public RollingMaterial getWagon(String id) {
-        for(PoweredRolling p: powered) {
-            if(p.getID().contentEquals(id)) {
+        for (PoweredRolling p : powered) {
+            if (p.getID().contentEquals(id)) {
                 return p;
             }
         }

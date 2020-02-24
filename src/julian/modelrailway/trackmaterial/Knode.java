@@ -1,16 +1,17 @@
-/**
- * Ein Knotenpunkt im Schienensystem speichert ein und ausgehende Verbindungen und seine eigene Position.
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.rollingmaterial.SetTrain;
 
+/**
+ * Ein Knotenpunkt im Schienensystem speichert ein und ausgehende Verbindungen
+ * und seine eigene Position.
+ * 
+ * @author Julian Strietzel
+ */
 public class Knode extends Vertex {
 
     private Rail railIn;
@@ -72,6 +73,7 @@ public class Knode extends Vertex {
 
     /**
      * Fügt einen Zug zu dem Knoten hinzu
+     * 
      * @param t neuer Zug
      */
     public void addTrain(SetTrain t) {
@@ -94,7 +96,7 @@ public class Knode extends Vertex {
     public void clearTrains() {
         trains.clear();
     }
-    
+
     /**
      * 
      * @return Ob Knoten mit Zug besetzt ist.
@@ -102,18 +104,19 @@ public class Knode extends Vertex {
     public boolean hasTrain() {
         return !trains.isEmpty();
     }
-    
+
     /**
      * ENtfernt die Schiene aus den Verbindungen des Knotens
-     * @param r, Schiene deren Verbindung entfernt werden soll.
+     * 
+     * @param r , Schiene deren Verbindung entfernt werden soll.
      */
     public void deconnect(Rail r) {
-        if(r.equals(railIn)) {
+        if (r.equals(railIn)) {
             railIn = railOut;
             railOut = null;
         }
-        
-        if(r.equals(railOut)) {
+
+        if (r.equals(railOut)) {
             railOut = null;
         }
     }
@@ -125,7 +128,7 @@ public class Knode extends Vertex {
     public boolean isUseless() {
         return railIn == null && railOut == null;
     }
-    
+
     /**
      * 
      * @param railone nciht interessierende Schiene
@@ -148,29 +151,29 @@ public class Knode extends Vertex {
      * @throws LogicalException , wenn kein entsporechender Track verbunden ist
      */
     public Rail getTrack(DirectionalVertex direc) throws LogicalException {
-        
-            if (railIn != null) {
-                if (this.equals(railIn.getEndInDirection(direc))) {
-                    return railIn;
-                }
-                if (direc.compatibleDirection(railIn.getSetDirection())) {
-                    if (railOut != null) {
-                        return railOut;
-                    }
-                    throw new LogicalException("no fitting Track existing.");
-                } 
+
+        if (railIn != null) {
+            if (this.equals(railIn.getEndInDirection(direc))) {
+                return railIn;
             }
-            if (railOut != null) {
-                if (this.equals(railOut.getEndInDirection(direc))) {
+            if (direc.compatibleDirection(railIn.getSetDirection())) {
+                if (railOut != null) {
                     return railOut;
                 }
-                if (direc.compatibleDirection(railOut.getSetDirection())) {
-                    if (railIn != null) {
-                        return railIn;
-                    }
-                    throw new LogicalException("no fitting Track existing.");
-                } 
+                throw new LogicalException("no fitting Track existing.");
             }
-            throw new LogicalException("no fitting Track existing.");        
+        }
+        if (railOut != null) {
+            if (this.equals(railOut.getEndInDirection(direc))) {
+                return railOut;
+            }
+            if (direc.compatibleDirection(railOut.getSetDirection())) {
+                if (railIn != null) {
+                    return railIn;
+                }
+                throw new LogicalException("no fitting Track existing.");
+            }
+        }
+        throw new LogicalException("no fitting Track existing.");
     }
 }

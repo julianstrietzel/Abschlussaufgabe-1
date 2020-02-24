@@ -1,13 +1,15 @@
-/**
- * Ein Zug, konkateniert aus Rollmaterial
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.rollingmaterial;
 
 import java.util.LinkedList;
 
 import julian.modelrailway.Exceptions.LogicalException;
 
+/**
+ * Ein Zug, konkateniert aus Rollmaterial
+ * 
+ * @author Julian Strietzel
+ */
 public class Train {
 
     private final LinkedList<RollingMaterial> wagons;
@@ -19,7 +21,7 @@ public class Train {
      * 
      * @param first erstes Rollmaterial
      * @param id    Id des Zuges
-     * @throws LogicalException, wenn first schon benutzt wird
+     * @throws LogicalException , wenn first schon benutzt wird
      */
     public Train(RollingMaterial first, int id) throws LogicalException {
         wagons = new LinkedList<RollingMaterial>();
@@ -35,20 +37,20 @@ public class Train {
     /**
      * Hängt hinten ein Rollmaterial an
      * 
-     * @param newWagon
-     * @return <newWagon> added to <ZugID>
-     * @throws LogicalException, wenn Kupplungen nicht kompatibel oder falscher
-     *                           Triebzug
+     * @param newWagon der angehängt werden soll
+     * @return newWagon added to ZugID
+     * @throws LogicalException , wenn Kupplungen nicht kompatibel oder falscher
+     *                          Triebzug
      */
     public String add(RollingMaterial newWagon) throws LogicalException {
-        //Überprüfung nach passenden Clutches
+        // Überprüfung nach passenden Clutches
         if (!(wagons.getLast().isClutchBack() && newWagon.isClutchFront())) {
             throw new LogicalException("clutches not compatible.");
         }
-        //Überprüfung nach Train-Sets
+        // Überprüfung nach Train-Sets
         boolean lastTrainSet = wagons.getLast() instanceof TrainSet;
         if (lastTrainSet && newWagon instanceof TrainSet) {
-            if (!wagons.getLast().getSeries().equals(newWagon.getSeries())) { 
+            if (!wagons.getLast().getSeries().equals(newWagon.getSeries())) {
                 throw new LogicalException("only train-sets of the same class can be concatenated.");
             }
         } else if (wagons.getLast() instanceof TrainSet || newWagon instanceof TrainSet) {
@@ -71,7 +73,7 @@ public class Train {
     /**
      * Setzt use auf den neuen Wert
      * 
-     * @param use
+     * @param use neuer Wert
      */
     public void setInUse(boolean use) {
         this.inUse = use;

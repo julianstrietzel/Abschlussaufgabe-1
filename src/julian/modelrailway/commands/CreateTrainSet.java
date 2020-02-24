@@ -1,13 +1,15 @@
-/**
- * Der create Egine Befehl fügt einen neuen Triebwagen hinzu.
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.commands;
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.main.ModelRailWay;
 
+/**
+ * Der create Egine Befehl fügt einen neuen Triebwagen hinzu.
+ * 
+ * @author Julian Strietzel
+ */
 public class CreateTrainSet extends Command {
 
     private static final String REGEX = "create train-set (\\w+) (\\w+) (\\d+) (true|false) (true|false)";

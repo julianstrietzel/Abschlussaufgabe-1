@@ -1,29 +1,32 @@
-/**
- * Der set switch Befehl setzt eine Weiche.
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.commands;
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.main.ModelRailWay;
 import julian.modelrailway.trackmaterial.Vertex;
 
+/**
+ * Der set switch Befehl setzt eine Weiche.
+ * 
+ * @author Julian Strietzel
+ */
 public class SetSwitch extends Command {
 
-private static final String REGEX = "set switch (\\d+) position \\(([-+]?\\d+),([-+]?\\d+)\\)"; 
-    
+    private static final String REGEX = "set switch (\\d+) position \\(([-+]?\\d+),([-+]?\\d+)\\)";
+
     /**
      * Erstellt einen neuen Command, der das set switch Pattern akzeptiert.
+     * 
      * @param model Bezugsmodelleisenbahn
      */
     public SetSwitch(ModelRailWay model) {
         super(model, REGEX);
     }
-    
+
     @Override
-    public void execute ( String command) {
+    public void execute(String command) {
         try {
             int id;
             int xcoord;
@@ -41,7 +44,7 @@ private static final String REGEX = "set switch (\\d+) position \\(([-+]?\\d+),(
         } catch (IllegalInputException e) {
             Terminal.printError(e.getMessage());
         } catch (LogicalException e) {
-            Terminal.printError(e.getMessage()); 
+            Terminal.printError(e.getMessage());
         }
     }
 

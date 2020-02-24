@@ -1,12 +1,15 @@
-/**
- * Ein gesetzter Zug auf dem Schienennetz aufgebaut nach einem Zug aus dem TrainStock
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.rollingmaterial;
 
 import julian.modelrailway.Exceptions.*;
 import julian.modelrailway.trackmaterial.*;
 
+/**
+ * Ein gesetzter Zug auf dem Schienennetz aufgebaut nach einem Zug aus dem
+ * TrainStock
+ * 
+ * @author Julian Strietzel
+ */
 public class SetTrain implements Comparable<SetTrain> {
 
     private DirectionalVertex direction;
@@ -107,10 +110,10 @@ public class SetTrain implements Comparable<SetTrain> {
      * 
      * @param forwards Richtung des Zuges
      * @return Boolean ob erfolgreich
-     * @throws IllegalInputException
-     * @throw wird nicht geworfen
+     * @throws IllegalInputException , wenn nächste Schiene nicht existiert
+     * @throws LogicalInputException , wenn Fehler im markoccupied()
      */
-    public boolean move(boolean forwards) throws LogicalException, IllegalInputException { // TODO backwards driving
+    public boolean move(boolean forwards) throws LogicalException, IllegalInputException {
 
         if (forwards) {
             if (position.equals(rail.getEndInDirection(direction))) {
@@ -132,9 +135,7 @@ public class SetTrain implements Comparable<SetTrain> {
             position = position.add(direction);
         } else {
             Rail now = rail;
-            if (position.equals(rail.getEndInDirection(direction.getInverseDirection()))) { // TODO change to last
-                                                                                            // position
-
+            if (position.equals(rail.getEndInDirection(direction.getInverseDirection()))) {
                 rail = rail.getNextInDirection(direction.getInverseDirection());
 
                 if (rail == null || !rail.isSetCorrectly(position)) {

@@ -1,10 +1,5 @@
-/**
- * Oberste Verwaltungsklasse.
- * Verwaltet Züge im TrainStock, das Schienennetz inkl. fahrender Züge im Railsystem und 
- * das RollMaterial im RollingStock.
- * @author Julian Strietzel
- */
-package julian.modelrailway;
+
+package julian.modelrailway.main;
 
 import java.util.LinkedList;
 
@@ -14,6 +9,12 @@ import julian.modelrailway.events.TrainMoved;
 import julian.modelrailway.rollingmaterial.*;
 import julian.modelrailway.trackmaterial.*;
 
+/**
+ * Oberste Verwaltungsklasse. Verwaltet Züge im TrainStock, das Schienennetz
+ * inkl. fahrender Züge im Railsystem und das RollMaterial im RollingStock.
+ * 
+ * @author Julian Strietzel
+ */
 public class ModelRailWay {
 
     private final Railsystem rSystem;
@@ -37,9 +38,9 @@ public class ModelRailWay {
      * @param endX   X-Koordinate des Endpunktes
      * @param endY   Y-Koordinate des Endpunktes
      * @return Ausgabe für den Nutzer
-     * @throws IllegalInputException, wenn die Länge der Schiene null ist.
-     * @throws LogicalException,      wenn es logische Fehler in der Interaktion mit
-     *                                dem restlichen Schienennetz gibt.
+     * @throws IllegalInputException , wenn die Länge der Schiene null ist.
+     * @throws LogicalException      , wenn es logische Fehler in der Interaktion
+     *                               mit dem restlichen Schienennetz gibt.
      */
     public String addTrack(int startX, int startY, int endX, int endY) throws IllegalInputException, LogicalException {
         return "" + rSystem.getRailNet().addRail(new Vertex(startX, startY), new Vertex(endX, endY));
@@ -55,9 +56,9 @@ public class ModelRailWay {
      * @param end2x  X-Koordinate des zweiten Endpunktes
      * @param end2Y  Y-Koordinate des zweiten Endpunktes
      * @return Ausgabe für den Nutzer
-     * @throws IllegalInputException, wenn die Länge der Schiene null ist.
-     * @throws LogicalException,      wenn es logische Fehler in der Interaktion mit
-     *                                dem restlichen Schienennetz gibt.
+     * @throws IllegalInputException , wenn die Länge der Schiene null ist.
+     * @throws LogicalException      , wenn es logische Fehler in der Interaktion
+     *                               mit dem restlichen Schienennetz gibt.
      */
     public String addSwitch(int startX, int startY, int endX, int endY, int end2x, int end2y)
             throws IllegalInputException, LogicalException {
@@ -90,7 +91,7 @@ public class ModelRailWay {
      * @param cFront     Ob die Lok vorne eine Kupplung hat
      * @param cBack      Ob die Lok hinten eine Kupplung hat
      * @return Nutzer Ausgabe
-     * @throws LogicalException, wenn Lok schon existiert
+     * @throws LogicalException , wenn Lok schon existiert
      */
     public String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
@@ -106,7 +107,7 @@ public class ModelRailWay {
      * @param cFront Ob der Triebwagen vorne eine Kupplung hat
      * @param cBack  Ob der Triebwagen hinten eine Kupplung hat
      * @return Nutzer Ausgabe
-     * @throws LogicalException, wenn Triebwagen schon existiert
+     * @throws LogicalException , wenn Triebwagen schon existiert
      */
     public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
@@ -119,8 +120,8 @@ public class ModelRailWay {
      * @param isPowered Ob es sich um etwas motorisiertes handelt
      * @param id        String Id des gesuchten Materials
      * @return Nutzerausgabe
-     * @throws IllegalInputException, wenn ID für Waggon kein Integer.
-     * @throws LogicalException,      Material in Benutzung oder nicht existiert.
+     * @throws IllegalInputException , wenn ID für Waggon kein Integer.
+     * @throws LogicalException      , Material in Benutzung oder nicht existiert.
      */
     public String delete(boolean isPowered, String id) throws IllegalInputException, LogicalException {
         return rstock.delete(isPowered, id);
@@ -145,8 +146,8 @@ public class ModelRailWay {
      * @param trainID neue ID des Zuges
      * @param rollID  ID des RollMaterials, das angehängt werden soll
      * @return Nutzerausgabe
-     * @throws LogicalException, RollMaterial nicht existiert oder schon verbaut
-     *                           ist, der Zug fährt oder die ID Vergabe falsch ist
+     * @throws LogicalException , RollMaterial nicht existiert oder schon verbaut
+     *                          ist, der Zug fährt oder die ID Vergabe falsch ist
      */
     public String addTrain(int trainID, String rollID) throws LogicalException {
         return ts.addTrain(trainID, rollID);
@@ -157,7 +158,7 @@ public class ModelRailWay {
      * 
      * @param id ID des Zuges
      * @return Nutzerausgabe
-     * @throws LogicalException, wenn Zug nicht existiert.
+     * @throws LogicalException , wenn Zug nicht existiert.
      */
     public String deleteTrain(int id) throws LogicalException {
         for (SetTrain s : rSystem.getToTCopy()) {
@@ -177,7 +178,7 @@ public class ModelRailWay {
      * @param pos       neue Position auf die gesetzt werden soll
      * @param direction Richtung in die gesetzt werden soll
      * @return Nutzerausgabe
-     * @throws LogicalException, wenn Zug schon existiert, oder auf dem Netz steht
+     * @throws LogicalException , wenn Zug schon existiert, oder auf dem Netz steht
      */
     public String putTrain(int id, Vertex pos, DirectionalVertex direction) throws LogicalException {
         Train model = ts.getTrain(id);
@@ -201,8 +202,8 @@ public class ModelRailWay {
      * 
      * @param speed Anzahl an Schritten
      * @return Neue Positionen und Crashes
-     * @throws LogicalException,      wenn Weichen noch nicht gesetzt wurden
-     * @throws IllegalInputException, wenn Fehler im Schienennetz
+     * @throws LogicalException      , wenn Weichen noch nicht gesetzt wurden
+     * @throws IllegalInputException , wenn Fehler im Schienennetz
      */
     public String move(short speed) throws LogicalException, IllegalInputException {
         rSystem.clearCrashes();
@@ -257,7 +258,7 @@ public class ModelRailWay {
      * 
      * @param trainID ID des Zuges
      * @return STring Visualisierung eines Zuges
-     * @throws LogicalException, wenn Zug nicht existiert
+     * @throws LogicalException , wenn Zug nicht existiert
      */
     public String showTrain(int trainID) throws LogicalException {
         try {
@@ -296,9 +297,9 @@ public class ModelRailWay {
      * 
      * @param id    der Weiche
      * @param point neue Einstellung der Weiche
-     * @throws IllegalInputException, wenn Weiche nicht existiert oder der Punkt
-     *                                nicht auf der Weiche lilegt.
-     * @throws LogicalException 
+     * @throws IllegalInputException , wenn Weiche nicht existiert oder der Punkt
+     *                               nicht auf der Weiche liegt.
+     * @throws LogicalException      , wenn Fehler in markoccupied()
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
         rSystem.getRailNet().setSwitch(id, point);

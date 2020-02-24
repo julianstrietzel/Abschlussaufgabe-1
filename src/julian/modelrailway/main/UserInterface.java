@@ -1,16 +1,16 @@
-package julian.modelrailway;
-
-/**
- * Das UserInterface verwaltet alle Commands und sucht einen zur Eingabe passenden raus.
- * @author Julian Strietzel
- */
+package julian.modelrailway.main;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import julian.modelrailway.commands.*;
-import julian.modelrailway.ModelRailWay;
 
+/**
+ * Das UserInterface verwaltet alle Commands und sucht einen zur Eingabe
+ * passenden raus.
+ * 
+ * @author Julian Strietzel
+ */
 public class UserInterface {
 
     private final List<Command> commands;
@@ -48,7 +48,7 @@ public class UserInterface {
     /**
      * Führt den Befehl mit dem Userinput aus
      * 
-     * @param command
+     * @param command String des Userinputs
      */
     public void executeCommand(String command) {
         getCommand(command).execute(command);

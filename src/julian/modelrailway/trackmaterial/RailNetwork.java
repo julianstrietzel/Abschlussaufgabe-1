@@ -1,7 +1,4 @@
-/**
- * 
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
@@ -11,6 +8,11 @@ import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.rollingmaterial.SetTrain;
 
+/**
+ * Das Netzwerk speichert alle schienen und Knotenpunkte
+ * 
+ * @author Julian Strietzel
+ */
 public class RailNetwork {
 
     private final LinkedList<Rail> rails;
@@ -82,7 +84,7 @@ public class RailNetwork {
      * Entfernt eine Schiene aus dem Netz, wenn diese nicht notwendig ist
      * 
      * @param id der Schiene
-     * @throws LogicalException, wenn Schiene notwendig oder besetzt
+     * @throws LogicalException , wenn Schiene notwendig oder besetzt
      */
     public void deleteTrack(int id) throws LogicalException {
         Rail dRail = getRailinSystem(id);
@@ -131,7 +133,7 @@ public class RailNetwork {
      * 
      * @param id der Schiene
      * @return Rail mit id, wenn existend
-     * @throws LogicalException, wenn nicht existend
+     * @throws LogicalException , wenn nicht existend
      */
     private Rail getRailinSystem(int id) throws LogicalException {
         for (Rail rail : rails) {
@@ -176,7 +178,7 @@ public class RailNetwork {
      * Guckt, ob die Knoten noch frei sind
      * 
      * @param knodes Liste an Knoten, die zu überprüfen sind
-     * @throws IllegalInputException, wenn einer der Knoten ncith im System ist
+     * @throws IllegalInputException , wenn einer der Knoten ncith im System ist
      */
     private void checkFreeKnodes(List<Vertex> knodes) throws LogicalException {
         int freeKnodes = 0;
@@ -204,17 +206,17 @@ public class RailNetwork {
      * @param breakUp ob die Funktion bei einer Collision weiter markiere n soll
      *                oder eben nicht
      * @return
-     * @throws IllegalInputException, wenn interner Fehler
-     * @throws LogicalException, wenn Zug zu lang für Schienennetz
+     * @throws IllegalInputException , wenn interner Fehler
+     * @throws LogicalException      , wenn Zug zu lang für Schienennetz
      */
     public boolean markBackOccupied(SetTrain train, Vertex pos, DirectionalVertex dire, Rail rail, boolean breakUp)
-            throws IllegalInputException, LogicalException  {
-
+            throws IllegalInputException, LogicalException {
+        DirectionalVertex direc = dire;
         if (ListUtility.contains(knodes, train.getPosition()) != null) {
             Knode newLy = ListUtility.contains(knodes, train.getPosition());
             newLy.addTrain(train);
         }
-        int i = rail.getSpaceLeftBehind(pos, dire);
+        int i = rail.getSpaceLeftBehind(pos, direc);
         LinkedList<Rail> newlyOccupied = new LinkedList<Rail>();
         newlyOccupied.add(rail);
         train.setRail(rail);
@@ -222,18 +224,18 @@ public class RailNetwork {
         Rail previous;
         while (i < train.getLength()) {
             previous = next;
-            next = previous.getNextInDirection(dire.getInverseDirection());
-            if(next == null) {
+            next = previous.getNextInDirection(direc.getInverseDirection());
+            if (next == null) {
                 throw new LogicalException("train to long for rails");
             }
-            dire = next.getDirectionFrom(previous.getEndInDirection(dire.getInverseDirection()));
+            direc = next.getDirectionFrom(previous.getEndInDirection(direc.getInverseDirection()));
             i += next.getLength();
             if (next.isOccupied() && breakUp) {
                 return true;
             }
             newlyOccupied.add(next);
             if (i == train.getLength()) {
-                ListUtility.contains(knodes, next.getEndInDirection(dire)).addTrain(train);
+                ListUtility.contains(knodes, next.getEndInDirection(direc)).addTrain(train);
             }
         }
         for (Rail newRail : newlyOccupied) {
@@ -248,7 +250,7 @@ public class RailNetwork {
      * @param pos   Position der Schiene
      * @param direc Richtung
      * @return gefunde Schiene
-     * @throws LogicalException, wenn Schiene nicht existiert
+     * @throws LogicalException , wenn Schiene nicht existiert
      */
     public Rail findTrack(Vertex pos, DirectionalVertex direc) throws LogicalException {
         for (Knode knode : knodes) {
@@ -274,7 +276,7 @@ public class RailNetwork {
      * @param id    der Weiche
      * @param point der das neue Ende sein soll
      * @throws IllegalInputException, wenn Point is not an End of the Switch
-     * @throws LogicalException 
+     * @throws LogicalException       , wenn Fehle rim MarkOccupied
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
         for (Switch s : switches) {
@@ -300,9 +302,9 @@ public class RailNetwork {
      * @param endOne erster Endpunkt
      * @param endTwo zweiter Endpunkt
      * @return eindeutige ID der neuen Weiche
-     * @throws IllegalInputException, wenn Länge null
-     * @throws LogicalException,      wenn der Track schon existiert oder bei
-     *                                Schienennetzkollisioen
+     * @throws IllegalInputException , wenn Länge null
+     * @throws LogicalException      , wenn der Track schon existiert oder bei
+     *                               Schienennetzkollisioen
      */
     public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
 
@@ -380,9 +382,9 @@ public class RailNetwork {
      * @param start Startpunkt
      * @param end   Endpunkt
      * @return eindeutige ID der neuen Schiene
-     * @throws IllegalInputException, wenn Länge null
-     * @throws LogicalException,      wenn der Track schon existiert oder bei
-     *                                Schienennetzkollisioen
+     * @throws IllegalInputException , wenn Länge null
+     * @throws LogicalException      , wenn der Track schon existiert oder bei
+     *                               Schienennetzkollisioen
      */
     public int addRail(Vertex start, Vertex end) throws IllegalInputException, LogicalException {
         Rail newRail = new Rail(start, end, getNextFreeID());

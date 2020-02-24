@@ -1,29 +1,32 @@
-/**
- * Erstellt einen neuen Command, der das Delete-Track Pattern akzeptiert. 
- * Bei der Ausführung wird die entsprechende Schiene gelöscht.
- * @param model
- */
+
 package julian.modelrailway.commands;
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.main.ModelRailWay;
 
+/**
+ * Erstellt einen neuen Command, der das Delete-Track Pattern akzeptiert. Bei
+ * der Ausführung wird die entsprechende Schiene gelöscht.
+ * 
+ * @param model
+ */
 public class DeleteTrack extends Command {
 
-private static final String REGEX = "delete track (\\d+)"; 
-    
+    private static final String REGEX = "delete track (\\d+)";
+
     /**
      * Erstellt einen neuen Befehl mit delete-Pattern.
+     * 
      * @param model Bezugsmodelleisenbahn
      */
     public DeleteTrack(ModelRailWay model) {
         super(model, REGEX);
     }
-    
+
     @Override
-    public void execute ( String command) {
+    public void execute(String command) {
         try {
             int id;
             try {

@@ -1,7 +1,4 @@
-/**
- * Event speichert ein Geschehniss und die beteiligten Züge.
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.events;
 
 import java.util.LinkedList;
@@ -9,21 +6,28 @@ import java.util.List;
 
 import julian.modelrailway.rollingmaterial.SetTrain;
 
-public abstract class Event implements Comparable<Event>{
+/**
+ * Event speichert ein Geschehniss und die beteiligten Züge.
+ * 
+ * @author Julian Strietzel
+ */
+public abstract class Event implements Comparable<Event> {
 
     private final LinkedList<SetTrain> involved;
 
     /**
      * Erstellt ein neues Event mit dem gesetzten Zug invol.
+     * 
      * @param invol beteiligter Zug
      */
     public Event(SetTrain invol) {
         involved = new LinkedList<SetTrain>();
         involved.add(invol);
     }
-    
+
     /**
      * Erstellt ein neues Event mit allen Zügen aus invol.
+     * 
      * @param invol alle involvierten Züge
      */
     public Event(List<SetTrain> invol) {
@@ -31,18 +35,18 @@ public abstract class Event implements Comparable<Event>{
         involved.addAll(invol);
         involved.sort(null);
     }
-    
+
     /**
      * 
      * @return Alle beteiligten Züge.
      */
     public LinkedList<SetTrain> getInvolved() {
-        
+
         LinkedList<SetTrain> involnew = new LinkedList<SetTrain>();
         involnew.addAll(involved);
         return involnew;
     }
-    
+
     /**
      * 
      * @param newly ersetzt die aktuell involvierten Züge
@@ -51,27 +55,29 @@ public abstract class Event implements Comparable<Event>{
         involved.clear();
         involved.addAll(newly);
     }
-  
+
     /**
      * Fügt einen neuen Zug zu den beteiligten hinzu.
+     * 
      * @param tr neuer gesetzter Zug
      */
     public void addInvolved(SetTrain tr) {
-        if(!involved.contains(tr)) {
+        if (!involved.contains(tr)) {
             involved.add(tr);
         }
         involved.sort(null);
     }
-    
+
     /**
      * Fügt mehrere neue Züge zu den beteiligten hinzu.
-     * @param tr neuer gesetzter Zug
+     * 
+     * @param trs neuer gesetzter Zug
      */
     public void addInvolved(List<SetTrain> trs) {
-        for (SetTrain train: trs) {
+        for (SetTrain train : trs) {
             if (!involved.contains(train)) {
                 involved.add(train);
-            } 
+            }
         }
         involved.sort(null);
     }
@@ -81,9 +87,10 @@ public abstract class Event implements Comparable<Event>{
      * @return Die Nachricht des Events
      */
     public abstract String getMessage();
-    
+
     /**
      * Überprüft, ob der Zug am Event beteiligt ist.
+     * 
      * @param t zu überprüfender Zug
      * @return WW, ob t beteiligt.
      */
@@ -91,9 +98,9 @@ public abstract class Event implements Comparable<Event>{
         return involved.contains(t);
     }
 
-    @Override 
+    @Override
     public int compareTo(Event e) {
         return getInvolved().getFirst().compareTo(e.getInvolved().getFirst());
     }
-    
+
 }

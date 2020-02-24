@@ -1,14 +1,15 @@
-/**
- * Ein Comparator für RollMaterial
- * Sortiert Lexikografisch nach String ID des ELemnets
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.rollingmaterial;
 
 import java.util.Comparator;
 
-public class RollingMaterialComparator implements Comparator <RollingMaterial>{
-
+/**
+ * Ein Comparator für RollMaterial Sortiert Lexikografisch nach String ID des
+ * ELemnets
+ * 
+ * @author Julian Strietzel
+ */
+public class RollingMaterialComparator implements Comparator<RollingMaterial> {
 
     /**
      * Erstellt einen neuen RollingMaterialCompaarator
@@ -23,7 +24,7 @@ public class RollingMaterialComparator implements Comparator <RollingMaterial>{
         if (one == null) {
             return -1;
         }
-        if(two == null) {
+        if (two == null) {
             return 1;
         }
         return one.compareToIgnoreCase(two);

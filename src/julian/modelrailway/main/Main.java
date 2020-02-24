@@ -1,12 +1,13 @@
-package julian.modelrailway;
+package julian.modelrailway.main;
+
+import edu.kit.informatik.Terminal;
+import julian.modelrailway.main.ModelRailWay;
 
 /**
  * Main-Klasse, die die Modelleisenbahn laufen lässt
+ * 
  * @author Julian Strietzel
  */
-
-import edu.kit.informatik.Terminal;
-
 public class Main {
 
     /**

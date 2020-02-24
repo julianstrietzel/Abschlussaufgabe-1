@@ -1,7 +1,4 @@
-/**
- * Repräsentiert eine einfache Schiene im Scheinenetz
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
@@ -11,7 +8,12 @@ import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.rollingmaterial.SetTrain;
 
-public class Rail implements Comparable<Rail>{
+/**
+ * Repräsentiert eine einfache Schiene im Scheinenetz
+ * 
+ * @author Julian Strietzel
+ */
+public class Rail implements Comparable<Rail> {
 
     private final Vertex start;
     private final Vertex end;
@@ -23,16 +25,17 @@ public class Rail implements Comparable<Rail>{
 
     /**
      * Erstellt eine neue Schiene mit Start, Ende und ID
+     * 
      * @param start der Startpunkt
      * @param end   der Endpunkt
      * @param id    die ID
-     * @throws IllegalInputException, falls Start und Ende inkompatibel
+     * @throws IllegalInputException , falls Start und Ende inkompatibel
      */
     public Rail(Vertex start, Vertex end, int id) throws IllegalInputException {
         this.end = end;
         this.id = id;
         this.start = start;
-        if(!(start.getXcoord() - end.getXcoord() == 0 ^ start.getYcoord() - end.getYcoord() == 0)) {
+        if (!(start.getXcoord() - end.getXcoord() == 0 ^ start.getYcoord() - end.getYcoord() == 0)) {
             throw new IllegalInputException("wrong start and end.");
         }
         this.direction = start.normedDirection(end);
@@ -56,38 +59,40 @@ public class Rail implements Comparable<Rail>{
     public int getId() {
         return id;
     }
-    
+
     /**
      * Fügt einen Zug zu dem Knoten hinzu
+     * 
      * @param t neuer Zug
      */
     public void addTrain(SetTrain t) {
         trains.add(t);
     }
-    
+
     /**
      * Entfernt den gewünschten Zug aus der Schiene
+     * 
      * @param t zu entfernender Zug
      */
     public void removeTrain(SetTrain t) {
         trains.remove(t);
     }
-    
+
     /**
      * Löscht die Liste an Zügen
      */
     public void clearTrains() {
         trains.clear();
     }
-   
+
     /**
      * 
      * @return die Richtung in die gesetzt ist.
      */
     public DirectionalVertex getSetDirection() {
         return direction;
-    } 
-    
+    }
+
     /**
      * 
      * @return Schiene, die als nächste abgespeichert ist
@@ -127,7 +132,7 @@ public class Rail implements Comparable<Rail>{
     public boolean isOccupied() {
         return !trains.isEmpty();
     }
-    
+
     /**
      * 
      * @return Startpunkt der Schiene
@@ -143,7 +148,7 @@ public class Rail implements Comparable<Rail>{
     public Vertex getEnd() {
         return end;
     }
-    
+
     /**
      * 
      * @return Länge der Schiene
@@ -151,7 +156,7 @@ public class Rail implements Comparable<Rail>{
     public int getLength() {
         return Math.max(Math.abs(start.getXcoord() - end.getXcoord()), Math.abs(start.getYcoord() - end.getYcoord()));
     }
-    
+
     /**
      * 
      * @return Richtung der Schiene
@@ -159,94 +164,102 @@ public class Rail implements Comparable<Rail>{
     public DirectionalVertex getDirection() {
         return direction;
     }
-    
+
     /**
-     * Gibt die Richtung, in die die Schiene zeigt, wenn point der Start oder das Ende ist.
+     * Gibt die Richtung, in die die Schiene zeigt, wenn point der Start oder das
+     * Ende ist.
+     * 
      * @param point Punkt von dem aus die Richtung losgehen soll
      * @return
      */
     public DirectionalVertex getDirectionFrom(Vertex point) {
-        if(this.start.equals(point)) {
+        if (this.start.equals(point)) {
             return this.direction;
         } else {
             return this.direction.getInverseDirection();
         }
     }
-    
+
     /**
      * Gibt die Richtungan um nach point zu kommen.
+     * 
      * @param point Zielpunkt
      * @return Richtung zum Zielpunkt
      */
     public DirectionalVertex getDirectionTo(Vertex point) {
-        if(this.end.equals(point)) {
+        if (this.end.equals(point)) {
             return this.direction;
         } else {
             return this.direction.getInverseDirection();
         }
     }
-    
+
     /**
      * Sucht die nächste Schiene in der entsprechenden Richtung
+     * 
      * @param direction Richtung in der gesuchten werden soll
-     * @return  nächste Schiene oder null, wenn diese nicht existiert
-     * @throws IllegalInputException, wenn Richtung nicht mit der Schiennerichtung übereinstimmt.
+     * @return nächste Schiene oder null, wenn diese nicht existiert
+     * @throws IllegalInputException , wenn Richtung nicht mit der Schiennerichtung
+     *                               übereinstimmt.
      */
     public Rail getNextInDirection(DirectionalVertex direction) throws IllegalInputException {
-        if(!this.direction.compatibleDirection(direction)) {
+        if (!this.direction.compatibleDirection(direction)) {
             throw new IllegalInputException("wrong directional Input");
         }
-        if(this.direction.equalsDirection(direction)) {
+        if (this.direction.equalsDirection(direction)) {
             return next;
-        } else { 
+        } else {
             return previous;
         }
     }
-    
+
     /**
      * Guckt, ob eine Schiene korrekt gesetz ist nur Relevant bei Gleisschienen.
-     * @param posiVer Ob dieser Vektor  auf der Schinee liegt
+     * 
+     * @param posiVer Ob dieser Vektor auf der Schinee liegt
      * @return WW, ob korrekt gesetzt
      */
     public boolean isSetCorrectly(Vertex posiVer) {
         return true;
     }
-    
+
     /**
-     * Setzt bei die nächste Schiene oder vorherige, jenachdem ob der Point dem Ende oder Start entspricht
+     * Setzt bei die nächste Schiene oder vorherige, jenachdem ob der Point dem Ende
+     * oder Start entspricht
+     * 
      * @param newRail
      * @param point
-     * @throws LogicalException 
+     * @throws LogicalException
      */
     public void connectEasy(Rail newRail, Vertex point) throws LogicalException {
-     if(point.equals(this.start)) {
-         this.setPrevious(newRail);
-         return;
-     }
-     if(point.equals(this.end)) {
-         this.setNext(newRail);
-         return;
-     }
-     throw new LogicalException("Punkt der connected werden soll ist nicht Ende oder Start der Schiene.");
+        if (point.equals(this.start)) {
+            this.setPrevious(newRail);
+            return;
+        }
+        if (point.equals(this.end)) {
+            this.setNext(newRail);
+            return;
+        }
+        throw new LogicalException("Punkt der connected werden soll ist nicht Ende oder Start der Schiene.");
     }
 
-    
     /**
      * Vergleicht zwei Rails anhand ihrer Start und Endpunkte
+     * 
      * @param rail
      * @return
      */
     public boolean equals(Rail rail) {
-        if(rail == null) {
+        if (rail == null) {
             return false;
         }
-        if((rail instanceof Switch)) {
+        if ((rail instanceof Switch)) {
             return rail.equals(this);
         }
-        return (this.start.equals(rail.end) && this.end.equals(rail.start) || 
-                this.start.equals(rail.start) && this.end.equals(rail.end));
+        return (this.start.equals(rail.end) && this.end.equals(rail.start)
+                || this.start.equals(rail.start) && this.end.equals(rail.end));
     }
-    
+
     /**
      * 
      * @return Die verbundenen Punkte
@@ -257,24 +270,26 @@ public class Rail implements Comparable<Rail>{
         list.add(end);
         return list;
     }
-    
+
     /**
      * Gibt das nächste Ende in die Richtung aus
+     * 
      * @param direction Richtung in die gesucht werden soll
      * @return Vertex Ende in Richtung
      */
     public Vertex getEndInDirection(DirectionalVertex direction) {
-        if(direction.equalsDirection(this.direction)) {
+        if (direction.equalsDirection(this.direction)) {
             return end;
-        } 
-        if(direction.equalsDirection(this.direction.getInverseDirection())){
+        }
+        if (direction.equalsDirection(this.direction.getInverseDirection())) {
             return start;
         }
         return null;
     }
-    
+
     /**
      * Gibt alle anderen Verbundenen Punkte aus.
+     * 
      * @param notThisOne außer diesem
      * @return Liste aller verbundenen außer <notThisOne>
      */
@@ -283,93 +298,103 @@ public class Rail implements Comparable<Rail>{
         list.add(next);
         list.add(previous);
         list.remove(notThisOne);
-        for(Rail r: list) {
-            if(r == null) {
+        for (Rail r : list) {
+            if (r == null) {
                 list.remove(r);
             }
         }
         return list;
     }
-    
+
     @Override
     public String toString() {
         return "t " + id + " " + start.toString() + " -> " + end.toString() + " " + this.getLength();
     }
-    
 
     /**
      * Sucht, ob der Punkt auf der streck liegt
+     * 
      * @param v gesuchter Punkt
      * @return WW, ob auf Strecke ( inkl. ENde und Start)
      */
     public boolean contains(Vertex v) {
         Vertex point = new Vertex(start.getXcoord(), start.getYcoord());
-        for(int i = 0; i <= this.getLength(); i++) {
-            if(point.equals(v)) {
+        for (int i = 0; i <= this.getLength(); i++) {
+            if (point.equals(v)) {
                 return true;
             }
             point = point.add(getSetDirection());
         }
         return false;
     }
-    
+
     /**
      * Guckt ob die Richtung mit der Schienen-Richtung übereinstimmt
-     * @param direc
-     * @return
+     * 
+     * @param direc , die auf Übereinstimmung überprüft wird
+     * @return WW, ob Richtung compatibel
      */
     public boolean isCorrectDirec(DirectionalVertex direc) {
         return direc.compatibleDirection(getSetDirection());
     }
-    
+
     /**
      * Löscht die Schiene aus allen verbundenen Knoten und Gleisen
-     * @param knodes
+     * 
+     * @param knodes aus diesen Knoten werden alle Verbindungen gelöscht
      */
     public void deleteConnections(List<Knode> knodes) {
         Knode endK = ListUtility.contains(knodes, end);
         endK.deconnect(this);
-        if(endK.isUseless()) {
+        if (endK.isUseless()) {
             knodes.remove(endK);
         }
         Knode startK = ListUtility.contains(knodes, start);
         startK.deconnect(this);
-        if(startK.isUseless()) {
+        if (startK.isUseless()) {
             knodes.remove(startK);
         }
-        if(next != null) {
+        if (next != null) {
             getNext().deleteConnectionsTo(this);
         }
-        if(previous != null) {
+        if (previous != null) {
             getPrevious().deleteConnectionsTo(this);
         }
     }
-    
+
+    /**
+     * Guckt ob die Schiene nötig ist
+     * 
+     * @param rn Netzwerk in dem überpürüft werden soll
+     * @return WW, ob nicht nötig
+     */
     public boolean wayWithout(RailNetwork rn) {
-        if(getConnected(null).size() < 2) {
+        if (getConnected(null).size() < 2) {
             return true;
         }
         LinkedList<Rail> notUse = new LinkedList<Rail>();
         notUse.add(this);
         return rn.wayWithout(notUse, this.getNext(), this.getPrevious(), this);
     }
-    
+
     /**
      * Löscht alle Verbindungen zur Übergebenen Schiene
+     * 
      * @param r Schiene zu der Verbindungen gelöscht werden sollen
      */
     protected void deleteConnectionsTo(Rail r) {
-        if(r.equals(next)) {
+        if (r.equals(next)) {
             next = null;
         }
-        if(r.equals(previous)) {
+        if (r.equals(previous)) {
             previous = null;
         }
     }
-    
+
     /**
      * Guckt wie viele Wagenlängen hinter der Position platz haben
-     * @param pos Position von der aus gesucht werdensoll
+     * 
+     * @param pos   Position von der aus gesucht werdensoll
      * @param direc Fahrtrichtung des Zuges
      * @return ANzahl freier Plätze behind
      */
@@ -377,7 +402,7 @@ public class Rail implements Comparable<Rail>{
         DirectionalVertex dire = direc.getInverseDirection();
         Vertex posi = pos.clone();
         int i = 0;
-        while(!posi.equals(getEndInDirection(dire))) {
+        while (!posi.equals(getEndInDirection(dire))) {
             i++;
             posi = posi.add(dire);
         }
@@ -386,10 +411,8 @@ public class Rail implements Comparable<Rail>{
 
     @Override
     public int compareTo(Rail o) {
-        return   this.getId() - ((Rail) o).getId();
+        return this.getId() - ((Rail) o).getId();
 
     }
-    
-    
 
 }

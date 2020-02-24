@@ -1,23 +1,26 @@
-/**
- * Abstrakte Überklasse für alle Lokomotiven
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.rollingmaterial;
 
+/**
+ * Abstrakte Überklasse für alle Lokomotiven
+ * 
+ * @author Julian Strietzel
+ */
 public abstract class Engine extends PoweredRolling {
 
     /**
      * Erstellt eine neue Lokomotive mit Baureihe, NAme, Länge und Kupplungen.
-     * @param series    Baureihe
-     * @param name      Name    
-     * @param length    Länge
-     * @param clutchFront   Ob Kupplung vorne
-     * @param clutchBack    Ob Kupplung hinten
+     * 
+     * @param series      Baureihe
+     * @param name        Name
+     * @param length      Länge
+     * @param clutchFront Ob Kupplung vorne
+     * @param clutchBack  Ob Kupplung hinten
      */
     public Engine(String series, String name, int length, boolean clutchFront, boolean clutchBack) {
         super(series, name, length, clutchFront, clutchBack);
     }
-    
+
     /**
      * @return Gibt den ersten Buchstaben der Baureihe zurück.
      */
@@ -26,18 +29,12 @@ public abstract class Engine extends PoweredRolling {
     @Override
     public String toString() {
         String trainID = "none";
-        if(isUsed()) {
+        if (isUsed()) {
             trainID = "" + getTrain().getID();
         }
-        
-        return  trainID + " " 
-    + getType() + " " 
-                + getSeries() + " " 
-    + getName() + " " 
-                + getLength() + " "
+
+        return trainID + " " + getType() + " " + getSeries() + " " + getName() + " " + getLength() + " "
                 + isClutchFront() + " " + isClutchBack();
     }
-    
-    
 
 }

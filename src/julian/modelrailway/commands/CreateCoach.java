@@ -1,12 +1,14 @@
-/**
- * Der create Egine Befehl fügt einen neuen Wagon hinzu.
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.commands;
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.ModelRailWay;
+import julian.modelrailway.main.ModelRailWay;
 
+/**
+ * Der create Egine Befehl fügt einen neuen Wagon hinzu.
+ * 
+ * @author Julian Strietzel
+ */
 public class CreateCoach extends Command {
 
     private static final String REGEX = "create coach (passenger|freight|special) (\\d+) (true|false) (true|false)";

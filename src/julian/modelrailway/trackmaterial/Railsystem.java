@@ -1,3 +1,4 @@
+
 package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
@@ -74,8 +75,10 @@ public class Railsystem {
      * Setzt einen Zug auf das Schienenetz
      * 
      * @param train gesetzter Zug
+     * @param direc Richtung des Zuges
+     * @param pos   Position des Zuges
      * @return ZugId als Nutzerausgabe
-     * @throws LogicalException, wenn einer der benötigten Schienen besetzt ist
+     * @throws LogicalException , wenn einer der benötigten Schienen besetzt ist
      */
     public String putTrain(SetTrain train, DirectionalVertex direc, Vertex pos) throws LogicalException {
         Rail track = railnet.findTrack(pos, direc);
@@ -105,9 +108,9 @@ public class Railsystem {
     /**
      * Bewegt alle Züge um einen Schritt
      * 
-     * @param forwards
-     * @throws LogicalException
-     * @throws IllegalInputException
+     * @param forwards Ob der zug vorwärts fährt
+     * @throws LogicalException      , wenn der Zug entgleist
+     * @throws IllegalInputException , wenn Fehler im markoccupied()
      */
     public void move(boolean forwards) throws LogicalException, IllegalInputException {
         resetMArkers();
@@ -136,11 +139,10 @@ public class Railsystem {
      * sucht nach Collisionen im Schienennetz und fügt diese der Liste an Crashes
      * hinzu.
      * 
-     * @throws IllegalInputException
      */
-    public void checkCollision() throws IllegalInputException {
+    public void checkCollision() {
         for (Rail r : railnet.getCopyRails()) {
-            List<SetTrain> workTrains = ListUtility.deleteDuplicates(r.getCopyTrains());
+            List<SetTrain> workTrains = ListUtility.copyWithoutDuplicates(r.getCopyTrains());
             if (workTrains.size() > 1) {
                 crashes.add(new Crash(r.getCopyTrains()));
                 for (SetTrain t : r.getCopyTrains()) {
@@ -150,7 +152,7 @@ public class Railsystem {
             }
         }
         for (Knode k : railnet.getCopyKnodes()) {
-            List<SetTrain> workTrains = ListUtility.deleteDuplicates(k.getTrains());
+            List<SetTrain> workTrains = ListUtility.copyWithoutDuplicates(k.getTrains());
             if (workTrains.size() > 1) {
                 crashes.add(new Crash(k.getTrains()));
                 for (SetTrain t : k.getTrains()) {
@@ -164,7 +166,7 @@ public class Railsystem {
     /**
      * Checkt, ob alle Weichen gesetzt sind
      * 
-     * @return
+     * @return ob alle Weichen gesetzt sind
      */
     public boolean isAllSet() {
         for (Switch s : railnet.getCopySwitches()) {
@@ -178,7 +180,7 @@ public class Railsystem {
     /**
      * Erneuert alle Marker auf dem Schienennetz
      * 
-     * @throws LogicalException, wenn interner Fehler
+     * @throws LogicalException , wenn interner Fehler
      */
     public void renewMarked() throws LogicalException {
 
@@ -201,7 +203,6 @@ public class Railsystem {
         for (Knode kn : railnet.getCopyKnodes()) {
             kn.clearTrains();
         }
-//        crashes.clear();
     }
 
     /**

@@ -1,26 +1,37 @@
-/**
- * Ein Command speichert die korrekte Eingabeform und führt den Befehl aus.
- * Es kann sich um den Exit-Befehl handeln.
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.commands;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import  julian.modelrailway.ModelRailWay;
+import julian.modelrailway.main.ModelRailWay;
 
+/**
+ * Ein Command speichert die korrekte Eingabeform und führt den Befehl aus. Es
+ * kann sich um den Exit-Befehl handeln.
+ * 
+ * @author Julian Strietzel
+ */
 public abstract class Command {
 
-    protected String regex = "";
     private final Pattern commandPattern;
+
+    /**
+     * Regex, dass den erlaubten input hält
+     */
+    protected String regex = "";
+
+    /**
+     * ModelRailWay, auf dem der Befehl ausgeführt werden soll
+     */
     protected final ModelRailWay model;
 
     /**
      * Erstellt einen neuen Command mit einer Modelleisenbahn als Bezugsobjekt.
      * 
      * @param model Bezugsobjekt, auf dem die Befehle ausgeführt werden sollen.
-     * @param regex regulärer Ausdruck, der die Eingabestruktur des Befhels festlegt.
+     * @param regex regulärer Ausdruck, der die Eingabestruktur des Befhels
+     *              festlegt.
      */
     protected Command(ModelRailWay model, String regex) {
         this.regex = regex;
@@ -30,12 +41,14 @@ public abstract class Command {
 
     /**
      * Führt aus, was der Befehl machen soll.
+     * 
      * @param command Eingabe, die der Befehl ausführen soll.
      */
     public abstract void execute(String command);
 
     /**
      * Checkt, ob die Eingabe zum Befehlspattern passt.
+     * 
      * @param command String Eingabe
      * @return Wahrheitswert, ob passend.
      */
@@ -45,6 +58,7 @@ public abstract class Command {
 
     /**
      * Gibt einen Matcher zum entsprechenden Regex Pattern zurück.
+     * 
      * @param command Eingabe
      * @return neuer Matcher zu Klassen entsprechendem commandPattern.
      */
@@ -55,11 +69,12 @@ public abstract class Command {
     }
 
     /**
-     * Gibt zurück, ob es sich bei dem Befehl um den Exit-Befehl handelt, welcher das Programm beenden soll.
+     * Gibt zurück, ob es sich bei dem Befehl um den Exit-Befehl handelt, welcher
+     * das Programm beenden soll.
+     * 
      * @return WW, ob exit
      */
     public boolean isExit() {
         return false;
     }
 }
-

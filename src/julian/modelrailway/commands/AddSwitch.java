@@ -1,14 +1,16 @@
-/**
- * Der Add-Switch befehl fügt eine Gleis-Schiene hinzu.
- * @author Julian Strietzel
- */
+
 package julian.modelrailway.commands;
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.ModelRailWay;
 import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.main.ModelRailWay;
 
+/**
+ * Der Add-Switch befehl fügt eine Gleis-Schiene hinzu.
+ * 
+ * @author Julian Strietzel
+ */
 public class AddSwitch extends Command {
 
     private static final String REGEX = "add switch \\(([-+]?\\d+),([-+]?\\d+)\\) -> \\(([-+]?\\d+),([-+]?\\d+)\\),"

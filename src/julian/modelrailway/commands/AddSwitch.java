@@ -10,6 +10,7 @@ import julian.modelrailway.main.ModelRailWay;
  * Der Add-Switch befehl fügt eine Gleis-Schiene hinzu.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class AddSwitch extends Command {
 

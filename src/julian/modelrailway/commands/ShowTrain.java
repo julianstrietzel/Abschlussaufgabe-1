@@ -9,6 +9,7 @@ import julian.modelrailway.main.ModelRailWay;
  * Der Befehl visualisiert einen bestimmten Zug.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class ShowTrain extends Command {
 

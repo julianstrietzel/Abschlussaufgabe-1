@@ -9,6 +9,7 @@ import julian.modelrailway.trackmaterial.*;
  * TrainStock
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class SetTrain implements Comparable<SetTrain> {
 
@@ -110,13 +111,13 @@ public class SetTrain implements Comparable<SetTrain> {
      * 
      * @param forwards Richtung des Zuges
      * @return Boolean ob erfolgreich
-     * @throws IllegalInputException , wenn nächste Schiene nicht existiert
-     * @throws LogicalInputException , wenn Fehler im markoccupied()
+     * @throws IllegalInputException wenn nächste Schiene nicht existiert
+     * @throws LogicalException wenn Fehler im markoccupied()
      */
     public boolean move(boolean forwards) throws LogicalException, IllegalInputException {
 
         if (forwards) {
-            if (position.equals(rail.getEndInDirection(direction))) {
+            if (position.sameVertex(rail.getEndInDirection(direction))) {
                 Rail now = rail;
                 try {
                     rail = rail.getNextInDirection(direction);
@@ -135,7 +136,7 @@ public class SetTrain implements Comparable<SetTrain> {
             position = position.add(direction);
         } else {
             Rail now = rail;
-            if (position.equals(rail.getEndInDirection(direction.getInverseDirection()))) {
+            if (position.sameVertex(rail.getEndInDirection(direction.getInverseDirection()))) {
                 rail = rail.getNextInDirection(direction.getInverseDirection());
 
                 if (rail == null || !rail.isSetCorrectly(position)) {
@@ -147,7 +148,7 @@ public class SetTrain implements Comparable<SetTrain> {
             }
 
             position = position.add(direction.getInverseDirection());
-            if (position.equals(rail.getEndInDirection(direction.getInverseDirection()))) {
+            if (position.sameVertex(rail.getEndInDirection(direction.getInverseDirection()))) {
                 rail.removeTrain(this);
                 rail = rail.getNextInDirection(direction.getInverseDirection());
                 if (rail == null || !rail.isSetCorrectly(position)) {

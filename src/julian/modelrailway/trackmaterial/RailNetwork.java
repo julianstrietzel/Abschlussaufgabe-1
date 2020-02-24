@@ -12,6 +12,7 @@ import julian.modelrailway.rollingmaterial.SetTrain;
  * Das Netzwerk speichert alle schienen und Knotenpunkte
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class RailNetwork {
 
@@ -21,7 +22,8 @@ public class RailNetwork {
     private final Railsystem rSys;
 
     /**
-     * 
+     * Erstellt ein neues Schienennetz
+     * @param rSys gekoppeltes Schienennetz
      */
     public RailNetwork(Railsystem rSys) {
         rails = new LinkedList<Rail>();
@@ -113,7 +115,7 @@ public class RailNetwork {
         if (from == null) {
             return false;
         }
-        if (from.equals(to)) {
+        if (from.sameRail(to)) {
             return true;
         }
         LinkedList<Rail> nextOnes = from.getConnected(now);
@@ -156,7 +158,7 @@ public class RailNetwork {
             Vertex checker = rail.getStart();
             for (int i = 1; i < rail.getLength(); i++) {
                 checker = checker.add(rail.getDirection());
-                if (checker.equals(start) || checker.equals(end)) {
+                if (checker.sameVertex(start) || checker.sameVertex(end)) {
                     return true;
                 }
             }
@@ -165,7 +167,7 @@ public class RailNetwork {
                 checker = rails.getStart();
                 for (int i = 1; i < rails.getLengthTwo(); i++) {
                     checker = checker.add(rails.getDirectionTwo());
-                    if (checker.equals(start) || checker.equals(end)) {
+                    if (checker.sameVertex(start) || checker.sameVertex(end)) {
                         return true;
                     }
                 }
@@ -205,7 +207,7 @@ public class RailNetwork {
      * @param rail    aktuele Schiene
      * @param breakUp ob die Funktion bei einer Collision weiter markiere n soll
      *                oder eben nicht
-     * @return
+     * @return bei break up false, wenn eine Schiene besetzt. sonst immer true.
      * @throws IllegalInputException , wenn interner Fehler
      * @throws LogicalException      , wenn Zug zu lang für Schienennetz
      */
@@ -254,7 +256,7 @@ public class RailNetwork {
      */
     public Rail findTrack(Vertex pos, DirectionalVertex direc) throws LogicalException {
         for (Knode knode : knodes) {
-            if (knode.equals(pos)) {
+            if (knode.sameVertex(pos)) {
                 Rail r = knode.getTrack(direc);
                 if (r == null) {
                     throw new LogicalException("track not found");
@@ -275,7 +277,7 @@ public class RailNetwork {
      * 
      * @param id    der Weiche
      * @param point der das neue Ende sein soll
-     * @throws IllegalInputException, wenn Point is not an End of the Switch
+     * @throws IllegalInputException , wenn Point is not an End of the Switch
      * @throws LogicalException       , wenn Fehle rim MarkOccupied
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
@@ -340,17 +342,17 @@ public class RailNetwork {
             }
             checkFreeKnodes(newSw.getKnodes());
             for (Knode knode : knodes) {
-                if (knode.equals(newSw.getStart())) {
+                if (knode.sameVertex(newSw.getStart())) {
                     knode.setRailOut(newSw);
                     knode.getRailIn().connectEasy(newSw, newSw.getStart());
                     newSw.setPrevious(knode.getRailIn());
                 }
-                if (knode.equals(newSw.getEnd())) {
+                if (knode.sameVertex(newSw.getEnd())) {
                     knode.setRailOut(newSw);
                     knode.getRailIn().connectEasy(newSw, newSw.getEnd());
                     newSw.setNext(knode.getRailIn());
                 }
-                if (knode.equals(newSw.getEndTwo())) {
+                if (knode.sameVertex(newSw.getEndTwo())) {
                     knode.setRailOut(newSw);
                     knode.getRailIn().connectEasy(newSw, newSw.getEndTwo());
                     newSw.setNextTwo(knode.getRailIn());
@@ -407,12 +409,12 @@ public class RailNetwork {
             }
             checkFreeKnodes(newRail.getKnodes());
             for (Knode knode : knodes) {
-                if (knode.equals(newRail.getStart())) {
+                if (knode.sameVertex(newRail.getStart())) {
                     knode.setRailOut(newRail);
                     knode.getRailIn().connectEasy(newRail, newRail.getStart());
                     newRail.setPrevious(knode.getRailIn());
                 }
-                if (knode.equals(newRail.getEnd())) {
+                if (knode.sameVertex(newRail.getEnd())) {
                     knode.setRailOut(newRail);
                     knode.getRailIn().connectEasy(newRail, newRail.getEnd());
                     newRail.setNext(knode.getRailIn());

@@ -2,7 +2,7 @@
  * 
  * @author Julian Strietzel
  */
-package julian.modelrailway.Tests;
+package Tests;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -31,7 +31,7 @@ public class DirectionalVertexTest {
      */
     @Test
     public void testEqualsDirection() {
-        assertFalse(d.equals(d.add(new Vertex(10, 0))));
+        assertFalse(d.sameVertex(d.add(new Vertex(10, 0))));
         assertTrue(d.equalsDirection(new DirectionalVertex(1, 0)));
         assertFalse(d.equalsDirection(new DirectionalVertex(-1, 0)));
         assertFalse(d.equalsDirection(new DirectionalVertex(0, 1)));
@@ -54,7 +54,7 @@ public class DirectionalVertexTest {
      */
     @Test
     public void testGetInverseDirection() {
-        assertTrue(d.getInverseDirection().equals(new DirectionalVertex(-1, 0)));
+        assertTrue(d.getInverseDirection().sameVertex(new DirectionalVertex(-1, 0)));
     }
 
 }

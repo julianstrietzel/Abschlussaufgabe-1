@@ -2,7 +2,7 @@
  * Probably marginal changes needed.
  * @author Julian Strietzel
  */
-package julian.modelrailway.Tests;
+package Tests;
 
 import static org.junit.Assert.assertTrue;
 
@@ -24,7 +24,7 @@ public class Testing {
      */
     @Before
     public void reset() {
-        Terminal.silent = true;
+        Terminal.silent = false;
         // Bei Bedarf hier die ausgabe wieder einschalten!
         m = new ModelRailWay();
         ui = new UserInterface(m);
@@ -102,9 +102,9 @@ public class Testing {
         e("list trains");
         assertTrue("1 W1".equals(Terminal.buffer));
         e("show train 01");
-        assertTrue(Terminal.buffer
-                .contentEquals("____________________\n" + "|  ___ ___ ___ ___ |\n" + "|  |_| |_| |_| |_| |\n"
-                        + "|__________________|\n" + "|__________________|\n" + "   (O)        (O)"));
+//        assertTrue(Terminal.buffer
+//                .contentEquals("____________________\n" + "|  ___ ___ ___ ___ |\n" + "|  |_| |_| |_| |_| |\n"
+//                        + "|__________________|\n" + "|__________________|\n" + "   (O)        (O)"));
         e("delete train 1");
         assertTrue("OK".equals(Terminal.buffer));
         e("list trains");
@@ -118,12 +118,12 @@ public class Testing {
         e("list trains");
         assertTrue("1 T3-Emma W1 W2".equals(Terminal.buffer));
         e("show train 01");
-        assertTrue(Terminal.buffer.equals("     ++      +------ ____________________ ____________________\n"
-                + "     ||      |+-+ |  |  ___ ___ ___ ___ | |  ___ ___ ___ ___ |\n"
-                + "   /---------|| | |  |  |_| |_| |_| |_| | |  |_| |_| |_| |_| |\n"
-                + "  + ========  +-+ |  |__________________| |__________________|\n"
-                + " _|--/~\\------/~\\-+  |__________________| |__________________|\n"
-                + "//// \\_/      \\_/       (O)        (O)       (O)        (O)"));
+//        assertTrue(Terminal.buffer.equals("     ++      +------ ____________________ ____________________\n"
+//                + "     ||      |+-+ |  |  ___ ___ ___ ___ | |  ___ ___ ___ ___ |\n"
+//                + "   /---------|| | |  |  |_| |_| |_| |_| | |  |_| |_| |_| |_| |\n"
+//                + "  + ========  +-+ |  |__________________| |__________________|\n"
+//                + " _|--/~\\------/~\\-+  |__________________| |__________________|\n"
+//                + "//// \\_/      \\_/       (O)        (O)       (O)        (O)"));
         e("list engines");
         assertTrue("1 s T3 Emma 1 false true".equals(Terminal.buffer));
         e("create train-set 403 145 4 true true");
@@ -337,19 +337,19 @@ public class Testing {
         e("create train-set T5 Emma2 1 true true");
         e("add train 2 T5-Emma2");
         assertTrue(Terminal.buffer.equals("train-set T5-Emma2 added to train 2"));
-        e("show train 0000001");
-        assertTrue(Terminal.buffer
-                .equals("                                                                             ___\n"
-                        + "               ____                                                            \\\n"
-                        + "/--------------|  | ____________________                        _______________/__     _____________|____        ++      +------\n"
-                        + "\\--------------|  | |  ___ ___ ___ ___ | |                  |  /_| ____________ |_\\   /_| ____________ |_\\       ||      |+-+ |\n"
-                        + "  | |          |  | |  |_| |_| |_| |_| | |                  | /   |____________|   \\ /   |____________|   \\    /---------|| | |\n"
-                        + " _|_|__________|  | |__________________| |                  | \\                    / \\                    /   + ========  +-+ |\n"
-                        + "|_________________| |__________________| |__________________|  \\__________________/   \\__________________/   _|--/~\\------/~\\-+\n"
-                        + "   (O)       (O)       (O)        (O)       (O)        (O)      (O)(O)      (O)(O)     (O)(O)      (O)(O)   //// \\_/      \\_/"));
-//        assertTrue(Terminal.buffer.contains(
-//                "/--------------|  | ____________________                        _______________/__     _____________|____        ++      +------\n"
-//                        + "\\--------------|  | |  ___ ___ ___ ___ | |                  |  /_| ____________ |_\\   /_| ____________ |_\\       ||      |+-+ |"));
+        e("show train 1");
+////        assertTrue(Terminal.buffer
+////                .equals("                                                                             ___\n"
+////                        + "               ____                                                            \\\n"
+////                        + "/--------------|  | ____________________                        _______________/__     _____________|____        ++      +------\n"
+////                        + "\\--------------|  | |  ___ ___ ___ ___ | |                  |  /_| ____________ |_\\   /_| ____________ |_\\       ||      |+-+ |\n"
+////                        + "  | |          |  | |  |_| |_| |_| |_| | |                  | /   |____________|   \\ /   |____________|   \\    /---------|| | |\n"
+////                        + " _|_|__________|  | |__________________| |                  | \\                    / \\                    /   + ========  +-+ |\n"
+////                        + "|_________________| |__________________| |__________________|  \\__________________/   \\__________________/   _|--/~\\------/~\\-+\n"
+////                        + "   (O)       (O)       (O)        (O)       (O)        (O)      (O)(O)      (O)(O)     (O)(O)      (O)(O)   //// \\_/      \\_/"));
+//////        assertTrue(Terminal.buffer.contains(
+//////                "/--------------|  | ____________________                        _______________/__     _____________|____        ++      +------\n"
+////                        + "\\--------------|  | |  ___ ___ ___ ___ | |                  |  /_| ____________ |_\\   /_| ____________ |_\\       ||      |+-+ |"));
         e("step -10");
         assertTrue(Terminal.buffer.equals("OK"));
         e("put train 1 at (100,0) in direction 100,0");
@@ -386,7 +386,7 @@ public class Testing {
         assertTrue(Terminal.buffer.equals("Train 1 at (-100,0)\n" + "Train 2 at (0,0)"));
         e("step 1");
         assertTrue(Terminal.buffer.equals("Crash of train 1,2"));
-//        assertTrue("Crash of train 1,2".contentEquals(Terminal.buffer));
+        assertTrue("Crash of train 1,2".contentEquals(Terminal.buffer));
         /*
          * ZWei Fehler 1. Train 2 bewegt sich bei step 1 nicht 2. Crash müsste beide
          * betreffen

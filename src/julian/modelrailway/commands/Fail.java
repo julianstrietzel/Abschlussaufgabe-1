@@ -9,6 +9,7 @@ import julian.modelrailway.main.ModelRailWay;
  * außer "command unknown" ausgeben.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class Fail extends Command {
 

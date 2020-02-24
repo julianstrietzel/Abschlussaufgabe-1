@@ -5,10 +5,17 @@ package julian.modelrailway.trackmaterial;
  * Ein Vektor
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class Vertex {
 
+    /**
+     * X-Koordinate des Punktes
+     */
     protected final int xcoord;
+    /**
+     * Y-Koordinate des Punktes
+     */
     protected final int ycoord;
 
     /**
@@ -54,7 +61,7 @@ public class Vertex {
      * @param vertex , zu vergleichender Vektro
      * @return ob gleiche Koordinaten
      */
-    public boolean equals(Vertex vertex) {
+    public boolean sameVertex(Vertex vertex) {
         if (vertex == null) {
             return false;
         }

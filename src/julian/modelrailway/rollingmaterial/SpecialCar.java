@@ -5,6 +5,7 @@ package julian.modelrailway.rollingmaterial;
  * Repräsentiert ein spezial Waggon
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class SpecialCar extends Coach {
 
@@ -22,8 +23,8 @@ public class SpecialCar extends Coach {
 
     @Override
     public String[] getVisual() {
-        String[] visual = { "   (O)       (O)   ", "|_________________|", " _|_|__________|  |", "  | |          |  |",
-                "\\--------------|  |", "/--------------|  |", "               ____" };
+        String[] visual = {"   (O)       (O)   ", "|_________________|", " _|_|__________|  |", "  | |          |  |",
+            "\\--------------|  |", "/--------------|  |", "               ____"};
         return visual;
     }
 

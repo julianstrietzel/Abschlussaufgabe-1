@@ -6,10 +6,10 @@ import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.main.ModelRailWay;
 
 /**
- * Erstellt einen neuen Command, der das Delete Train Pattern akzeptiert. Bei
- * der Ausführung wird der Zug gelöscht.
+ * Ein Befehl, der ein bestimmten Zug entfernt
  * 
- * @param model
+ * @author Julian Strietzel
+ * @version 1.0
  */
 public class DeleteTrain extends Command {
 
@@ -28,7 +28,6 @@ public class DeleteTrain extends Command {
     public void execute(String command) {
         try {
             Terminal.printLine(model.deleteTrain(Integer.parseInt(getMatcher(command).group(1))));
-            ;
         } catch (LogicalException e) {
             Terminal.printError(e.getMessage());
         }

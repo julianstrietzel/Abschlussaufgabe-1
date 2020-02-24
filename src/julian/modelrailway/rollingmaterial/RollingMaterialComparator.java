@@ -8,6 +8,7 @@ import java.util.Comparator;
  * ELemnets
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class RollingMaterialComparator implements Comparator<RollingMaterial> {
 

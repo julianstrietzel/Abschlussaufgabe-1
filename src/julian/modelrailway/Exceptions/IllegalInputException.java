@@ -5,6 +5,7 @@ package julian.modelrailway.Exceptions;
  * Wird geworfen, wenn ein gegebener Input nicht den Anforderungen entspricht.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class IllegalInputException extends Exception {
 

@@ -14,6 +14,7 @@ import julian.modelrailway.trackmaterial.*;
  * inkl. fahrender Züge im Railsystem und das RollMaterial im RollingStock.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class ModelRailWay {
 
@@ -54,7 +55,7 @@ public class ModelRailWay {
      * @param endX   X-Koordinate des Endpunktes
      * @param endY   Y-Koordinate des Endpunktes
      * @param end2x  X-Koordinate des zweiten Endpunktes
-     * @param end2Y  Y-Koordinate des zweiten Endpunktes
+     * @param end2y  Y-Koordinate des zweiten Endpunktes
      * @return Ausgabe für den Nutzer
      * @throws IllegalInputException , wenn die Länge der Schiene null ist.
      * @throws LogicalException      , wenn es logische Fehler in der Interaktion
@@ -132,7 +133,7 @@ public class ModelRailWay {
      * 
      * @param id Id des Materials
      * @return Nutzerausgbae
-     * @throws LogicalException, wenn die Schiene für den Zusammenhalt nötig ist.
+     * @throws LogicalException , wenn die Schiene für den Zusammenhalt nötig ist.
      */
     public String deleteTrack(int id) throws LogicalException {
         rSystem.getRailNet().deleteTrack(id);

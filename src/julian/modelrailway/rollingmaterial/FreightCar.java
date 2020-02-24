@@ -5,6 +5,7 @@ package julian.modelrailway.rollingmaterial;
  * Repräsentiert einen Güterwaggon.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public final class FreightCar extends Coach {
 
@@ -22,11 +23,16 @@ public final class FreightCar extends Coach {
 
     @Override
     public String[] getVisual() {
-        String[] visual = { "   (O)        (O)   ", "|__________________|", "|                  |",
-                "|                  |", "|                  |" };
+        String[] visual = {"   (O)        (O)   ", "|__________________|", "|                  |",
+            "|                  |", "|                  |"};
         return visual;
     }
 
+    @Override
+    public String getLeerzeile() {
+        return "                    ";
+    }
+    
     @Override
     public String getType() {
         return "f";

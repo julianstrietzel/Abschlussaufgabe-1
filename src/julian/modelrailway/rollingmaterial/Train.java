@@ -9,6 +9,7 @@ import julian.modelrailway.Exceptions.LogicalException;
  * Ein Zug, konkateniert aus Rollmaterial
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class Train {
 
@@ -131,20 +132,27 @@ public class Train {
         }
         for (RollingMaterial r : wagons) {
             String[] cVisual = r.getVisual();
-            cVisual.clone();
+            cVisual = cVisual.clone();
             int i;
             for (i = 0; i < cVisual.length; i++) {
-                visualArray[i].append(cVisual[i] + " ");
+                visualArray[i].append(cVisual[i]);
+                if (!r.equals(wagons.getLast())) {
+                    visualArray[i].append(" ");
+                }
 
             }
             for (int f = i; f < visualArray.length; f++) {
-                visualArray[f].append(r.getLeerzeile() + " ");
+                visualArray[f].append(r.getLeerzeile());
+                if (!r.equals(wagons.getLast())) {
+                    visualArray[f].append(" ");
+                }
+
             }
         }
         StringBuilder sb = new StringBuilder();
         for (int i = visualArray.length - 1; i > -1; i--) {
-
-            sb.append(visualArray[i].toString().replaceAll("\\s+$", ""));
+            sb.append(visualArray[i].toString());
+//            sb.append(visualArray[i].toString().replaceAll("\\s+$", ""));
             sb.append("\n");
         }
         return sb.substring(0, sb.length() - 1);

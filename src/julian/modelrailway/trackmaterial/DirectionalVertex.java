@@ -5,6 +5,7 @@ package julian.modelrailway.trackmaterial;
  * Ein Vektor, der einen normierte Richtung repräsentiert.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class DirectionalVertex extends Vertex {
 

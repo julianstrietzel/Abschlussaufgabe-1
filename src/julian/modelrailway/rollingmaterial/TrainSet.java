@@ -5,6 +5,7 @@ package julian.modelrailway.rollingmaterial;
  * Repräsentiert einen Triebzug
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class TrainSet extends PoweredRolling {
 
@@ -23,9 +24,9 @@ public class TrainSet extends PoweredRolling {
 
     @Override
     public String[] getVisual() {
-        String[] visual = { "   (O)        (O)   ", "|__________________|", "|__________________|",
-                "|  |_| |_| |_| |_| |", "|  ___ ___ ___ ___ |", "_________||_________", "         ||         ",
-                "         ++         " };
+        String[] visual = {"   (O)        (O)   ", "|__________________|", "|__________________|",
+            "|  |_| |_| |_| |_| |", "|  ___ ___ ___ ___ |", "_________||_________", "         ||         ",
+            "         ++         " };
         return visual;
     }
 

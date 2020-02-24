@@ -5,6 +5,7 @@ package julian.modelrailway.rollingmaterial;
  * Repräsentiert eine Elektrolok
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class ElectricLocomotive extends Engine {
 
@@ -23,9 +24,9 @@ public class ElectricLocomotive extends Engine {
 
     @Override
     public String[] getVisual() {
-        String[] visual = { "  (O)(O)      (O)(O)  ", " \\__________________/ ", "\\                    /",
-                "/   |____________|   \\", " /_| ____________ |_\\ ", "  _______________/__  ",
-                "                 \\    ", "               ___    " };
+        String[] visual = {"  (O)(O)      (O)(O)  ", " \\__________________/ ", "\\                    /",
+            "/   |____________|   \\", " /_| ____________ |_\\ ", "  _______________/__  ",
+            "                 \\    ", "               ___    "};
         return visual;
     }
 

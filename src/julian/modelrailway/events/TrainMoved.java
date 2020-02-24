@@ -7,6 +7,7 @@ import julian.modelrailway.rollingmaterial.SetTrain;
  * Event, dass eine erfolgreiche Bewegung speichert.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class TrainMoved extends Event implements Comparable<Event> {
 

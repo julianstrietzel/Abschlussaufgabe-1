@@ -5,6 +5,7 @@ package julian.modelrailway.rollingmaterial;
  * Allgemeine Klasse für ein rollendes Objekt.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public abstract class RollingMaterial implements Comparable<RollingMaterial> {
 
@@ -122,7 +123,7 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
      * @param o anderes Material
      * @return boolean, ob das gleiche Material
      */
-    public abstract boolean equalsRollingMat(RollingMaterial o);
+    public abstract boolean sameRollingMat(RollingMaterial o);
 
     /**
      * Gibt ein Feld mit den Spalten der visuellen Repräsentation zurück.

@@ -12,6 +12,7 @@ import julian.modelrailway.rollingmaterial.SetTrain;
  * Repräsentiert eine einfache Schiene im Scheinenetz
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class Rail implements Comparable<Rail> {
 
@@ -170,10 +171,10 @@ public class Rail implements Comparable<Rail> {
      * Ende ist.
      * 
      * @param point Punkt von dem aus die Richtung losgehen soll
-     * @return
+     * @return Richtung in die die Schiene vom point aus weiterführt
      */
     public DirectionalVertex getDirectionFrom(Vertex point) {
-        if (this.start.equals(point)) {
+        if (this.start.sameVertex(point)) {
             return this.direction;
         } else {
             return this.direction.getInverseDirection();
@@ -187,7 +188,7 @@ public class Rail implements Comparable<Rail> {
      * @return Richtung zum Zielpunkt
      */
     public DirectionalVertex getDirectionTo(Vertex point) {
-        if (this.end.equals(point)) {
+        if (this.end.sameVertex(point)) {
             return this.direction;
         } else {
             return this.direction.getInverseDirection();
@@ -227,16 +228,16 @@ public class Rail implements Comparable<Rail> {
      * Setzt bei die nächste Schiene oder vorherige, jenachdem ob der Point dem Ende
      * oder Start entspricht
      * 
-     * @param newRail
-     * @param point
-     * @throws LogicalException
+     * @param newRail die Schiene, die verbunden werden soll
+     * @param point der Punkt an dem verbunden werden soll
+     * @throws LogicalException , wenn der PÜunkt nicht am ende oder Sgtart der Schiene ist.
      */
     public void connectEasy(Rail newRail, Vertex point) throws LogicalException {
-        if (point.equals(this.start)) {
+        if (point.sameVertex(this.start)) {
             this.setPrevious(newRail);
             return;
         }
-        if (point.equals(this.end)) {
+        if (point.sameVertex(this.end)) {
             this.setNext(newRail);
             return;
         }
@@ -246,18 +247,18 @@ public class Rail implements Comparable<Rail> {
     /**
      * Vergleicht zwei Rails anhand ihrer Start und Endpunkte
      * 
-     * @param rail
-     * @return
+     * @param rail zu vergleichende Schiene
+     * @return Ob die Schienen den gleichen Start und Endpunkt haben 
      */
-    public boolean equals(Rail rail) {
+    public boolean sameRail(Rail rail) {
         if (rail == null) {
             return false;
         }
         if ((rail instanceof Switch)) {
-            return rail.equals(this);
+            return rail.sameRail(this);
         }
-        return (this.start.equals(rail.end) && this.end.equals(rail.start)
-                || this.start.equals(rail.start) && this.end.equals(rail.end));
+        return (this.start.sameVertex(rail.end) && this.end.sameVertex(rail.start)
+                || this.start.sameVertex(rail.start) && this.end.sameVertex(rail.end));
     }
 
     /**
@@ -320,7 +321,7 @@ public class Rail implements Comparable<Rail> {
     public boolean contains(Vertex v) {
         Vertex point = new Vertex(start.getXcoord(), start.getYcoord());
         for (int i = 0; i <= this.getLength(); i++) {
-            if (point.equals(v)) {
+            if (point.sameVertex(v)) {
                 return true;
             }
             point = point.add(getSetDirection());
@@ -383,10 +384,10 @@ public class Rail implements Comparable<Rail> {
      * @param r Schiene zu der Verbindungen gelöscht werden sollen
      */
     protected void deleteConnectionsTo(Rail r) {
-        if (r.equals(next)) {
+        if (r.sameRail(next)) {
             next = null;
         }
-        if (r.equals(previous)) {
+        if (r.sameRail(previous)) {
             previous = null;
         }
     }
@@ -402,7 +403,7 @@ public class Rail implements Comparable<Rail> {
         DirectionalVertex dire = direc.getInverseDirection();
         Vertex posi = pos.clone();
         int i = 0;
-        while (!posi.equals(getEndInDirection(dire))) {
+        while (!posi.sameVertex(getEndInDirection(dire))) {
             i++;
             posi = posi.add(dire);
         }

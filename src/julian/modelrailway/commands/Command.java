@@ -11,10 +11,11 @@ import julian.modelrailway.main.ModelRailWay;
  * kann sich um den Exit-Befehl handeln.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public abstract class Command {
 
-    private final Pattern commandPattern;
+    
 
     /**
      * Regex, dass den erlaubten input hält
@@ -25,6 +26,8 @@ public abstract class Command {
      * ModelRailWay, auf dem der Befehl ausgeführt werden soll
      */
     protected final ModelRailWay model;
+    
+    private final Pattern commandPattern;
 
     /**
      * Erstellt einen neuen Command mit einer Modelleisenbahn als Bezugsobjekt.

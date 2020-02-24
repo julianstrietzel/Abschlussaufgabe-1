@@ -7,6 +7,7 @@ import julian.modelrailway.main.ModelRailWay;
  * Main-Klasse, die die Modelleisenbahn laufen lässt
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class Main {
 

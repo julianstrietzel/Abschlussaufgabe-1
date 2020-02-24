@@ -8,6 +8,7 @@ import julian.modelrailway.main.ModelRailWay;
  * Der Befehl listet alle vorhanden Züge auf.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class ListTrains extends Command {
 

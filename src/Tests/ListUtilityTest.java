@@ -2,7 +2,7 @@
  * 
  * @author Julian Strietzel
  */
-package julian.modelrailway.Tests;
+package Tests;
 
 import static org.junit.Assert.*;
 
@@ -33,7 +33,7 @@ public class ListUtilityTest {
     public void testContainsLinkedListOfTT() throws IllegalInputException {
         LinkedList<Rail> test = new LinkedList<Rail>();
         test.add(new Rail(new Vertex(0,0), new Vertex(0,10),0));
-        assertTrue(test.getFirst().equals(new Rail(new Vertex(0,0), new Vertex(0,10),0)));
+        assertTrue(test.getFirst().sameRail(new Rail(new Vertex(0,0), new Vertex(0,10),0)));
         assertTrue(ListUtility.contains(test, new Rail(new Vertex(0,0), new Vertex(0,10),0)));
      }
 

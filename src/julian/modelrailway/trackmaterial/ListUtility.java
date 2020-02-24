@@ -9,6 +9,7 @@ import java.util.List;
  * voneinander unabhängige Klassen sehr ähnliche Funktionen brauchen
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public abstract class ListUtility {
 
@@ -40,7 +41,7 @@ public abstract class ListUtility {
      */
     public static boolean contains(List<Rail> list, Rail object) {
         for (Rail obj : list) {
-            if (object.equals(obj)) {
+            if (object.sameRail(obj)) {
                 return true;
             }
         }
@@ -57,7 +58,7 @@ public abstract class ListUtility {
      */
     public static Knode contains(List<Knode> list, Vertex object) {
         for (Knode obj : list) {
-            if (obj.equals(object)) {
+            if (obj.sameVertex(object)) {
                 return obj;
             }
         }
@@ -74,7 +75,7 @@ public abstract class ListUtility {
      */
     public static boolean contains(List<Vertex> list, Knode object) {
         for (Vertex obj : list) {
-            if (obj.equals(object)) {
+            if (obj.sameVertex(object)) {
                 return true;
             }
         }

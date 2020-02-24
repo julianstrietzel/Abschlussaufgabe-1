@@ -3,7 +3,6 @@ package julian.modelrailway.rollingmaterial;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import julian.modelrailway.Exceptions.*;
@@ -12,6 +11,7 @@ import julian.modelrailway.Exceptions.*;
  * Diese Klasse speichert das gesamte RollMaterial
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class RollingStock {
 
@@ -75,10 +75,6 @@ public class RollingStock {
         }
         powered.add(new TrainSet(series, name, length, cFront, cBack));
         return powered.getLast().getID();
-    }
-
-    public List<PoweredRolling> getPowered() {
-        return powered;
     }
 
     /**

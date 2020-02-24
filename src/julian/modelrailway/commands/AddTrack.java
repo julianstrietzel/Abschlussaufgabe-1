@@ -10,6 +10,7 @@ import julian.modelrailway.main.ModelRailWay;
  * Der Add-Track befehl fügt eine normale Schiene hinzu.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class AddTrack extends Command {
     private static final String REGEX = "add track \\(([-+]?\\d+),([-+]?\\d+)\\) -> \\(([-+]?\\d+),([-+]?\\d+)\\)";

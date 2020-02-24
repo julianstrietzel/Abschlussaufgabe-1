@@ -1,16 +1,18 @@
 
 package julian.modelrailway.trackmaterial;
 
-/**
- * Repräsentiert eine Weiche
- * @author Julian Strietzel
- */
+
 import java.util.LinkedList;
 import java.util.List;
 
 import julian.modelrailway.Exceptions.IllegalInputException;
 import julian.modelrailway.Exceptions.LogicalException;
 
+/**
+ * Repräsentiert eine Weiche
+ * @author Julian Strietzel
+ * @version 1.0
+ */
 public class Switch extends Rail {
     private Rail nextTwo;
     private final Vertex endTwo;
@@ -49,7 +51,7 @@ public class Switch extends Rail {
         if (!this.setDirection.compatibleDirection(direction)) {
             throw new IllegalInputException("wrong directional Input");
         }
-        if (setDirection.equals(directionTwo)) {
+        if (setDirection.sameVertex(directionTwo)) {
             if (this.setDirection.equalsDirection(direction)) {
                 return nextTwo;
             } else {
@@ -136,7 +138,7 @@ public class Switch extends Rail {
 
     @Override
     public boolean isSetCorrectly(Vertex posiVertex) {
-        if (posiVertex.equals(endTwo) && setDirOne || posiVertex.equals(getEnd()) && !setDirOne) {
+        if (posiVertex.sameVertex(endTwo) && setDirOne || posiVertex.sameVertex(getEnd()) && !setDirOne) {
             return false;
         }
         return set;
@@ -186,16 +188,16 @@ public class Switch extends Rail {
      * Setzt die Weiche auf eine neue Stellung
      * 
      * @param point ENdpunkt auf den gesetzt werden soll
-     * @throws IllegalInputException, wenn Point kein Endpunkt
+     * @throws IllegalInputException , wenn Point kein Endpunkt
      */
     public void setSwitch(Vertex point) throws IllegalInputException {
-        if (getEnd().equals(point)) {
+        if (getEnd().sameVertex(point)) {
             this.setDirection = getDirection();
             set = true;
             setDirOne = true;
             return;
         }
-        if (endTwo.equals(point)) {
+        if (endTwo.sameVertex(point)) {
             this.setDirection = directionTwo;
             set = true;
             setDirOne = false;
@@ -218,7 +220,7 @@ public class Switch extends Rail {
         try {
             super.connectEasy(newRail, point);
         } catch (LogicalException e) {
-            if (point.equals(this.endTwo)) {
+            if (point.sameVertex(this.endTwo)) {
                 this.nextTwo = newRail;
                 return;
             }
@@ -249,7 +251,7 @@ public class Switch extends Rail {
 
     @Override
     protected void deleteConnectionsTo(Rail r) {
-        if (r.equals(nextTwo)) {
+        if (r.sameRail(nextTwo)) {
             nextTwo = null;
         }
 
@@ -273,10 +275,10 @@ public class Switch extends Rail {
 
     @Override
     public DirectionalVertex getDirectionFrom(Vertex point) {
-        if (point.equals(this.getStart())) {
+        if (point.sameVertex(this.getStart())) {
             return this.setDirection;
         } else {
-            if (point.equals(endTwo)) {
+            if (point.sameVertex(endTwo)) {
                 return this.directionTwo.getInverseDirection();
             } else {
                 return this.getDirection().getInverseDirection();
@@ -286,13 +288,13 @@ public class Switch extends Rail {
 
     @Override
     public Vertex getEndInDirection(DirectionalVertex direction) throws NullPointerException {
-        if (direction.equals(this.setDirection)) {
+        if (direction.sameVertex(this.setDirection)) {
             if (setDirOne) {
                 return getEnd();
             }
             return endTwo;
         }
-        if (direction.equals(this.setDirection.getInverseDirection())) {
+        if (direction.sameVertex(this.setDirection.getInverseDirection())) {
             return getStart();
         }
         return null;
@@ -304,24 +306,25 @@ public class Switch extends Rail {
     }
 
     @Override
-    public boolean equals(Rail r) {
+    public boolean sameRail(Rail r) {
         if (r == null) {
             return false;
         }
         try {
             if (r instanceof Switch) {
                 Switch re = (Switch) r;
-                if (new Rail(re.getStart(), re.getEnd(), 0).equals(new Rail(this.getStart(), this.getEnd(), 0))
-                        || new Rail(re.getStart(), re.getEnd(), 0).equals(new Rail(this.getStart(), this.endTwo, 0))) {
+                if (new Rail(re.getStart(), re.getEnd(), 0).sameRail(new Rail(this.getStart(), this.getEnd(), 0)) 
+                        || new Rail(re.getStart(), re.getEnd(), 0).sameRail(new Rail(this.getStart(), 
+                                this.endTwo, 0))) {
                     return true;
                 }
-                if (new Rail(re.getStart(), re.endTwo, 0).equals(new Rail(this.getStart(), this.getEnd(), 0))
-                        || new Rail(re.getStart(), re.endTwo, 0).equals(new Rail(this.getStart(), this.endTwo, 0))) {
+                if (new Rail(re.getStart(), re.endTwo, 0).sameRail(new Rail(this.getStart(), this.getEnd(), 0))
+                        || new Rail(re.getStart(), re.endTwo, 0).sameRail(new Rail(this.getStart(), this.endTwo, 0))) {
                     return true;
                 }
             } else {
 
-                if (r.equals(new Rail(getStart(), getEnd(), 0)) || r.equals(new Rail(getStart(), endTwo, 0))) {
+                if (r.sameRail(new Rail(getStart(), getEnd(), 0)) || r.sameRail(new Rail(getStart(), endTwo, 0))) {
                     return true;
                 }
 

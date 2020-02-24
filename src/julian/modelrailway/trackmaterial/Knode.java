@@ -11,6 +11,7 @@ import julian.modelrailway.rollingmaterial.SetTrain;
  * und seine eigene Position.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class Knode extends Vertex {
 
@@ -111,12 +112,12 @@ public class Knode extends Vertex {
      * @param r , Schiene deren Verbindung entfernt werden soll.
      */
     public void deconnect(Rail r) {
-        if (r.equals(railIn)) {
+        if (r.sameRail(railIn)) {
             railIn = railOut;
             railOut = null;
         }
 
-        if (r.equals(railOut)) {
+        if (r.sameRail(railOut)) {
             railOut = null;
         }
     }
@@ -135,9 +136,9 @@ public class Knode extends Vertex {
      * @return interessierende Schiene
      */
     public Rail getNext(Rail railone) {
-        if (railone.equals(railIn)) {
+        if (railone.sameRail(railIn)) {
             return railOut;
-        } else if (railone.equals(railOut)) {
+        } else if (railone.sameRail(railOut)) {
             return railIn;
         }
         return null;
@@ -153,7 +154,7 @@ public class Knode extends Vertex {
     public Rail getTrack(DirectionalVertex direc) throws LogicalException {
 
         if (railIn != null) {
-            if (this.equals(railIn.getEndInDirection(direc))) {
+            if (this.sameVertex(railIn.getEndInDirection(direc))) {
                 return railIn;
             }
             if (direc.compatibleDirection(railIn.getSetDirection())) {
@@ -164,7 +165,7 @@ public class Knode extends Vertex {
             }
         }
         if (railOut != null) {
-            if (this.equals(railOut.getEndInDirection(direc))) {
+            if (this.sameVertex(railOut.getEndInDirection(direc))) {
                 return railOut;
             }
             if (direc.compatibleDirection(railOut.getSetDirection())) {

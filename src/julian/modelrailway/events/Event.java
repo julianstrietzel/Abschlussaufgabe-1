@@ -10,6 +10,7 @@ import julian.modelrailway.rollingmaterial.SetTrain;
  * Event speichert ein Geschehniss und die beteiligten Züge.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public abstract class Event implements Comparable<Event> {
 

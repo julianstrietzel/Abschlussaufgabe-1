@@ -9,6 +9,7 @@ import julian.modelrailway.Exceptions.LogicalException;
  * Verwaltet die zusammengesetzten Züge
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class TrainStock {
 

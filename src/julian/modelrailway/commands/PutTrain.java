@@ -12,10 +12,12 @@ import julian.modelrailway.trackmaterial.Vertex;
  * Setzt einene neuen Zug auf die Schienen.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class PutTrain extends Command {
 
-    private static final String REGEX = "put train (\\d+) at \\(([-+]?\\d+),([-+]?\\d+)\\) in direction ([+-]?\\d+),([+-]?\\d+)";
+    private static final String REGEX 
+        = "put train (\\d+) at \\(([-+]?\\d+),([-+]?\\d+)\\) in direction ([+-]?\\d+),([+-]?\\d+)";
 
     /**
      * Erstellt einen neuen Command mit put train PAttern.

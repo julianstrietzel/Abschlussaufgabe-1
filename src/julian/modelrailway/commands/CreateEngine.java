@@ -9,10 +9,12 @@ import julian.modelrailway.main.ModelRailWay;
  * Der create Egine Befehl fügt eine Lokomotive hinzu
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class CreateEngine extends Command {
 
-    private static final String REGEX = "create engine (electrical|steam|diesel) (\\w+) (\\w+) (\\d+) (true|false) (true|false)";
+    private static final String REGEX 
+        = "create engine (electrical|steam|diesel) (\\w+) (\\w+) (\\d+) (true|false) (true|false)";
 
     /**
      * Erstellt einen neuen Command, der das create Engine Pattern akzeptiert.

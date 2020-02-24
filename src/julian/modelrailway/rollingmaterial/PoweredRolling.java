@@ -5,6 +5,7 @@ package julian.modelrailway.rollingmaterial;
  * Überklasse für alle Schienenfahrzeuge mit Motor
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public abstract class PoweredRolling extends RollingMaterial {
 
@@ -51,7 +52,7 @@ public abstract class PoweredRolling extends RollingMaterial {
     }
 
     @Override
-    public boolean equalsRollingMat(RollingMaterial p) {
+    public boolean sameRollingMat(RollingMaterial p) {
         if (p == null) {
             return false;
         }

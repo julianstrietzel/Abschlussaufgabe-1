@@ -10,6 +10,7 @@ import julian.modelrailway.main.ModelRailWay;
  * Befehl, der die Züge fahren lässt
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class Step extends Command {
 

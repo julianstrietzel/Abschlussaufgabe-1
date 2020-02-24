@@ -5,6 +5,7 @@ package julian.modelrailway.rollingmaterial;
  * Repräsentiert einen Wagon.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public abstract class Coach extends RollingMaterial {
 
@@ -31,17 +32,17 @@ public abstract class Coach extends RollingMaterial {
     }
 
     @Override
-    public boolean equalsRollingMat(RollingMaterial p) {
+    public boolean sameRollingMat(RollingMaterial p) {
         if (p == null) {
             return false;
         }
         return p.getWStringID().equals(this.getWStringID());
     }
-
-    @Override
-    public String getLeerzeile() {
-        return "                    ";
-    }
+//
+//    @Override
+//    public String getLeerzeile() {
+//        return "                  ";
+//    }
 
     @Override
     public String toString() {

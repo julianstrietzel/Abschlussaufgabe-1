@@ -13,6 +13,7 @@ import julian.modelrailway.rollingmaterial.SetTrain;
  * Schienennetzes die Klasse RailNetwork
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class Railsystem {
     private final RailNetwork railnet;

@@ -8,6 +8,7 @@ import julian.modelrailway.main.ModelRailWay;
  * er bei isExit() true zurück.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class Exit extends Command {
 

@@ -11,6 +11,7 @@ import julian.modelrailway.trackmaterial.Vertex;
  * Der set switch Befehl setzt eine Weiche.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class SetSwitch extends Command {
 

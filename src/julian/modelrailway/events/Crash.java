@@ -10,6 +10,7 @@ import julian.modelrailway.trackmaterial.ListUtility;
  * Event, dass alle bteiligten Züge eines Crashes speichert.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class Crash extends Event implements Comparable<Event> {
 

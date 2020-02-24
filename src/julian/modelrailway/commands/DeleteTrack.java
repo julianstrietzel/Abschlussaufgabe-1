@@ -7,10 +7,10 @@ import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.main.ModelRailWay;
 
 /**
- * Erstellt einen neuen Command, der das Delete-Track Pattern akzeptiert. Bei
- * der Ausführung wird die entsprechende Schiene gelöscht.
+ * Ein Befehl, der ein bestimmtes Track Material entfernt
  * 
- * @param model
+ * @author Julian Strietzel
+ * @version 1.0
  */
 public class DeleteTrack extends Command {
 

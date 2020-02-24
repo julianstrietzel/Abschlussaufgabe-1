@@ -10,6 +10,7 @@ import julian.modelrailway.commands.*;
  * passenden raus.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class UserInterface {
 

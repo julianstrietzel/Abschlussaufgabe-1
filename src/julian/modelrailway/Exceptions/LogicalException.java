@@ -6,6 +6,7 @@ package julian.modelrailway.Exceptions;
  * der gelöscht werden soll existiert nicht.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class LogicalException extends Exception {
 

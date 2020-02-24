@@ -5,6 +5,7 @@ package julian.modelrailway.rollingmaterial;
  * Repräsentiert eine Diesellokomotive.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class DieselLocomotive extends Engine {
 
@@ -23,8 +24,8 @@ public class DieselLocomotive extends Engine {
 
     @Override
     public String[] getVisual() {
-        String[] visual = { "  (O)(O)      (O)(O)  ", " \\__________________/ ", "\\                    /",
-                "/   |____________|   \\", " /_| ____________ |_\\ ", "  _____________|____  " };
+        String[] visual = {"  (O)(O)      (O)(O)  ", " \\__________________/ ", "\\                    /",
+            "/   |____________|   \\", " /_| ____________ |_\\ ", "  _____________|____  "};
         return visual;
     }
 

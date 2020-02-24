@@ -5,6 +5,7 @@ package julian.modelrailway.rollingmaterial;
  * Passagierwaggon
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public final class PassengerWagon extends Coach {
 
@@ -22,9 +23,14 @@ public final class PassengerWagon extends Coach {
 
     @Override
     public String[] getVisual() {
-        String[] visual = { "   (O)        (O)   ", "|__________________|", "|__________________|",
-                "|  |_| |_| |_| |_| |", "|  ___ ___ ___ ___ |", "____________________" };
+        String[] visual = {"   (O)        (O)   ", "|__________________|", "|__________________|",
+            "|  |_| |_| |_| |_| |", "|  ___ ___ ___ ___ |", "____________________"};
         return visual;
+    }
+    
+    @Override
+    public String getLeerzeile() {
+        return "                    ";
     }
 
     @Override

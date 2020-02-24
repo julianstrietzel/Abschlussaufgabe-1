@@ -9,6 +9,7 @@ import julian.modelrailway.main.ModelRailWay;
  * Der create Egine Befehl fügt einen neuen Triebwagen hinzu.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class CreateTrainSet extends Command {
 

@@ -8,6 +8,7 @@ import julian.modelrailway.main.ModelRailWay;
  * Der create Egine Befehl fügt einen neuen Wagon hinzu.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class CreateCoach extends Command {
 

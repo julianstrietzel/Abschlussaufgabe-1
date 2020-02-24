@@ -5,6 +5,7 @@ package julian.modelrailway.rollingmaterial;
  * Abstrakte Überklasse für alle Lokomotiven
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public abstract class Engine extends PoweredRolling {
 

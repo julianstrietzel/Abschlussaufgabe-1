@@ -7,10 +7,10 @@ import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.main.ModelRailWay;
 
 /**
- * Erstellt einen neuen Command, der das Delete Stock Pattern akzeptiert. Bei
- * der Ausführung wird der entsprechende Wagon gelöscht.
+ * Ein Befehl, der ein bestimmtes RollMaterial löscht
+ * @author Julian Strietzel
+ * @version 1.0
  * 
- * @param model
  */
 public class DeleteRollingStock extends Command {
 

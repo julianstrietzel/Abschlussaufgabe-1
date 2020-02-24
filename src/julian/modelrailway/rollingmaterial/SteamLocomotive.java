@@ -5,6 +5,7 @@ package julian.modelrailway.rollingmaterial;
  * Repräsentiert eine Dampflokomotive
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class SteamLocomotive extends Engine {
 
@@ -23,8 +24,8 @@ public class SteamLocomotive extends Engine {
 
     @Override
     public String[] getVisual() {
-        String[] visual = { "//// \\_/      \\_/   ", " _|--/~\\------/~\\-+ ", "  + ========  +-+ | ",
-                "   /---------|| | | ", "     ||      |+-+ | ", "     ++      +------" };
+        String[] visual = {"//// \\_/      \\_/   ", " _|--/~\\------/~\\-+ ", "  + ========  +-+ | ",
+            "   /---------|| | | ", "     ||      |+-+ | ", "     ++      +------" };
         return visual;
 
     }

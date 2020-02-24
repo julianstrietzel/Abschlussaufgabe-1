@@ -6,9 +6,10 @@ import julian.modelrailway.Exceptions.LogicalException;
 import julian.modelrailway.main.ModelRailWay;
 
 /**
- * x * Der Add-Track befehl fügt eine normale Schiene hinzu.
+ * Der Add-Track befehl fügt eine normale Schiene hinzu.
  * 
  * @author Julian Strietzel
+ * @version 1.0
  */
 public class AddTrain extends Command {
     private static final String REGEX = "add train (\\d+) (W?)((-|\\w)+)";

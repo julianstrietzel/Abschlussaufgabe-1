@@ -3,7 +3,8 @@ package julian.modelrailway.trackmaterial;
 
 import java.util.LinkedList;
 import java.util.List;
-import julian.modelrailway.Exceptions.LogicalException;
+
+import julian.modelrailway.exceptions.LogicalException;
 import julian.modelrailway.rollingmaterial.SetTrain;
 
 /**

@@ -4,8 +4,9 @@ package julian.modelrailway.trackmaterial;
 import java.util.LinkedList;
 import java.util.List;
 
-import julian.modelrailway.Exceptions.*;
 import julian.modelrailway.events.*;
+import julian.modelrailway.exceptions.IllegalInputException;
+import julian.modelrailway.exceptions.LogicalException;
 import julian.modelrailway.rollingmaterial.SetTrain;
 
 /**

@@ -2,8 +2,8 @@
 package julian.modelrailway.commands;
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.Exceptions.IllegalInputException;
-import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.exceptions.IllegalInputException;
+import julian.modelrailway.exceptions.LogicalException;
 import julian.modelrailway.main.ModelRailWay;
 import julian.modelrailway.trackmaterial.Vertex;
 

@@ -3,9 +3,10 @@ package julian.modelrailway.main;
 
 import java.util.LinkedList;
 
-import julian.modelrailway.Exceptions.*;
 import julian.modelrailway.events.Event;
 import julian.modelrailway.events.TrainMoved;
+import julian.modelrailway.exceptions.IllegalInputException;
+import julian.modelrailway.exceptions.LogicalException;
 import julian.modelrailway.rollingmaterial.*;
 import julian.modelrailway.trackmaterial.*;
 

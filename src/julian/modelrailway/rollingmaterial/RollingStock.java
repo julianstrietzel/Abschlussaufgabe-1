@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import julian.modelrailway.Exceptions.*;
+import julian.modelrailway.exceptions.IllegalInputException;
+import julian.modelrailway.exceptions.LogicalException;
 
 /**
  * Diese Klasse speichert das gesamte RollMaterial

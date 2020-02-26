@@ -2,7 +2,7 @@
 package julian.modelrailway.commands;
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.exceptions.LogicalException;
 import julian.modelrailway.main.ModelRailWay;
 
 /**

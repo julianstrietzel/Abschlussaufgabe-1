@@ -1,5 +1,5 @@
 
-package julian.modelrailway.Exceptions;
+package julian.modelrailway.exceptions;
 
 /**
  * Wird geworfen, wenn ein Logischer Fehler im Programm auftritt. Bsp. Ein Zug

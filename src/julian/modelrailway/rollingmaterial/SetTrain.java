@@ -1,7 +1,8 @@
 
 package julian.modelrailway.rollingmaterial;
 
-import julian.modelrailway.Exceptions.*;
+import julian.modelrailway.exceptions.IllegalInputException;
+import julian.modelrailway.exceptions.LogicalException;
 import julian.modelrailway.trackmaterial.*;
 
 /**

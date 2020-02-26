@@ -2,6 +2,7 @@
 package julian.modelrailway.commands;
 
 import edu.kit.informatik.Terminal;
+import julian.modelrailway.commands.Command;
 import julian.modelrailway.main.ModelRailWay;
 
 /**

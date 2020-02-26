@@ -3,7 +3,7 @@ package julian.modelrailway.rollingmaterial;
 
 import java.util.LinkedList;
 
-import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.exceptions.LogicalException;
 
 /**
  * Ein Zug, konkateniert aus Rollmaterial

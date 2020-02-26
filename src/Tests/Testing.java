@@ -178,7 +178,7 @@ public  class Testing {
 
     @Test
     public void testinDeleteTracks() {
-//        Terminal.silent = true;
+//        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
 //        e("add track (10,10) -> (10,11)");
 //        e("list tracks");
@@ -405,7 +405,7 @@ public  class Testing {
      */
     @Test
     public void backwardsANDEntgleisem() {
-        Terminal.silent = false;
+//        Terminal.silent = false;
         e("add track (0,0) -> (100,0)");
         assertTrue("1".contentEquals(Terminal.buffer));
         e("add track (0,0) -> (-100,0)");
@@ -432,9 +432,38 @@ public  class Testing {
 
     }
 
-//    @Test
-//    public void findError() {
-//        
-//    }
+    @Test
+    public void deletingSwitches() {
+//        Terminal.silent = false;
+        e("add track (1,1) -> (5,1)");
+      e("add switch (5,1) -> (8,1),(5,3)");
+      e("add track (10,1) -> (8,1)");
+      e("add track (10,-1) -> (10,1)");
+      e("add track (10,-1) -> (1,-1)");
+      e("delete track 2");
+      assertTrue(Terminal.buffer.contains("Error, "));
+      e("add track (1,-1) -> (1,1)");
+      e("delete track 2");
+      e("add track (5,1) -> (8,1)");
+      assertTrue("2".contentEquals(Terminal.buffer));
+      e("delete track 2");
+      e("add switch (5,1) -> (8,1),(5,3)");
+      e("add switch (5,3) -> (10,3),(5,8)");
+      e("delete track 2");
+      assertTrue(Terminal.buffer.contains("Error, "));
+      e("delete track 3");
+      e("add switch (10,1) -> (10,3),(8,1)");
+      e("delete track 2");
+      assertTrue("OK".contentEquals(Terminal.buffer));
+    }
 
+    @Test
+    public void placingTRains() {
+        Terminal.silent = false;
+        e("add track (1,1) -> (5,1)");
+        e("create engine steam T4 Emma 1 true false");
+        e("add train 1 T4-Emma");
+        e("put train 1 at (01,1) in direction 1,0");
+        assertTrue(Terminal.buffer.contains("Error, "));
+    }
 }

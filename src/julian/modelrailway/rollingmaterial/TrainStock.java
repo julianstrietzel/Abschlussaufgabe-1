@@ -3,7 +3,7 @@ package julian.modelrailway.rollingmaterial;
 
 import java.util.HashMap;
 
-import julian.modelrailway.Exceptions.LogicalException;
+import julian.modelrailway.exceptions.LogicalException;
 
 /**
  * Verwaltet die zusammengesetzten Züge

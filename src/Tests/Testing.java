@@ -15,7 +15,8 @@ import org.junit.Test;
 import julian.modelrailway.main.ModelRailWay;
 import julian.modelrailway.main.UserInterface;
 
-public class Testing {
+public  class Testing {
+    
     ModelRailWay m;
     UserInterface ui;
 
@@ -23,9 +24,13 @@ public class Testing {
      * Resets before every Test
      */
     @Before
-    public void reset() {
-        Terminal.silent = false;
+    public void start() {
+        Terminal.silent = true;
         // Bei Bedarf hier die ausgabe wieder einschalten!
+        reset();
+    }
+    
+    private void reset() {
         m = new ModelRailWay();
         ui = new UserInterface(m);
     }
@@ -400,8 +405,9 @@ public class Testing {
      */
     @Test
     public void backwardsANDEntgleisem() {
-//        Terminal.silent = false;
+        Terminal.silent = false;
         e("add track (0,0) -> (100,0)");
+        assertTrue("1".contentEquals(Terminal.buffer));
         e("add track (0,0) -> (-100,0)");
         e("create engine steam T3 Emma 10 true false");
         e("add train 1 T3-Emma");
@@ -411,19 +417,18 @@ public class Testing {
         e("put train 2 at (0,0) in direction -1,0");
         e("step 1");
         assertTrue("Crash of train 1,2".contentEquals(Terminal.buffer));
-        m = new ModelRailWay();
-        ui = new UserInterface(m);
+        reset();
         e("add track (0,0) -> (100,0)");
         e("add track (0,0) -> (-100,0)");
-        e("create engine steam T3 Emma 1 true false"); // only change
+        e("create engine steam T3 Emma 1 true false");
         e("add train 1 T3-Emma");
         e("put train 1 at (-100,0) in direction -1,0");
         e("create engine steam T4 Emma 10 true false");
         e("add train 2 T4-Emma");
         e("put train 2 at (0,0) in direction -1,0");
+        e("step 0");
         e("step 1");
         assertTrue("Crash of train 1\nTrain 2 at (-1,0)".contentEquals(Terminal.buffer));
-//        e("put train 1 at (0,0) in direction 1,0");
 
     }
 

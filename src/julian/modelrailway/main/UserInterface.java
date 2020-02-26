@@ -15,7 +15,7 @@ import julian.modelrailway.commands.*;
 public class UserInterface {
 
     private final List<Command> commands;
-    private Command lastFoundCommand;
+    private Command lastCommand;
     private final Command fail;
 
     /**
@@ -42,29 +42,29 @@ public class UserInterface {
         commands.add(new PutTrain(model));
         commands.add(new Step(model));
         commands.add(new Exit(model));
-        lastFoundCommand = new Fail(model);
-        fail = new Fail(model);
+        lastCommand = new Fail(model);
+        fail = lastCommand;
     }
 
     /**
      * Führt den Befehl mit dem Userinput aus
      * 
-     * @param command String des Userinputs
+     * @param input String des Userinputs
      */
-    public void executeCommand(String command) {
-        getCommand(command).execute(command);
+    public void executeCommand(String input) {
+        findCommand(input).execute(input);
     }
 
     /**
      * Sucht einen zum Input passenden Befehl raus.
      * 
-     * @param command Userinput
+     * @param input Userinput
      * @return gefundener Command oder fail-Command
      */
-    private Command getCommand(String command) {
+    private Command findCommand(String input) {
         for (Command found : commands) {
-            if (found.matches(command)) {
-                lastFoundCommand = found;
+            if (found.matches(input)) {
+                lastCommand = found;
                 return found;
             }
         }
@@ -77,6 +77,6 @@ public class UserInterface {
      * @return isExit von letztem befehl
      */
     public boolean isExit() {
-        return lastFoundCommand.isExit();
+        return lastCommand.isExit();
     }
 }

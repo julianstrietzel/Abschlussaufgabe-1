@@ -20,10 +20,9 @@ public class Main {
     public static void main(String[] args) {
         ModelRailWay model = new ModelRailWay();
         UserInterface userInterface = new UserInterface(model);
-
-        do {
+        while (!userInterface.isExit()) {
             userInterface.executeCommand(Terminal.readLine());
-        } while (!userInterface.isExit());
+        }
     }
 
 }

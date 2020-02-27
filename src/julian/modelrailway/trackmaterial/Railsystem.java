@@ -90,7 +90,7 @@ public class Railsystem {
         if (track.isOccupied()) {
             throw new LogicalException("track occupied.");
         }
-        if (ListUtility.contains(railnet.getCopyKnodes(), pos) != null) {
+        if (Knode.contains(railnet.getCopyKnodes(), pos) != null) {
             train.setDirection(track.getDirectionTo(pos)); // Auch wenn an Ecke gesetzt muss die richtige richtung
                                                            // eingespeihcer sein
         }

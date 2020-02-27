@@ -238,7 +238,7 @@ public class Switch extends Rail {
 
     @Override
     public void deleteConnections(List<Knode> knodes) {
-        Knode endKTwo = ListUtility.contains(knodes, endTwo);
+        Knode endKTwo = Knode.contains(knodes, endTwo);
         endKTwo.deconnect(this);
         if (endKTwo.isUseless()) {
             knodes.remove(endKTwo);

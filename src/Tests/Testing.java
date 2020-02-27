@@ -459,11 +459,19 @@ public  class Testing {
 
     @Test
     public void placingTRains() {
-        Terminal.silent = false;
+//        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
         e("create engine steam T4 Emma 1 true false");
         e("add train 1 T4-Emma");
         e("put train 1 at (01,1) in direction 1,0");
         assertTrue(Terminal.buffer.contains("Error, "));
     }
+   
+   @Test
+   public void addDublicats() {
+//       Terminal.silent = false;
+       e("add track (1,1) -> (5,1)");
+       e("add track (5,1) -> (1,1)");
+       e("add switch (1,1) -> (5,1),(1,10)");
+   }
 }

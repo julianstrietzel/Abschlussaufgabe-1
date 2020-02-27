@@ -178,4 +178,22 @@ public class Knode extends Vertex {
         }
         throw new LogicalException("no fitting Track existing.");
     }
+
+    /**
+     * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der
+     * entsorechenden equals Funktion.
+     * 
+     * @param list   , die diruchsucht werden soll
+     * @param object , nach dem gesucht werden soll
+     * @return Knoten, nach dem gesucht wurde, wenn dieser existiert, sonst null.
+     */
+    public static Knode contains(List<Knode> list, Vertex object) {
+        for (Knode obj : list) {
+            if (obj.sameVertex(object)) {
+                return obj;
+            }
+        }
+        return null;
+    }
+
 }

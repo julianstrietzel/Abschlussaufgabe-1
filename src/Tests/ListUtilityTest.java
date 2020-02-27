@@ -25,17 +25,17 @@ public class ListUtilityTest {
     public static void setUpBeforeClass() throws Exception {
     }
 
-    /**
-     * Test method for {@link julian.modelrailway.trackmaterial.ListUtility#contains(java.util.LinkedList, java.lang.Object)}.
-     * @throws IllegalInputException 
-     */
-    @Test
-    public void testContainsLinkedListOfTT() throws IllegalInputException {
-        LinkedList<Rail> test = new LinkedList<Rail>();
-        test.add(new Rail(new Vertex(0,0), new Vertex(0,10),0));
-        assertTrue(test.getFirst().sameRail(new Rail(new Vertex(0,0), new Vertex(0,10),0)));
-        assertTrue(ListUtility.contains(test, new Rail(new Vertex(0,0), new Vertex(0,10),0)));
-     }
+//    /**
+//     * Test method for {@link julian.modelrailway.trackmaterial.ListUtility#contains(java.util.LinkedList, java.lang.Object)}.
+//     * @throws IllegalInputException 
+//     */
+//    @Test
+//    public void testContainsLinkedListOfTT() throws IllegalInputException {
+//        LinkedList<Rail> test = new LinkedList<Rail>();
+//        test.add(new Rail(new Vertex(0,0), new Vertex(0,10),0));
+//        assertTrue(test.getFirst().sameRail(new Rail(new Vertex(0,0), new Vertex(0,10),0)));
+//        assertTrue(ListUtility.contains(test, new Rail(new Vertex(0,0), new Vertex(0,10),0)));
+//     }
 
     /**
      * Test method for {@link julian.modelrailway.trackmaterial.ListUtility#contains(java.util.LinkedList, julian.modelrailway.trackmaterial.Vertex)}.

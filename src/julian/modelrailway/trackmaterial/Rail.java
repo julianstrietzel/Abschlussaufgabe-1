@@ -345,12 +345,12 @@ public class Rail implements Comparable<Rail> {
      * @param knodes aus diesen Knoten werden alle Verbindungen gelöscht
      */
     public void deleteConnections(List<Knode> knodes) {
-        Knode endK = ListUtility.contains(knodes, end);
+        Knode endK = Knode.contains(knodes, end);
         endK.deconnect(this);
         if (endK.isUseless()) {
             knodes.remove(endK);
         }
-        Knode startK = ListUtility.contains(knodes, start);
+        Knode startK = Knode.contains(knodes, start);
         startK.deconnect(this);
         if (startK.isUseless()) {
             knodes.remove(startK);

@@ -185,7 +185,7 @@ public class RailNetwork {
     private void checkFreeKnodes(List<Vertex> knodes) throws LogicalException {
         int freeKnodes = 0;
         for (Knode knode : this.knodes) {
-            if (ListUtility.contains(knodes, knode)) {
+            if (contains(knodes, knode)) {
                 freeKnodes++;
                 if (!knode.isFree()) {
                     throw new LogicalException("knodes occupied.");
@@ -214,8 +214,8 @@ public class RailNetwork {
     public boolean markBackOccupied(SetTrain train, Vertex pos, DirectionalVertex dire, Rail rail, boolean breakUp)
             throws IllegalInputException, LogicalException {
         DirectionalVertex direc = dire;
-        if (ListUtility.contains(knodes, train.getPosition()) != null) {
-            Knode newLy = ListUtility.contains(knodes, train.getPosition());
+        if (Knode.contains(knodes, train.getPosition()) != null) {
+            Knode newLy = Knode.contains(knodes, train.getPosition());
             newLy.addTrain(train);
         }
         int i = rail.getSpaceLeftBehind(pos, direc);
@@ -237,7 +237,7 @@ public class RailNetwork {
             }
             newlyOccupied.add(next);
             if (i == train.getLength()) {
-                ListUtility.contains(knodes, next.getEndInDirection(direc)).addTrain(train);
+                Knode.contains(knodes, next.getEndInDirection(direc)).addTrain(train);
             }
         }
         for (Rail newRail : newlyOccupied) {
@@ -311,7 +311,7 @@ public class RailNetwork {
     public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
 
         Switch newSw = new Switch(start, endOne, endTwo, getNextFreeID());
-        if (ListUtility.contains(switches, newSw)) {
+        if (contains(rails, newSw)) {
             throw new LogicalException("track existing");
         }
         if (newSw.getMinLength() == 0) {
@@ -359,13 +359,13 @@ public class RailNetwork {
                 }
             }
 
-            if (ListUtility.contains(knodes, newSw.getStart()) == null) {
+            if (Knode.contains(knodes, newSw.getStart()) == null) {
                 knodes.add(new Knode(newSw.getStart(), newSw));
             }
-            if (ListUtility.contains(knodes, newSw.getEnd()) == null) {
+            if (Knode.contains(knodes, newSw.getEnd()) == null) {
                 knodes.add(new Knode(newSw.getEnd(), newSw));
             }
-            if (ListUtility.contains(knodes, newSw.getEndTwo()) == null) {
+            if (Knode.contains(knodes, newSw.getEndTwo()) == null) {
                 knodes.add(new Knode(newSw.getEndTwo(), newSw));
             }
         } else {
@@ -390,7 +390,7 @@ public class RailNetwork {
      */
     public int addRail(Vertex start, Vertex end) throws IllegalInputException, LogicalException {
         Rail newRail = new Rail(start, end, getNextFreeID());
-        if (ListUtility.contains(rails, newRail)) {
+        if (contains(rails, newRail)) {
             throw new LogicalException("track existing.");
         }
         if (newRail.getLength() == 0) {
@@ -420,10 +420,10 @@ public class RailNetwork {
                     newRail.setNext(knode.getRailIn());
                 }
             }
-            if (ListUtility.contains(knodes, newRail.getStart()) == null) {
+            if (Knode.contains(knodes, newRail.getStart()) == null) {
                 knodes.add(new Knode(newRail.getStart(), newRail));
             }
-            if (ListUtility.contains(knodes, newRail.getEnd()) == null) {
+            if (Knode.contains(knodes, newRail.getEnd()) == null) {
                 knodes.add(new Knode(newRail.getEnd(), newRail));
             }
         } else {
@@ -447,4 +447,38 @@ public class RailNetwork {
         }
         return result.toString().substring(0, result.length() - 1).trim();
     }
+    
+    /**
+     * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der
+     * entsorechenden equals Funktion.
+     * 
+     * @param list   die durchsucht werden soll
+     * @param object nachdem gesucht werden soll
+     * @return WW, ob die Liste die Schiene enthält
+     */
+    public boolean contains(List<Rail> list, Rail object) {
+        for (Rail obj : list) {
+            if (object.sameRail(obj)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+   * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der
+   * entsorechenden equals Funktion.
+   * 
+   * @param list   die durchsucht werden soll
+   * @param object nachdem gesucht werden soll
+   * @return WW, ob die Liste den Knoten enthält
+   */
+  public boolean contains(List<Vertex> list, Knode object) {
+      for (Vertex obj : list) {
+          if (obj.sameVertex(object)) {
+              return true;
+          }
+      }
+      return false;
+  }
 }

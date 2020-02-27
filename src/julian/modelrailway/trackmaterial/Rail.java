@@ -229,8 +229,9 @@ public class Rail implements Comparable<Rail> {
      * oder Start entspricht
      * 
      * @param newRail die Schiene, die verbunden werden soll
-     * @param point der Punkt an dem verbunden werden soll
-     * @throws LogicalException , wenn der PÜunkt nicht am ende oder Sgtart der Schiene ist.
+     * @param point   der Punkt an dem verbunden werden soll
+     * @throws LogicalException , wenn der PÜunkt nicht am ende oder Sgtart der
+     *                          Schiene ist.
      */
     public void connectEasy(Rail newRail, Vertex point) throws LogicalException {
         if (point.sameVertex(this.start)) {
@@ -248,7 +249,7 @@ public class Rail implements Comparable<Rail> {
      * Vergleicht zwei Rails anhand ihrer Start und Endpunkte
      * 
      * @param rail zu vergleichende Schiene
-     * @return Ob die Schienen den gleichen Start und Endpunkt haben 
+     * @return Ob die Schienen den gleichen Start und Endpunkt haben
      */
     public boolean sameRail(Rail rail) {
         if (rail == null) {

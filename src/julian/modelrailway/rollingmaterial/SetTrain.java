@@ -113,7 +113,7 @@ public class SetTrain implements Comparable<SetTrain> {
      * @param forwards Richtung des Zuges
      * @return Boolean ob erfolgreich
      * @throws IllegalInputException wenn nächste Schiene nicht existiert
-     * @throws LogicalException wenn Fehler im markoccupied()
+     * @throws LogicalException      wenn Fehler im markoccupied()
      */
     public boolean move(boolean forwards) throws LogicalException, IllegalInputException {
 

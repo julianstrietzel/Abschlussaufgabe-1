@@ -24,7 +24,7 @@ public final class FreightCar extends Coach {
     @Override
     public String[] getVisual() {
         String[] visual = {"   (O)        (O)   ", "|__________________|", "|                  |",
-            "|                  |", "|                  |"};
+            "|                  |", "|                  |" };
         return visual;
     }
 
@@ -32,7 +32,7 @@ public final class FreightCar extends Coach {
     public String getLeerzeile() {
         return "                    ";
     }
-    
+
     @Override
     public String getType() {
         return "f";

@@ -1,7 +1,6 @@
 
 package julian.modelrailway.trackmaterial;
 
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import julian.modelrailway.exceptions.LogicalException;
 
 /**
  * Repräsentiert eine Weiche
+ * 
  * @author Julian Strietzel
  * @version 1.0
  */
@@ -313,9 +313,9 @@ public class Switch extends Rail {
         try {
             if (r instanceof Switch) {
                 Switch re = (Switch) r;
-                if (new Rail(re.getStart(), re.getEnd(), 0).sameRail(new Rail(this.getStart(), this.getEnd(), 0)) 
-                        || new Rail(re.getStart(), re.getEnd(), 0).sameRail(new Rail(this.getStart(), 
-                                this.endTwo, 0))) {
+                if (new Rail(re.getStart(), re.getEnd(), 0).sameRail(new Rail(this.getStart(), this.getEnd(), 0))
+                        || new Rail(re.getStart(), re.getEnd(), 0)
+                                .sameRail(new Rail(this.getStart(), this.endTwo, 0))) {
                     return true;
                 }
                 if (new Rail(re.getStart(), re.endTwo, 0).sameRail(new Rail(this.getStart(), this.getEnd(), 0))

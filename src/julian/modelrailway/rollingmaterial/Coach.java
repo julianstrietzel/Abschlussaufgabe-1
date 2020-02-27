@@ -38,11 +38,6 @@ public abstract class Coach extends RollingMaterial {
         }
         return p.getWStringID().equals(this.getWStringID());
     }
-//
-//    @Override
-//    public String getLeerzeile() {
-//        return "                  ";
-//    }
 
     @Override
     public String toString() {

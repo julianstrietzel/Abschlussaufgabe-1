@@ -45,7 +45,7 @@ public class ModelRailWay {
      *                               mit dem restlichen Schienennetz gibt.
      */
     public String addTrack(int startX, int startY, int endX, int endY) throws IllegalInputException, LogicalException {
-        return "" + rSystem.getRailNet().addRail(new Vertex(startX, startY), new Vertex(endX, endY));
+        return "" + rSystem.addRail(new Vertex(startX, startY), new Vertex(endX, endY));
     }
 
     /**
@@ -65,8 +65,7 @@ public class ModelRailWay {
     public String addSwitch(int startX, int startY, int endX, int endY, int end2x, int end2y)
             throws IllegalInputException, LogicalException {
 
-        return "" + rSystem.getRailNet().addSwitch(new Vertex(startX, startY), new Vertex(endX, endY),
-                new Vertex(end2x, end2y));
+        return "" + rSystem.addSwitch(new Vertex(startX, startY), new Vertex(endX, endY), new Vertex(end2x, end2y));
 
     }
 
@@ -137,7 +136,7 @@ public class ModelRailWay {
      * @throws LogicalException , wenn die Schiene für den Zusammenhalt nötig ist.
      */
     public String deleteTrack(int id) throws LogicalException {
-        rSystem.getRailNet().deleteTrack(id);
+        rSystem.deleteTrack(id);
         return "OK";
     }
 
@@ -200,7 +199,9 @@ public class ModelRailWay {
     }
 
     /**
-     * Bewegt alle Züge auf dem Schienennetz um <speed> Schritte
+     * Bewegt alle Züge auf dem Schienennetz um <speed> Schritte Dabei wird nach
+     * jedem Schritt nach kollisionen überprüft (siehe move in Railsystem) In Events
+     * werden alle Crashes gespeichert
      * 
      * @param speed Anzahl an Schritten
      * @return Neue Positionen und Crashes
@@ -231,12 +232,10 @@ public class ModelRailWay {
         }
         rSystem.resetMArkers();
         for (SetTrain train : rSystem.getToTCopy()) {
-            rSystem.getRailNet().markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(),
-                    false);
+            rSystem.markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
 
         }
         return sb.substring(0, sb.length() - 1).toString();
-
     }
 
     /**
@@ -244,7 +243,7 @@ public class ModelRailWay {
      * @return Listet alle Schienen auf
      */
     public String listTracks() {
-        return rSystem.getRailNet().toString();
+        return rSystem.listRailNet();
     }
 
     /**
@@ -304,7 +303,7 @@ public class ModelRailWay {
      * @throws LogicalException      , wenn Fehler in markoccupied()
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
-        rSystem.getRailNet().setSwitch(id, point);
+        rSystem.setSwitch(id, point);
     }
 
 }

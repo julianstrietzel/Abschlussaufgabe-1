@@ -4,17 +4,9 @@
  */
 package Tests;
 
-import static org.junit.Assert.*;
-
-import java.util.LinkedList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import julian.modelrailway.exceptions.IllegalInputException;
-import julian.modelrailway.trackmaterial.ListUtility;
-import julian.modelrailway.trackmaterial.Rail;
-import julian.modelrailway.trackmaterial.Vertex;
 
 public class ListUtilityTest {
 

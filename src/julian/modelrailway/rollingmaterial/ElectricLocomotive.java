@@ -26,7 +26,7 @@ public class ElectricLocomotive extends Engine {
     public String[] getVisual() {
         String[] visual = {"  (O)(O)      (O)(O)  ", " \\__________________/ ", "\\                    /",
             "/   |____________|   \\", " /_| ____________ |_\\ ", "  _______________/__  ",
-            "                 \\    ", "               ___    "};
+            "                 \\    ", "               ___    " };
         return visual;
     }
 

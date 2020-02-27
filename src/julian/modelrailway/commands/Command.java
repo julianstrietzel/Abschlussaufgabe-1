@@ -15,8 +15,6 @@ import julian.modelrailway.main.ModelRailWay;
  */
 public abstract class Command {
 
-    
-
     /**
      * Regex, dass den erlaubten input hält
      */
@@ -26,7 +24,7 @@ public abstract class Command {
      * ModelRailWay, auf dem der Befehl ausgeführt werden soll
      */
     protected final ModelRailWay model;
-    
+
     private final Pattern commandPattern;
 
     /**

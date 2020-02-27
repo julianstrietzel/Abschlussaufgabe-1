@@ -17,6 +17,7 @@ import julian.modelrailway.rollingmaterial.SetTrain;
  * @version 1.0
  */
 public class Railsystem {
+
     private final RailNetwork railnet;
     private final List<SetTrain> trainsOnTrack;
     private final List<Crash> crashes;
@@ -66,15 +67,8 @@ public class Railsystem {
     }
 
     /**
-     * 
-     * @return das Schienennetz
-     */
-    public RailNetwork getRailNet() {
-        return railnet;
-    }
-
-    /**
-     * Setzt einen Zug auf das Schienenetz
+     * Setzt einen Zug auf das Schienenetz, dabei wird überprüft, ob Kollisionen mit
+     * anderen Zügen stattfinden wprden
      * 
      * @param train gesetzter Zug
      * @param direc Richtung des Zuges
@@ -91,8 +85,7 @@ public class Railsystem {
             throw new LogicalException("track occupied.");
         }
         if (Knode.contains(railnet.getCopyKnodes(), pos) != null) {
-            train.setDirection(track.getDirectionTo(pos)); // Auch wenn an Ecke gesetzt muss die richtige richtung
-                                                           // eingespeihcer sein
+            train.setDirection(track.getDirectionTo(pos));
         }
         try {
             if (railnet.markBackOccupied(train, train.getPosition(), train.getDirection(), track, true)) {
@@ -229,6 +222,89 @@ public class Railsystem {
      */
     public void removeTrain(SetTrain train) {
         trainsOnTrack.remove(train);
+    }
+
+    // Folgende Methoden leiten nur Funktionen an das Schienennetz weiter, um das
+    // Geheimnisprinzip zu wahren.
+
+    /**
+     * Leitet die Gleis hinzufügen Funktion an das Schienennetz weiter.
+     * 
+     * @param start Startpunkt
+     * @param end   Endpunkt
+     * @return eindeutige ID der neuen Schiene
+     * @throws IllegalInputException , wenn Länge null
+     * @throws LogicalException      , wenn der Track schon existiert oder bei
+     *                               Schienennetzkollisioen
+     */
+    public int addRail(Vertex start, Vertex end) throws IllegalInputException, LogicalException {
+        return railnet.addRail(start, end);
+    }
+
+    /**
+     * Leitet die Weiche hinzufügen Funktion an das Schienennetz weiter.
+     * 
+     * @param start  Starpunkt
+     * @param endOne erster Endpunkt
+     * @param endTwo zweiter Endpunkt
+     * @return eindeutige ID der neuen Weiche
+     * @throws IllegalInputException , wenn Länge null
+     * @throws LogicalException      , wenn der Track schon existiert oder bei
+     *                               Schienennetzkollisioen
+     */
+    public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
+        return railnet.addSwitch(start, endOne, endTwo);
+    }
+
+    /**
+     * Entfernt eine Schiene aus dem Netz, wenn diese nicht notwendig ist. Leitet
+     * diese Funktion an das Schienennetz weiter.
+     * 
+     * @param id der Schiene
+     * @throws LogicalException , wenn Schiene notwendig oder besetzt
+     */
+    public void deleteTrack(int id) throws LogicalException {
+        railnet.deleteTrack(id);
+    }
+
+    /**
+     * Leitet folgende Funktion an das Schienennetz weiter. Markiert hinter jedem
+     * Kopf eines ZUges entsprechend der Länge des Zuges die Schienen als besetzt.
+     * 
+     * @param train   Zug um den es geht
+     * @param pos     aktuelle Position
+     * @param dire    aktuelle Richtung
+     * @param rail    aktuele Schiene
+     * @param breakUp ob die Funktion bei einer Collision weiter markiere n soll
+     *                oder eben nicht
+     * @return bei break up false, wenn eine Schiene besetzt. sonst immer true.
+     * @throws IllegalInputException , wenn interner Fehler
+     * @throws LogicalException      , wenn Zug zu lang für Schienennetz
+     */
+    public boolean markBackOccupied(SetTrain train, Vertex pos, DirectionalVertex dire, Rail rail, boolean breakUp)
+            throws IllegalInputException, LogicalException {
+        return railnet.markBackOccupied(train, pos, dire, rail, breakUp);
+    }
+
+    /**
+     * 
+     * @return Liste aller Schienen im Netzwerk
+     */
+    public String listRailNet() {
+        return railnet.toString();
+    }
+
+    /**
+     * Leitet diese Funktion an das Schienennetz weiter. Setzt eine Weiche in
+     * Richtung des neuen Punktes
+     * 
+     * @param id    der Weiche
+     * @param point der das neue Ende sein soll
+     * @throws IllegalInputException , wenn Point is not an End of the Switch
+     * @throws LogicalException      , wenn Fehle rim MarkOccupied
+     */
+    public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
+        railnet.setSwitch(id, point);
     }
 
 }

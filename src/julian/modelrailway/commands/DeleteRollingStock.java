@@ -8,6 +8,7 @@ import julian.modelrailway.main.ModelRailWay;
 
 /**
  * Ein Befehl, der ein bestimmtes RollMaterial löscht
+ * 
  * @author Julian Strietzel
  * @version 1.0
  * 

@@ -4,6 +4,7 @@
  */
 package Tests;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
@@ -134,7 +135,9 @@ public  class Testing {
         e("create train-set 403 145 4 true true");
         assertTrue("403-145".equals(Terminal.buffer));
         e("add train 2 403-145");
+        
         assertTrue("train-set 403-145 added to train 2".equals(Terminal.buffer));
+        e("show train 2");
         e("set switch 4 position (10,1)");
         assertTrue("OK".equals(Terminal.buffer));
         e("step 1");
@@ -295,7 +298,7 @@ public  class Testing {
 
     @Test
     public void testPutting() {
-//        Terminal.silent = false;
+        Terminal.silent = false;
         e("add track (0,0) -> (10000,0)");
         assertTrue(Terminal.buffer.equals("1"));
         e("create engine steam T3 Emma 20 true false");
@@ -397,6 +400,8 @@ public  class Testing {
          * betreffen
          */
         // TODO getList überall entfernen
+        
+        e("show train 2");
 
     }
 
@@ -459,12 +464,17 @@ public  class Testing {
 
     @Test
     public void placingTRains() {
-//        Terminal.silent = false;
+        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
         e("create engine steam T4 Emma 1 true false");
         e("add train 1 T4-Emma");
-        e("put train 1 at (01,1) in direction 1,0");
+        e("put train 1 at (1,1) in direction 1,0");
         assertTrue(Terminal.buffer.contains("Error, "));
+        e("add track (1,1) -> (1,5)");
+        e("put train 1 at (1,1) in direction 0,-1");
+        assertFalse(Terminal.buffer.contains("Error, "));
+        e("step 2");
+        
     }
    
    @Test

@@ -6,8 +6,8 @@ import java.util.List;
 
 /**
  * Utility-Klasse für Operationen auf einer Liste ist gerechtfertigt, da mehrere
- * voneinander unabhängige Klassen die gleiche Funktionen brauchen und diese nicht an ein
- * bestimmtes Objekt gebunden ist.
+ * voneinander unabhängige Klassen die gleiche Funktionen brauchen und diese
+ * nicht an ein bestimmtes Objekt gebunden ist.
  * 
  * @author Julian Strietzel
  * @version 1.0

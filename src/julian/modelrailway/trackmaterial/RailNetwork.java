@@ -23,6 +23,7 @@ public class RailNetwork {
 
     /**
      * Erstellt ein neues Schienennetz
+     * 
      * @param rSys gekoppeltes Schienennetz
      */
     public RailNetwork(Railsystem rSys) {
@@ -103,7 +104,9 @@ public class RailNetwork {
     }
 
     /**
-     * Guckt ob es einen Weg ohne notSUe gibtvon from zu to
+     * Guckt ob es einen Weg von "from" zu "to", ohne die Tracks in notUse gibt.
+     * Also ob die Schiene "notwendig" ist Dabei wird rekursiv vorgegangen und alle
+     * besuchten Tracks zu notUse hinzugefügt.
      * 
      * @param notUse Nicht zu verwendende Scheinewege
      * @param from   Startpunkt
@@ -199,7 +202,9 @@ public class RailNetwork {
 
     /**
      * Markiert hinter jedem Kopf eines ZUges entsprechend der Länge des Zuges die
-     * Schienen als besetzt.
+     * Schienen als besetzt. Dabei wird nacheinander das Schienennetz entlang
+     * gegangen und bei jeder durch diesen Zug belegten Schiene, dieser der Liste an
+     * Zügen auf dieser Schiene hinzugefügt.
      * 
      * @param train   Zug um den es geht
      * @param pos     aktuelle Position
@@ -278,7 +283,7 @@ public class RailNetwork {
      * @param id    der Weiche
      * @param point der das neue Ende sein soll
      * @throws IllegalInputException , wenn Point is not an End of the Switch
-     * @throws LogicalException       , wenn Fehle rim MarkOccupied
+     * @throws LogicalException      , wenn Fehle rim MarkOccupied
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
         for (Switch s : switches) {
@@ -309,7 +314,6 @@ public class RailNetwork {
      *                               Schienennetzkollisioen
      */
     public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
-
         Switch newSw = new Switch(start, endOne, endTwo, getNextFreeID());
         if (contains(rails, newSw)) {
             throw new LogicalException("track existing");
@@ -317,9 +321,9 @@ public class RailNetwork {
         if (newSw.getMinLength() == 0) {
             throw new IllegalInputException("length needs to be not null");
         }
-
         if (!rails.isEmpty()) {
             newSw.setSwitch(newSw.getEnd());
+            // Es wird geprüft, ob es irgendwelche kollisionen mit anderen Schienen gibt
             Vertex checker = newSw.getStart();
             for (int i = 1; i < newSw.getSetLength(); i++) {
                 checker.add(newSw.getDirection());
@@ -340,7 +344,9 @@ public class RailNetwork {
                     || checkTrackCollision(newSw.getStart(), newSw.getEndTwo())) {
                 throw new LogicalException("Switch cutting another Rail.");
             }
+            // Überprüft, ob die Knoten nocht frei sind, an die die Weiche andocken soll
             checkFreeKnodes(newSw.getKnodes());
+            // Alle Knoten werden mit der Schiene verbunden
             for (Knode knode : knodes) {
                 if (knode.sameVertex(newSw.getStart())) {
                     knode.setRailOut(newSw);
@@ -358,7 +364,7 @@ public class RailNetwork {
                     newSw.setNextTwo(knode.getRailIn());
                 }
             }
-
+            // oder erstellt, wenn diese noch nicht existieren
             if (Knode.contains(knodes, newSw.getStart()) == null) {
                 knodes.add(new Knode(newSw.getStart(), newSw));
             }
@@ -397,6 +403,7 @@ public class RailNetwork {
             throw new IllegalInputException("length needs to be not null.");
         }
         if (!rails.isEmpty()) {
+            // Es wird geprüft, ob es irgendwelche kollisionen mit anderen Schienen gibt
             Vertex checker = newRail.getStart();
             for (int i = 1; i < newRail.getLength(); i++) {
                 checker.add(newRail.getDirection());
@@ -407,7 +414,9 @@ public class RailNetwork {
             if (checkTrackCollision(newRail.getStart(), newRail.getEnd())) {
                 throw new LogicalException("rail cutting another Rail");
             }
+            // Überprüft, ob die Knoten nocht frei sind, an die die Weiche andocken soll
             checkFreeKnodes(newRail.getKnodes());
+            // Alle Knoten werden mit der Schiene verbunden
             for (Knode knode : knodes) {
                 if (knode.sameVertex(newRail.getStart())) {
                     knode.setRailOut(newRail);
@@ -420,6 +429,7 @@ public class RailNetwork {
                     newRail.setNext(knode.getRailIn());
                 }
             }
+            // oder neu erstellt
             if (Knode.contains(knodes, newRail.getStart()) == null) {
                 knodes.add(new Knode(newRail.getStart(), newRail));
             }
@@ -447,7 +457,7 @@ public class RailNetwork {
         }
         return result.toString().substring(0, result.length() - 1).trim();
     }
-    
+
     /**
      * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der
      * entsorechenden equals Funktion.
@@ -464,21 +474,21 @@ public class RailNetwork {
         }
         return false;
     }
-    
+
     /**
-   * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der
-   * entsorechenden equals Funktion.
-   * 
-   * @param list   die durchsucht werden soll
-   * @param object nachdem gesucht werden soll
-   * @return WW, ob die Liste den Knoten enthält
-   */
-  public boolean contains(List<Vertex> list, Knode object) {
-      for (Vertex obj : list) {
-          if (obj.sameVertex(object)) {
-              return true;
-          }
-      }
-      return false;
-  }
+     * Gibt zurück, ob ein solches Objekt in der Liste existiert: nach der
+     * entsorechenden equals Funktion.
+     * 
+     * @param list   die durchsucht werden soll
+     * @param object nachdem gesucht werden soll
+     * @return WW, ob die Liste den Knoten enthält
+     */
+    public boolean contains(List<Vertex> list, Knode object) {
+        for (Vertex obj : list) {
+            if (obj.sameVertex(object)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

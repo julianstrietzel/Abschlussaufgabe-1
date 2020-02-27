@@ -31,6 +31,7 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
 
     /**
      * lololo
+     * 
      * @return Die höhe der Stringrepräsentation des Materials
      */
     public int getVisualHeight() {

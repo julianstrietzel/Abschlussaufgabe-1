@@ -26,7 +26,7 @@ public  class Testing {
      */
     @Before
     public void start() {
-        Terminal.silent = true;
+        Terminal.silent = false;
         // Bei Bedarf hier die ausgabe wieder einschalten!
         reset();
     }

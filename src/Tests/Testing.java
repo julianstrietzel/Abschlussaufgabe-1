@@ -494,10 +494,10 @@ public class Testing {
         e("add track (5,1) -> (1,1)");
         e("add switch (1,1) -> (5,1),(1,10)");
     }
-    
+
     @Test
     public void entgleisen() {
-        Terminal.silent = false;
+//        Terminal.silent = false;
         e("add switch (1,1) -> (5,1),(1,10)");
         e("set switch 1 position (5,1)");
         e("create engine steam T4 Emma 1 true false");
@@ -510,8 +510,37 @@ public class Testing {
         e("put train 1 at (5,1) in direction 0,0");
         e("set switch 1 position (5,1)");
         e("step 0");
-        
-        
+
     }
     
+    @Test
+    public void testWString() {
+        Terminal.silent = false;
+        e("create engine steam W Emma 10 true false");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("create coach special 1 true true");
+        e("create engine steam W1 Emma 10 true false");
+        e("delete rolling stock W1-Emma");
+        e("list engines");
+        assertTrue("No engine exists".contentEquals(Terminal.buffer));
+        e("list coaches");
+        e("list tracks");
+        assertTrue("No track exists".contentEquals(Terminal.buffer));
+        e("create engine steam W1 Emma 10 true true");
+        e("add train 1 W1");
+       
+        assertTrue("special coach W1 added to train 1".contentEquals(Terminal.buffer));
+        e("add train 1 W1-Emma");
+        e("create engine steam 1 Emma 10 true true");
+        e("create train-set W1 145 4 true true");
+        e("create train-set W1 146 4 true true");
+        e("create train-set 1 147 4 true true");
+        e("add train 2 W1-145");
+        e("add train 2 W1-146");
+        e("list trains");
+        assertTrue("1 W1 W1-Emma\n2 W1-145 W1-146".contentEquals(Terminal.buffer));
+        e("add train 2 1-147");
+        
+    }
+
 }

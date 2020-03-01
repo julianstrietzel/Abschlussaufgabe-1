@@ -1,6 +1,8 @@
 
 package julian.modelrailway.rollingmaterial;
 
+import julian.modelrailway.exceptions.IllegalInputException;
+
 /**
  * Überklasse für alle Schienenfahrzeuge mit Motor
  * 
@@ -20,9 +22,14 @@ public abstract class PoweredRolling extends RollingMaterial {
      * @param length      Länge
      * @param clutchFront Ob Kupplung vorne
      * @param clutchBack  Ob Kupplung hinten
+     * @throws IllegalInputException wenn Baureihe = "W"
      */
-    public PoweredRolling(String series, String name, int length, boolean clutchFront, boolean clutchBack) {
+    public PoweredRolling(String series, String name, int length, boolean clutchFront, boolean clutchBack) 
+            throws IllegalInputException {
         super(length, clutchFront, clutchBack);
+        if ("W".contentEquals(series)) {
+            throw new IllegalInputException("series W not allowed");
+        }
         this.series = series;
         this.name = name;
     }

@@ -98,9 +98,10 @@ public class ModelRailWay {
      * @param cBack      Ob die Lok hinten eine Kupplung hat
      * @return Nutzer Ausgabe
      * @throws LogicalException , wenn Lok schon existiert oder Länge gliech null
+     * @throws IllegalInputException wenn Series mit W beginnt
      */
     public String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
-            throws LogicalException {
+            throws LogicalException, IllegalInputException {
         if (length == 0) {
             throw new LogicalException("length null not allowed.");
         }
@@ -118,9 +119,10 @@ public class ModelRailWay {
      * @return Nutzer Ausgabe
      * @throws LogicalException , wenn Triebwagen schon existiert oder Länge gleich
      *                          null
+     * @throws IllegalInputException wenn Series mit W beginnt
      */
     public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
-            throws LogicalException {
+            throws LogicalException, IllegalInputException {
         if (length == 0) {
             throw new LogicalException("length null not allowed.");
         }

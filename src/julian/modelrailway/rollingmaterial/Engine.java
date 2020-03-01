@@ -1,6 +1,8 @@
 
 package julian.modelrailway.rollingmaterial;
 
+import julian.modelrailway.exceptions.IllegalInputException;
+
 /**
  * Abstrakte Überklasse für alle Lokomotiven
  * 
@@ -17,8 +19,10 @@ public abstract class Engine extends PoweredRolling {
      * @param length      Länge
      * @param clutchFront Ob Kupplung vorne
      * @param clutchBack  Ob Kupplung hinten
+     * @throws IllegalInputException 
      */
-    public Engine(String series, String name, int length, boolean clutchFront, boolean clutchBack) {
+    public Engine(String series, String name, int length, boolean clutchFront, boolean clutchBack) 
+            throws IllegalInputException {
         super(series, name, length, clutchFront, clutchBack);
     }
 

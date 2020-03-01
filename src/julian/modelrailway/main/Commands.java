@@ -190,11 +190,11 @@ public enum Commands {
      * 
      * Error, wenn Rollmaterial mit der ID nicht existiert.
      */
-    DELETE_ROLLING_STOCK("delete rolling stock (W?)((-|\\w)+)") {
+    DELETE_ROLLING_STOCK("delete rolling stock ((W?)(-|\\w)+)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model)
                 throws IllegalInputException, LogicalException {
-            Terminal.printLine(model.delete(!"W".contentEquals(matcher.group(1)), matcher.group(2)));
+            Terminal.printLine(model.delete(!"W".contentEquals(matcher.group(2)), matcher.group(1)));
 
         }
     },
@@ -272,13 +272,13 @@ public enum Commands {
      * Error, wenn der Input nicht valide, das Material nicht mit dem Zug
      * funktioniert oder das RollMaterial nicht existiert.
      */
-    ADD_TRAIN("add train (\\d+) (W?)((-|\\w)+)") {
+    ADD_TRAIN("add train (\\d+) ((W?)(-|\\w)+)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model)
                 throws IllegalInputException, LogicalException {
             try {
-                Terminal.printLine(model.addTrain(Integer.parseInt(matcher.group(1)), matcher.group(3),
-                        !"W".contentEquals(matcher.group(2))));
+                Terminal.printLine(model.addTrain(Integer.parseInt(matcher.group(1)), matcher.group(2),
+                        !"W".contentEquals(matcher.group(3))));
             } catch (NumberFormatException e) {
                 throw new IllegalInputException("input needs to contain valid integers");
             }

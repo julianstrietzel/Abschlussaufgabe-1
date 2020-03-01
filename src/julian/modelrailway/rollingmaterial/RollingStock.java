@@ -38,9 +38,10 @@ public class RollingStock {
      * @param cBack      Ob Kupplung hinten
      * @return ID der neuen Lokomotive
      * @throws LogicalException , wenn Lokomotive schon existiert
+     * @throws IllegalInputException wenn Baureihe mit "W" beginnt
      */
     public String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
-            throws LogicalException {
+            throws LogicalException, IllegalInputException {
         String id = series + "-" + name;
         if (RollingMaterial.exists(powered, id) != null) {
             throw new LogicalException("Engine already existing.");
@@ -67,9 +68,10 @@ public class RollingStock {
      * @param cBack  Ob Kupplung hinten
      * @return ID des neuen Triebzuges
      * @throws LogicalException , wenn Triebzug schon existiert
+     * @throws IllegalInputException wenn Baureihe bmit W beginnt
      */
     public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
-            throws LogicalException {
+            throws LogicalException, IllegalInputException {
         String id = series + "-" + name;
         if (RollingMaterial.exists(powered, id) != null) {
             throw new LogicalException("train-set already existing.");
@@ -111,31 +113,31 @@ public class RollingStock {
      *                               existiert.
      */
     public String delete(boolean isPowered, String id) throws IllegalInputException, LogicalException {
-        if (isPowered) {
-            PoweredRolling p = RollingMaterial.exists(powered, id);
-            if (p == null) {
-                throw new LogicalException("there is no powered stock with that id.");
-            }
+        PoweredRolling p = RollingMaterial.exists(powered, id);
+        if (p != null) {
             if (p.getTrain() != null) {
                 throw new LogicalException("rolling stock is used in train.");
             }
             powered.remove(p);
+            return "OK";
         } else {
+            String idwithoutW = id.substring(1);
             int intID;
             try {
-                intID = Integer.parseInt("id");
+                intID = Integer.parseInt(idwithoutW);
             } catch (NumberFormatException e) {
-                throw new IllegalInputException("id of Coach needs to be an Integer.");
+                throw new IllegalInputException("rolling Stock not found");
             }
             if (!coaches.containsKey(intID)) {
-                throw new LogicalException("coach not existing.");
+                throw new LogicalException("rolling material not found");
             }
             if (coaches.get(intID).getTrain() != null) {
                 throw new LogicalException("coach is used in Train.");
             }
             coaches.remove(intID);
+            return "OK";
         }
-        return "OK";
+        
     }
 
     /**
@@ -151,7 +153,7 @@ public class RollingStock {
             }
         }
         if (sb.length() == 0) {
-            return "No engine exists.";
+            return "No engine exists";
         }
         return sb.substring(0, sb.length() - 1);
     }
@@ -200,7 +202,7 @@ public class RollingStock {
      */
     public RollingMaterial getWagon(String id, boolean hasPower) {
         for (PoweredRolling p : powered) {
-            if (p.getID().contentEquals(id) && hasPower) {
+            if (p.getID().contentEquals(id)) {
                 return p;
             }
         }
@@ -209,7 +211,7 @@ public class RollingStock {
         }
         int intID;
         try {
-            intID = Integer.parseInt(id);
+            intID = Integer.parseInt(id.substring(1));
         } catch (NumberFormatException e) {
             return null;
         }

@@ -1,6 +1,8 @@
 
 package julian.modelrailway.rollingmaterial;
 
+import julian.modelrailway.exceptions.IllegalInputException;
+
 /**
  * Repräsentiert eine Diesellokomotive.
  * 
@@ -17,8 +19,10 @@ public class DieselLocomotive extends Engine {
      * @param length      Länge
      * @param clutchFront Ob Kupplung vorne
      * @param clutchBack  Ob Kupplung hinten
+     * @throws IllegalInputException wenn Series mit W beginnt
      */
-    public DieselLocomotive(String series, String name, int length, boolean clutchFront, boolean clutchBack) {
+    public DieselLocomotive(String series, String name, int length, boolean clutchFront, boolean clutchBack) 
+            throws IllegalInputException {
         super(series, name, length, clutchFront, clutchBack);
     }
 

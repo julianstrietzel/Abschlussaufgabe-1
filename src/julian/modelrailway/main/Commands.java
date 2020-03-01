@@ -420,7 +420,7 @@ public enum Commands {
      * @throws LogicalException      wenn es in der Logik des Systems einen Fehler
      *                               gibt
      */
-    public abstract void execute(final Matcher matcher, final ModelRailWay model)
+    public abstract void execute(Matcher matcher, ModelRailWay model)
             throws IllegalInputException, LogicalException;
 
     /**

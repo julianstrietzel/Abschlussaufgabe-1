@@ -32,6 +32,7 @@ public class TrainStock {
      * 
      * @param trainID Zug, an den angehöngt wrrden soll
      * @param rollID  Id des RollMaterials
+     * @param powered ob das gesucht eRollmaterial einen Motor hat
      * @return MatType <MatID> added to <ZugID>
      * @throws LogicalException , wenn der Waggon nicht angehängt werden darf
      */

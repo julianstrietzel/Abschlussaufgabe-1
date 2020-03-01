@@ -16,8 +16,8 @@ import org.junit.Test;
 import julian.modelrailway.main.Commands;
 import julian.modelrailway.main.ModelRailWay;
 
-public  class Testing {
-    
+public class Testing {
+
     ModelRailWay m;
     Commands ui;
 
@@ -30,7 +30,7 @@ public  class Testing {
         // Bei Bedarf hier die ausgabe wieder einschalten!
         reset();
     }
-    
+
     private void reset() {
         m = new ModelRailWay();
 
@@ -136,7 +136,7 @@ public  class Testing {
         e("create train-set 403 145 4 true true");
         assertTrue("403-145".equals(Terminal.buffer));
         e("add train 2 403-145");
-        
+
         assertTrue("train-set 403-145 added to train 2".equals(Terminal.buffer));
         e("show train 2");
         e("set switch 4 position (10,1)");
@@ -197,9 +197,11 @@ public  class Testing {
         e("create engine steam T3 Emma 1 false true");
         e("add train 1 T3-Emma");
         e("put train 1 at (3,1) in direction 1,0");
+        assertTrue(Terminal.buffer.contains("Error, "));
         e("delete track 4");
         e("delete track 3");
         e("delete track 2");
+        e("put train 1 at (3,1) in direction 1,0");
         e("step 20");
         assertTrue(Terminal.buffer.contentEquals("Crash of train 1"));
         e("delete track 1");
@@ -246,11 +248,14 @@ public  class Testing {
         e("add train 2 T4-Emma");
         e("create engine steam T5 Emma 1 false true");
         e("add train 3 T5-Emma");
-        e("put train 1 at (1,1) in direction 1,0");
-        e("put train 2 at (2,1) in direction -1,0");
         e("set switch 4 position (10,1)");
         e("set switch 2 position (8,1)");
         e("set switch 9 position (12,-3)");
+
+        e("put train 1 at (1,1) in direction 1,0");
+        e("put train 2 at (2,1) in direction -1,0");
+//        e("set switch 2 position (5,3)");
+//        e("set switch 9 position (14,3)");
         e("put train 3 at (5,1) in direction -1,0");
         e("step 1");
         assertTrue("Crash of train 1,2,3".equals(Terminal.buffer));
@@ -299,7 +304,7 @@ public  class Testing {
 
     @Test
     public void testPutting() {
-        Terminal.silent = false;
+//        Terminal.silent = false;
         e("add track (0,0) -> (10000,0)");
         assertTrue(Terminal.buffer.equals("1"));
         e("create engine steam T3 Emma 20 true false");
@@ -401,7 +406,7 @@ public  class Testing {
          * betreffen
          */
         // TODO getList überall entfernen
-        
+
         e("show train 2");
 
     }
@@ -442,30 +447,34 @@ public  class Testing {
     public void deletingSwitches() {
 //        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
-      e("add switch (5,1) -> (8,1),(5,3)");
-      e("add track (10,1) -> (8,1)");
-      e("add track (10,-1) -> (10,1)");
-      e("add track (10,-1) -> (1,-1)");
-      e("delete track 2");
-      assertTrue(Terminal.buffer.contains("Error, "));
-      e("add track (1,-1) -> (1,1)");
-      e("delete track 2");
-      e("add track (5,1) -> (8,1)");
-      assertTrue("2".contentEquals(Terminal.buffer));
-      e("delete track 2");
-      e("add switch (5,1) -> (8,1),(5,3)");
-      e("add switch (5,3) -> (10,3),(5,8)");
-      e("delete track 2");
-      assertTrue(Terminal.buffer.contains("Error, "));
-      e("delete track 3");
-      e("add switch (10,1) -> (10,3),(8,1)");
-      e("delete track 2");
-      assertTrue("OK".contentEquals(Terminal.buffer));
+        e("add switch (5,1) -> (8,1),(5,3)");
+        e("add track (10,1) -> (8,1)");
+        e("add track (10,-1) -> (10,1)");
+        e("add track (10,-1) -> (1,-1)");
+        e("delete track 2");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("add track (1,-1) -> (1,1)");
+        e("delete track 2");
+        e("add track (5,1) -> (8,1)");
+        assertTrue("2".contentEquals(Terminal.buffer));
+        e("delete track 2");
+        e("add switch (5,1) -> (8,1),(5,3)");
+        e("add switch (5,3) -> (10,3),(5,8)");
+        e("delete track 2");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("delete track 3");
+        e("add switch (10,1) -> (10,3),(8,1)");
+        e("delete track 2");
+        assertTrue("OK".contentEquals(Terminal.buffer));
+        e("create engine steam T4 Emma 1 true false");
+        e("add train 1 T4-Emma");
+        e("list tracks");
+        e("put train 1 at (1,1) in direction 1,0");
     }
 
     @Test
     public void placingTRains() {
-        Terminal.silent = false;
+//        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
         e("create engine steam T4 Emma 1 true false");
         e("add train 1 T4-Emma");
@@ -475,14 +484,34 @@ public  class Testing {
         e("put train 1 at (1,1) in direction 0,-1");
         assertFalse(Terminal.buffer.contains("Error, "));
         e("step 2");
+
+    }
+
+    @Test
+    public void addDublicats() {
+//       Terminal.silent = false;
+        e("add track (1,1) -> (5,1)");
+        e("add track (5,1) -> (1,1)");
+        e("add switch (1,1) -> (5,1),(1,10)");
+    }
+    
+    @Test
+    public void entgleisen() {
+        Terminal.silent = false;
+        e("add switch (1,1) -> (5,1),(1,10)");
+        e("set switch 1 position (5,1)");
+        e("create engine steam T4 Emma 1 true false");
+        e("add train 1 T4-Emma");
+        e("put train 1 at (2,1) in direction 1,0");
+        e("set switch 1 position (5,1)");
+        e("step 0");
+        assertTrue("OK".contentEquals(Terminal.buffer));
+        e("add track (10,1) -> (5,1)");
+        e("put train 1 at (5,1) in direction 0,0");
+        e("set switch 1 position (5,1)");
+        e("step 0");
+        
         
     }
-   
-   @Test
-   public void addDublicats() {
-//       Terminal.silent = false;
-       e("add track (1,1) -> (5,1)");
-       e("add track (5,1) -> (1,1)");
-       e("add switch (1,1) -> (5,1),(1,10)");
-   }
+    
 }

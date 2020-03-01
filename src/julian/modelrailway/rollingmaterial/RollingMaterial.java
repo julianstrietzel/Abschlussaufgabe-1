@@ -50,23 +50,6 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
         return used;
     }
 
-    /**
-     * Baut das Material in einen Zug ein
-     * 
-     * @param t neuer Zug
-     */
-    public void concat(Train t) {
-        this.used = true;
-        setTrain(t);
-    }
-
-    /**
-     * Baut das Material aus dem Zug wieder aus.
-     */
-    public void unconcat() {
-        this.used = false;
-        this.train = null;
-    }
 
     /**
      * 
@@ -107,6 +90,24 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
      */
     public boolean isClutchBack() {
         return clutchBack;
+    }
+    
+    /**
+     * Baut das Material in einen Zug ein
+     * 
+     * @param t neuer Zug
+     */
+    public void concat(Train t) {
+        this.used = true;
+        setTrain(t);
+    }
+
+    /**
+     * Baut das Material aus dem Zug wieder aus.
+     */
+    public void unconcat() {
+        this.used = false;
+        this.train = null;
     }
 
     /**

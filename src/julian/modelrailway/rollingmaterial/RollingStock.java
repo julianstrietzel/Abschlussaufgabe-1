@@ -195,6 +195,7 @@ public class RollingStock {
      * Sucht das Material mit der ID
      * 
      * @param id als String
+     * @param hasPower ob der gesuchte Waggon motorisiert ist
      * @return das gefunden Material oder null, wenn nicht existend
      */
     public RollingMaterial getWagon(String id, boolean hasPower) {

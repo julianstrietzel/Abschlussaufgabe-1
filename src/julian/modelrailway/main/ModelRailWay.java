@@ -158,6 +158,7 @@ public class ModelRailWay {
      * 
      * @param trainID neue ID des Zuges
      * @param rollID  ID des RollMaterials, das angehängt werden soll
+     * @param powered ob das gesuchte Material motorisiert ist
      * @return Nutzerausgabe
      * @throws LogicalException , RollMaterial nicht existiert oder schon verbaut
      *                          ist, der Zug fährt oder die ID Vergabe falsch ist

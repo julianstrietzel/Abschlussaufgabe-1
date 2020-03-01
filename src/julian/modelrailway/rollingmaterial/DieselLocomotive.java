@@ -25,7 +25,7 @@ public class DieselLocomotive extends Engine {
     @Override
     public String[] getVisual() {
         String[] visual = {"  (O)(O)      (O)(O)  ", " \\__________________/ ", "\\                    /",
-                "/   |____________|   \\", " /_| ____________ |_\\ ", "  _____________|____  " };
+            "/   |____________|   \\", " /_| ____________ |_\\ ", "  _____________|____  " };
         return visual;
     }
 

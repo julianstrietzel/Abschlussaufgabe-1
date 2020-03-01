@@ -24,7 +24,7 @@ public class SpecialCar extends Coach {
     @Override
     public String[] getVisual() {
         String[] visual = {"   (O)       (O)   ", "|_________________|", " _|_|__________|  |", "  | |          |  |",
-                "\\--------------|  |", "/--------------|  |", "               ____" };
+            "\\--------------|  |", "/--------------|  |", "               ____" };
         return visual;
     }
 

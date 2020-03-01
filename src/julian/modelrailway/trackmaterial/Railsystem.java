@@ -81,6 +81,9 @@ public class Railsystem {
         if (track == null) {
             throw new LogicalException("wrong placement");
         }
+        if (!isAllSet()) {
+            throw new LogicalException("not all switches set yet");
+        }
         if (track.isOccupied()) {
             throw new LogicalException("track occupied.");
         }

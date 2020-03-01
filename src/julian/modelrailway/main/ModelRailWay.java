@@ -79,8 +79,9 @@ public class ModelRailWay {
      * @return Ausgabe für den Nutzer
      * @throws IllegalInputException , wenn Länge = null
      */
-    public String createCoach(String coachType, int length, boolean cFront, boolean cBack) throws IllegalInputException {
-        if(length == 0) {
+    public String createCoach(String coachType, int length, boolean cFront, boolean cBack)
+            throws IllegalInputException {
+        if (length == 0) {
             throw new IllegalInputException("length null not allowed.");
         }
         return rstock.createCoach(coachType, length, cFront, cBack);
@@ -100,7 +101,7 @@ public class ModelRailWay {
      */
     public String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
-        if(length == 0) {
+        if (length == 0) {
             throw new LogicalException("length null not allowed.");
         }
         return rstock.createEngine(engineType, series, name, length, cFront, cBack);
@@ -115,11 +116,12 @@ public class ModelRailWay {
      * @param cFront Ob der Triebwagen vorne eine Kupplung hat
      * @param cBack  Ob der Triebwagen hinten eine Kupplung hat
      * @return Nutzer Ausgabe
-     * @throws LogicalException , wenn Triebwagen schon existiert oder Länge gleich null
+     * @throws LogicalException , wenn Triebwagen schon existiert oder Länge gleich
+     *                          null
      */
     public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
-        if(length == 0) {
+        if (length == 0) {
             throw new LogicalException("length null not allowed.");
         }
         return rstock.createTrainSet(series, name, length, cFront, cBack);

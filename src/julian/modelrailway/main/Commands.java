@@ -1,4 +1,4 @@
-package julian.modelrailway.commands;
+package julian.modelrailway.main;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,18 +6,17 @@ import java.util.regex.Pattern;
 import edu.kit.informatik.Terminal;
 import julian.modelrailway.exceptions.IllegalInputException;
 import julian.modelrailway.exceptions.LogicalException;
-import julian.modelrailway.main.ModelRailWay;
 import julian.modelrailway.trackmaterial.DirectionalVertex;
 import julian.modelrailway.trackmaterial.Vertex;
 
 /**
+ * In diesem Enum sind alle Befehle mit ihren regex Patterns gespeichert
+ * 
  * @author Julian Strietzel
  * @version 01.03.2020
  */
 public enum Commands {
 
-    // TODO Comments und Main umschreiben. dann testen
-    // Crash of train groß geschrieben?
     /**
      * Command, der die Züge um die angegebene Anzahl an Schritten fahren lässt
      * Danach erfolgt ein Statusbericht aller Züge.
@@ -28,7 +27,8 @@ public enum Commands {
      */
     STEP("step ([+-]?\\d+)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) throws IllegalInputException, LogicalException {
+        public void execute(final Matcher matcher, final ModelRailWay model)
+                throws IllegalInputException, LogicalException {
             short step;
             try {
                 step = Short.parseShort(matcher.group(1));
@@ -60,7 +60,8 @@ public enum Commands {
      */
     SET_SWITCH("set switch (\\d+) position \\(([-+]?\\d+),([-+]?\\d+)\\)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) throws IllegalInputException, LogicalException {
+        public void execute(final Matcher matcher, final ModelRailWay model)
+                throws IllegalInputException, LogicalException {
             int id;
             int xcoord;
             int ycoord;
@@ -85,7 +86,8 @@ public enum Commands {
      */
     PUT_TRAIN("put train (\\d+) at \\(([-+]?\\d+),([-+]?\\d+)\\) in direction ([+-]?\\d+),([+-]?\\d+)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) throws IllegalInputException, LogicalException {
+        public void execute(final Matcher matcher, final ModelRailWay model)
+                throws IllegalInputException, LogicalException {
             int id;
             int px;
             int py;
@@ -150,9 +152,10 @@ public enum Commands {
      * Error, wenn der Zug nicht existiert oder der input nicht verarbeitet werden
      * kann.
      */
-    DELETE_TRAIN("delete train (\\\\d+)") {
+    DELETE_TRAIN("delete train (\\d+)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) throws LogicalException, IllegalInputException {
+        public void execute(final Matcher matcher, final ModelRailWay model)
+                throws LogicalException, IllegalInputException {
             try {
                 Terminal.printLine(model.deleteTrain(Integer.parseInt(matcher.group(1))));
             } catch (NumberFormatException e1) {
@@ -170,7 +173,8 @@ public enum Commands {
      */
     DELETE_TRACK("delete track (\\d+)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) throws IllegalInputException, LogicalException {
+        public void execute(final Matcher matcher, final ModelRailWay model)
+                throws IllegalInputException, LogicalException {
             int id;
             try {
                 id = Integer.parseInt(matcher.group(1));
@@ -188,7 +192,8 @@ public enum Commands {
      */
     DELETE_ROLLING_STOCK("delete rolling stock (W?)((-|\\w)+)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) throws IllegalInputException, LogicalException {
+        public void execute(final Matcher matcher, final ModelRailWay model)
+                throws IllegalInputException, LogicalException {
             Terminal.printLine(model.delete(!"W".contentEquals(matcher.group(1)), matcher.group(2)));
 
         }
@@ -204,7 +209,8 @@ public enum Commands {
      */
     CREATE_TRAIN_SET("create train-set (\\w+) (\\w+) (\\d+) (true|false) (true|false)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) throws LogicalException, IllegalInputException {
+        public void execute(final Matcher matcher, final ModelRailWay model)
+                throws LogicalException, IllegalInputException {
             try {
                 Terminal.printLine(
                         model.createTrainSet(matcher.group(1), matcher.group(2), Integer.parseInt(matcher.group(3)),
@@ -225,7 +231,8 @@ public enum Commands {
      */
     CREATE_ENGINE("create engine (electrical|steam|diesel) (\\w+) (\\w+) (\\d+) (true|false) (true|false)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) throws LogicalException, IllegalInputException {
+        public void execute(final Matcher matcher, final ModelRailWay model)
+                throws LogicalException, IllegalInputException {
             try {
                 Terminal.printLine(model.createEngine(matcher.group(1), matcher.group(2), matcher.group(3),
                         Integer.parseInt(matcher.group(4)), "true".contentEquals(matcher.group(5)),
@@ -267,7 +274,8 @@ public enum Commands {
      */
     ADD_TRAIN("add train (\\d+) (W?)((-|\\w)+)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) throws IllegalInputException, LogicalException {
+        public void execute(final Matcher matcher, final ModelRailWay model)
+                throws IllegalInputException, LogicalException {
             try {
                 Terminal.printLine(model.addTrain(Integer.parseInt(matcher.group(1)), matcher.group(3),
                         !"W".contentEquals(matcher.group(2))));
@@ -288,7 +296,8 @@ public enum Commands {
      */
     ADD_TRACK("add track \\(([-+]?\\d+),([-+]?\\d+)\\) -> \\(([-+]?\\d+),([-+]?\\d+)\\)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) throws IllegalInputException, LogicalException {
+        public void execute(final Matcher matcher, final ModelRailWay model)
+                throws IllegalInputException, LogicalException {
             int sx;
             int sy;
             int ex;
@@ -317,7 +326,8 @@ public enum Commands {
     ADD_SWITCH("add switch \\(([-+]?\\d+),([-+]?\\d+)\\) -> \\(([-+]?\\d+),([-+]?\\d+)\\),"
             + "\\(([-+]?\\d+),([-+]?\\d+)\\)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) throws IllegalInputException, LogicalException {
+        public void execute(final Matcher matcher, final ModelRailWay model)
+                throws IllegalInputException, LogicalException {
 
             int sx;
             int sy;
@@ -400,14 +410,15 @@ public enum Commands {
 
     }
 
-    
     /**
      * Gibt vor, was der bestimmte Command machen soll
      * 
      * @param matcher , der das command pattern verarbeitet
-     * @param model , Modelleisenbahn auf der gearbeitet wird
-     * @throws IllegalInputException wenn der Input nicht den Anforderungen entspricht
-     * @throws LogicalException wenn es in der Logik des Systems einen Fehler gibt
+     * @param model   , Modelleisenbahn auf der gearbeitet wird
+     * @throws IllegalInputException wenn der Input nicht den Anforderungen
+     *                               entspricht
+     * @throws LogicalException      wenn es in der Logik des Systems einen Fehler
+     *                               gibt
      */
     public abstract void execute(final Matcher matcher, final ModelRailWay model)
             throws IllegalInputException, LogicalException;

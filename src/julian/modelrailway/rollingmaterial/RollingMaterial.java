@@ -23,10 +23,10 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
      * @param length      Länge
      * @param clutchFront Ob Kupplung vorne
      * @param clutchBack  Ob Kupplung hinten
-     * @throws IllegalInputException 
+     * @throws IllegalInputException
      */
     public RollingMaterial(int length, boolean clutchFront, boolean clutchBack) {
-        
+
         this.length = length;
         this.clutchBack = clutchBack;
         this.clutchFront = clutchFront;

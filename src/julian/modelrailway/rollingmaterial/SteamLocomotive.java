@@ -25,7 +25,7 @@ public class SteamLocomotive extends Engine {
     @Override
     public String[] getVisual() {
         String[] visual = {"//// \\_/      \\_/   ", " _|--/~\\------/~\\-+ ", "  + ========  +-+ | ",
-            "   /---------|| | | ", "     ||      |+-+ | ", "     ++      +------" };
+                "   /---------|| | | ", "     ||      |+-+ | ", "     ++      +------" };
         return visual;
 
     }

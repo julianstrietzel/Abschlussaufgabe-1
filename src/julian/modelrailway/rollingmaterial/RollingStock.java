@@ -203,7 +203,7 @@ public class RollingStock {
                 return p;
             }
         }
-        if(hasPower) {
+        if (hasPower) {
             return null;
         }
         int intID;

@@ -13,27 +13,27 @@ import edu.kit.informatik.Terminal;
 import org.junit.Before;
 import org.junit.Test;
 
+import julian.modelrailway.main.Commands;
 import julian.modelrailway.main.ModelRailWay;
-import julian.modelrailway.main.UserInterface;
 
 public  class Testing {
     
     ModelRailWay m;
-    UserInterface ui;
+    Commands ui;
 
     /**
      * Resets before every Test
      */
     @Before
     public void start() {
-        Terminal.silent = false;
+        Terminal.silent = true;
         // Bei Bedarf hier die ausgabe wieder einschalten!
         reset();
     }
     
     private void reset() {
         m = new ModelRailWay();
-        ui = new UserInterface(m);
+
     }
 
     @After
@@ -46,8 +46,9 @@ public  class Testing {
      * 
      * @param command
      */
+    @SuppressWarnings("static-access")
     private void e(String command) {
-        ui.executeCommand(command);
+        ui.execute(command, m);
     }
 
     /**
@@ -370,7 +371,7 @@ public  class Testing {
         e("list trains");
         assertTrue(Terminal.buffer.equals("1 W1 W2 W3 T4-Emma 1-Tom T3-Emma\n" + "2 T5-Emma T5-Emma2"));
         e("jbeufbeuf");
-        assertTrue(Terminal.buffer.contains("Error, command unknown."));
+        assertTrue(Terminal.buffer.contains("Error, "));
         e("list engines");
         assertTrue(Terminal.buffer
                 .equals("1 d 1 Tom 6 true true\n" + "1 s T3 Emma 20 true false\n" + "1 e T4 Emma 1 true true"));

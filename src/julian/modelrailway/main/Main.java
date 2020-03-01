@@ -12,17 +12,17 @@ import julian.modelrailway.main.ModelRailWay;
 public class Main {
 
     /**
-     * Ruft mit dem Konsoleninput immer wieder das Userinterface auf, bis dieses den
+     * Ruft mit dem Konsoleninput immer wieder Commands.execute auf, bis dieses den
      * isExit Befehl zurück gibt.
      * 
      * @param args werden nicht verarbeitet
      */
     public static void main(String[] args) {
         ModelRailWay model = new ModelRailWay();
-        UserInterface userInterface = new UserInterface(model);
-        while (!userInterface.isExit()) {
-            userInterface.executeCommand(Terminal.readLine());
-        }
+        Commands c;
+        do {
+            c = Commands.execute(Terminal.readLine(), model);
+        } while (!c.isExit());
     }
 
 }

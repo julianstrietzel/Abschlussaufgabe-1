@@ -25,8 +25,8 @@ public class TrainSet extends PoweredRolling {
     @Override
     public String[] getVisual() {
         String[] visual = {"   (O)        (O)   ", "|__________________|", "|__________________|",
-            "|  |_| |_| |_| |_| |", "|  ___ ___ ___ ___ |", "_________||_________", "         ||         ",
-            "         ++         " };
+                "|  |_| |_| |_| |_| |", "|  ___ ___ ___ ___ |", "_________||_________", "         ||         ",
+                "         ++         " };
         return visual;
     }
 

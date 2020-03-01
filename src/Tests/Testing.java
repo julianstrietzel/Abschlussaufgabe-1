@@ -381,9 +381,6 @@ public class Testing {
         assertTrue(Terminal.buffer
                 .equals("1 d 1 Tom 6 true true\n" + "1 s T3 Emma 20 true false\n" + "1 e T4 Emma 1 true true"));
         e("list train-sets");
-//        assertTrue(Terminal.buffer.equals("2 T5 Emma 1 true true\n" + 
-//                "2 T5 Emma2 1 true true\n" + 
-//                "none T6 Emma 1 true true"));
         e("list coaches");
         assertTrue(Terminal.buffer.equals("1 1 s 1 true true\n2 1 p 1 true true\n3 1 f 1 true true"));
         e("add track (0,0) -> (-100,0)");
@@ -401,11 +398,7 @@ public class Testing {
         e("step 1");
         assertTrue(Terminal.buffer.equals("Crash of train 1,2"));
         assertTrue("Crash of train 1,2".contentEquals(Terminal.buffer));
-        /*
-         * ZWei Fehler 1. Train 2 bewegt sich bei step 1 nicht 2. Crash müsste beide
-         * betreffen
-         */
-        // TODO getList überall entfernen
+
 
         e("show train 2");
 
@@ -528,7 +521,6 @@ public class Testing {
         assertTrue("No track exists".contentEquals(Terminal.buffer));
         e("create engine steam W1 Emma 10 true true");
         e("add train 1 W1");
-       
         assertTrue("special coach W1 added to train 1".contentEquals(Terminal.buffer));
         e("add train 1 W1-Emma");
         e("create engine steam 1 Emma 10 true true");
@@ -540,6 +532,7 @@ public class Testing {
         e("list trains");
         assertTrue("1 W1 W1-Emma\n2 W1-145 W1-146".contentEquals(Terminal.buffer));
         e("add train 2 1-147");
+        assertTrue(Terminal.buffer.contains("Error, "));
         
     }
 

@@ -35,8 +35,8 @@ public class TrainStock {
      * @return MatType <MatID> added to <ZugID>
      * @throws LogicalException , wenn der Waggon nicht angehängt werden darf
      */
-    public String addTrain(int trainID, String rollID, boolean powered) throws LogicalException {
-        RollingMaterial r = rStock.getWagon(rollID, powered);
+    public String addTrain(int trainID, String rollID) throws LogicalException {
+        RollingMaterial r = rStock.getWagon(rollID);
         if (r == null) {
             throw new LogicalException("rolling material not existing.");
         }

@@ -45,7 +45,7 @@ public class ModelRailWay {
      *                               mit dem restlichen Schienennetz gibt.
      */
     public String addTrack(int startX, int startY, int endX, int endY) throws IllegalInputException, LogicalException {
-        return "" + rSystem.addRail(new Vertex(startX, startY), new Vertex(endX, endY));
+        return "" + rSystem.getRailNet().addRail(new Vertex(startX, startY), new Vertex(endX, endY));
     }
 
     /**
@@ -65,7 +65,8 @@ public class ModelRailWay {
     public String addSwitch(int startX, int startY, int endX, int endY, int end2x, int end2y)
             throws IllegalInputException, LogicalException {
 
-        return "" + rSystem.addSwitch(new Vertex(startX, startY), new Vertex(endX, endY), new Vertex(end2x, end2y));
+        return "" + rSystem.getRailNet().addSwitch(new Vertex(startX, startY), new Vertex(endX, endY),
+                new Vertex(end2x, end2y));
 
     }
 
@@ -77,12 +78,8 @@ public class ModelRailWay {
      * @param cFront    Ob der Waggon vorne eine Kupplung hat
      * @param cBack     Ob der Waggon hinten eine Kupplung hat
      * @return Ausgabe für den Nutzer
-     * @throws IllegalInputException , wenn Länge = null
      */
-    public String createCoach(String coachType, int length, boolean cFront, boolean cBack) throws IllegalInputException {
-        if(length == 0) {
-            throw new IllegalInputException("length null not allowed.");
-        }
+    public String createCoach(String coachType, int length, boolean cFront, boolean cBack) {
         return rstock.createCoach(coachType, length, cFront, cBack);
     }
 
@@ -96,13 +93,10 @@ public class ModelRailWay {
      * @param cFront     Ob die Lok vorne eine Kupplung hat
      * @param cBack      Ob die Lok hinten eine Kupplung hat
      * @return Nutzer Ausgabe
-     * @throws LogicalException , wenn Lok schon existiert oder Länge gliech null
+     * @throws LogicalException , wenn Lok schon existiert
      */
     public String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
-        if(length == 0) {
-            throw new LogicalException("length null not allowed.");
-        }
         return rstock.createEngine(engineType, series, name, length, cFront, cBack);
     }
 
@@ -115,13 +109,10 @@ public class ModelRailWay {
      * @param cFront Ob der Triebwagen vorne eine Kupplung hat
      * @param cBack  Ob der Triebwagen hinten eine Kupplung hat
      * @return Nutzer Ausgabe
-     * @throws LogicalException , wenn Triebwagen schon existiert oder Länge gleich null
+     * @throws LogicalException , wenn Triebwagen schon existiert
      */
     public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException {
-        if(length == 0) {
-            throw new LogicalException("length null not allowed.");
-        }
         return rstock.createTrainSet(series, name, length, cFront, cBack);
     }
 
@@ -146,7 +137,7 @@ public class ModelRailWay {
      * @throws LogicalException , wenn die Schiene für den Zusammenhalt nötig ist.
      */
     public String deleteTrack(int id) throws LogicalException {
-        rSystem.deleteTrack(id);
+        rSystem.getRailNet().deleteTrack(id);
         return "OK";
     }
 
@@ -160,8 +151,8 @@ public class ModelRailWay {
      * @throws LogicalException , RollMaterial nicht existiert oder schon verbaut
      *                          ist, der Zug fährt oder die ID Vergabe falsch ist
      */
-    public String addTrain(int trainID, String rollID, boolean powered) throws LogicalException {
-        return ts.addTrain(trainID, rollID, powered);
+    public String addTrain(int trainID, String rollID) throws LogicalException {
+        return ts.addTrain(trainID, rollID);
     }
 
     /**
@@ -209,9 +200,7 @@ public class ModelRailWay {
     }
 
     /**
-     * Bewegt alle Züge auf dem Schienennetz um <speed> Schritte Dabei wird nach
-     * jedem Schritt nach kollisionen überprüft (siehe move in Railsystem) In Events
-     * werden alle Crashes gespeichert
+     * Bewegt alle Züge auf dem Schienennetz um <speed> Schritte
      * 
      * @param speed Anzahl an Schritten
      * @return Neue Positionen und Crashes
@@ -242,10 +231,12 @@ public class ModelRailWay {
         }
         rSystem.resetMArkers();
         for (SetTrain train : rSystem.getToTCopy()) {
-            rSystem.markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
+            rSystem.getRailNet().markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(),
+                    false);
 
         }
         return sb.substring(0, sb.length() - 1).toString();
+
     }
 
     /**
@@ -253,7 +244,7 @@ public class ModelRailWay {
      * @return Listet alle Schienen auf
      */
     public String listTracks() {
-        return rSystem.listRailNet();
+        return rSystem.getRailNet().toString();
     }
 
     /**
@@ -313,7 +304,7 @@ public class ModelRailWay {
      * @throws LogicalException      , wenn Fehler in markoccupied()
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
-        rSystem.setSwitch(id, point);
+        rSystem.getRailNet().setSwitch(id, point);
     }
 
 }

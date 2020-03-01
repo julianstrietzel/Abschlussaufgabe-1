@@ -7,20 +7,22 @@ import julian.modelrailway.exceptions.LogicalException;
 import julian.modelrailway.main.ModelRailWay;
 
 /**
- * Der Add-Track befehl fügt eine normale Schiene hinzu.
+ * Der Add-Switch befehl fügt eine Gleis-Schiene hinzu.
  * 
  * @author Julian Strietzel
  * @version 1.0
  */
-public class AddTrack extends Command {
-    private static final String REGEX = "add track \\(([-+]?\\d+),([-+]?\\d+)\\) -> \\(([-+]?\\d+),([-+]?\\d+)\\)";
+public class AddSwitch extends Command {
+
+    private static final String REGEX = "add switch \\(([-+]?\\d+),([-+]?\\d+)\\) -> \\(([-+]?\\d+),([-+]?\\d+)\\),"
+            + "\\(([-+]?\\d+),([-+]?\\d+)\\)";
 
     /**
      * Erstellt einen neuen Command, der das AddTrack Pattern akzeptiert.
      * 
      * @param model Bezugsmodelleisenbahn
      */
-    public AddTrack(ModelRailWay model) {
+    public AddSwitch(ModelRailWay model) {
         super(model, REGEX);
     }
 
@@ -32,16 +34,19 @@ public class AddTrack extends Command {
             int sy;
             int ex;
             int ey;
+            int e2x;
+            int e2y;
             try {
                 sx = Integer.parseInt(getMatcher(command).group(1));
                 sy = Integer.parseInt(getMatcher(command).group(2));
                 ex = Integer.parseInt(getMatcher(command).group(3));
                 ey = Integer.parseInt(getMatcher(command).group(4));
-            } catch (NumberFormatException e) {
-                throw new IllegalInputException("input needs to contain valid integers");
+                e2x = Integer.parseInt(getMatcher(command).group(5));
+                e2y = Integer.parseInt(getMatcher(command).group(6));
+            } catch (NumberFormatException e1) {
+                throw new IllegalInputException("input needs to be an Integer.");
             }
-
-            Terminal.printLine(model.addTrack(sx, sy, ex, ey));
+            Terminal.printLine(model.addSwitch(sx, sy, ex, ey, e2x, e2y));
         } catch (IllegalInputException | LogicalException e) {
             Terminal.printError(e.getMessage());
         }

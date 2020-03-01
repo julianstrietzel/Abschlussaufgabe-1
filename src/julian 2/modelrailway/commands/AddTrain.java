@@ -27,7 +27,7 @@ public class AddTrain extends Command {
     public void execute(String command) {
         try {
             Terminal.printLine(
-                    model.addTrain(Integer.parseInt(getMatcher(command).group(1)), getMatcher(command).group(3), !"W".contentEquals(getMatcher(command).group(2))));
+                    model.addTrain(Integer.parseInt(getMatcher(command).group(1)), getMatcher(command).group(3)));
         } catch (NumberFormatException | LogicalException e) {
             Terminal.printError(e.getMessage());
         }

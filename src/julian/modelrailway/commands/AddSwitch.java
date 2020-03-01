@@ -28,7 +28,6 @@ public class AddSwitch extends Command {
 
     @Override
     public void execute(String command) {
-
         try {
             int sx;
             int sy;
@@ -50,7 +49,6 @@ public class AddSwitch extends Command {
         } catch (IllegalInputException | LogicalException e) {
             Terminal.printError(e.getMessage());
         }
-
     }
 
 }

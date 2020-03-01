@@ -2,7 +2,6 @@
 package julian.modelrailway.commands;
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.exceptions.IllegalInputException;
 import julian.modelrailway.main.ModelRailWay;
 
 /**
@@ -30,7 +29,7 @@ public class CreateCoach extends Command {
             Terminal.printLine(model.createCoach(getMatcher(command).group(1),
                     Integer.parseInt(getMatcher(command).group(2)), "true".contentEquals(getMatcher(command).group(3)),
                     "true".contentEquals(getMatcher(command).group(4))));
-        } catch (NumberFormatException | IllegalInputException e) {
+        } catch (NumberFormatException e) {
             Terminal.printError(e.getMessage());
         }
     }

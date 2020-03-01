@@ -1,8 +1,6 @@
 
 package julian.modelrailway.rollingmaterial;
 
-import julian.modelrailway.exceptions.IllegalInputException;
-
 /**
  * Allgemeine Klasse für ein rollendes Objekt.
  * 
@@ -23,10 +21,8 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
      * @param length      Länge
      * @param clutchFront Ob Kupplung vorne
      * @param clutchBack  Ob Kupplung hinten
-     * @throws IllegalInputException 
      */
     public RollingMaterial(int length, boolean clutchFront, boolean clutchBack) {
-        
         this.length = length;
         this.clutchBack = clutchBack;
         this.clutchFront = clutchFront;
@@ -35,7 +31,6 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
 
     /**
      * lololo
-     * 
      * @return Die höhe der Stringrepräsentation des Materials
      */
     public int getVisualHeight() {

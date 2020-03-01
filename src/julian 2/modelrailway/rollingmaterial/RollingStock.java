@@ -197,14 +197,11 @@ public class RollingStock {
      * @param id als String
      * @return das gefunden Material oder null, wenn nicht existend
      */
-    public RollingMaterial getWagon(String id, boolean hasPower) {
+    public RollingMaterial getWagon(String id) {
         for (PoweredRolling p : powered) {
-            if (p.getID().contentEquals(id) && hasPower) {
+            if (p.getID().contentEquals(id)) {
                 return p;
             }
-        }
-        if(hasPower) {
-            return null;
         }
         int intID;
         try {

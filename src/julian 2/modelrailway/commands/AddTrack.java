@@ -32,17 +32,13 @@ public class AddTrack extends Command {
             int sy;
             int ex;
             int ey;
-            try {
-                sx = Integer.parseInt(getMatcher(command).group(1));
-                sy = Integer.parseInt(getMatcher(command).group(2));
-                ex = Integer.parseInt(getMatcher(command).group(3));
-                ey = Integer.parseInt(getMatcher(command).group(4));
-            } catch (NumberFormatException e) {
-                throw new IllegalInputException("input needs to contain valid integers");
-            }
+            sx = Integer.parseInt(getMatcher(command).group(1));
+            sy = Integer.parseInt(getMatcher(command).group(2));
+            ex = Integer.parseInt(getMatcher(command).group(3));
+            ey = Integer.parseInt(getMatcher(command).group(4));
 
             Terminal.printLine(model.addTrack(sx, sy, ex, ey));
-        } catch (IllegalInputException | LogicalException e) {
+        } catch (IllegalInputException | LogicalException | NumberFormatException e) {
             Terminal.printError(e.getMessage());
         }
 

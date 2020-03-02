@@ -302,7 +302,12 @@ public class Switch extends Rail {
 
     @Override
     public String toString() {
-        return "s " + getId() + " " + getStart().toString() + " -> " + getEnd().toString() + "," + endTwo.toString();
+        String length = "";
+        if (isSet()) {
+            length = " " + getSetLength();
+        }
+        return "s " + getId() + " " + getStart().toString() + " -> " + getEnd().toString() + "," + endTwo.toString()
+                + length;
     }
 
     @Override

@@ -157,6 +157,14 @@ public class Rail implements Comparable<Rail> {
     public int getLength() {
         return Math.max(Math.abs(start.getXcoord() - end.getXcoord()), Math.abs(start.getYcoord() - end.getYcoord()));
     }
+    
+    /**
+     * 
+     * @return bei einer normalen Schiene die einfache Länge
+     */
+    public int getSetLength() {
+        return getLength();
+    }
 
     /**
      * 

@@ -236,7 +236,7 @@ public class RailNetwork {
                 throw new LogicalException("train to long for rails");
             }
             direc = next.getDirectionFrom(previous.getEndInDirection(direc.getInverseDirection()));
-            i += next.getLength();
+            i += next.getSetLength();
             if (next.isOccupied() && breakUp) {
                 return true;
             }
@@ -282,7 +282,8 @@ public class RailNetwork {
      * 
      * @param id    der Weiche
      * @param point der das neue Ende sein soll
-     * @throws IllegalInputException , wenn Point is not an End of the Switch
+     * @throws IllegalInputException , wenn Point is not an End of the Switch oder
+     *                               die ID nicht existiert
      * @throws LogicalException      , wenn Fehle rim MarkOccupied
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
@@ -298,8 +299,10 @@ public class RailNetwork {
                     rSys.renewMarked();
                     s.clearTrains();
                 }
+                return;
             }
         }
+        throw new IllegalInputException("switch not existing");
     }
 
     /**

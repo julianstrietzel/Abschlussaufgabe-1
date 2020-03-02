@@ -508,7 +508,7 @@ public class Testing {
     
     @Test
     public void testWString() {
-        Terminal.silent = false;
+//        Terminal.silent = false;
         e("create engine steam W Emma 10 true false");
         assertTrue(Terminal.buffer.contains("Error, "));
         e("create coach special 1 true true");
@@ -535,5 +535,264 @@ public class Testing {
         assertTrue(Terminal.buffer.contains("Error, "));
         
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @Test
+    public void puttingOnCorners() {
+//        Terminal.silent = false;
+        e("add track (0,0) -> (5,0)");
+        assertTrue(Terminal.buffer.contentEquals("1"));
+        e("add track (5,5) -> (5,0)");
+        assertTrue(Terminal.buffer.contentEquals("2"));
+        e("add track (5,5) -> (0,5)");
+        assertTrue(Terminal.buffer.contentEquals("3"));
+        e("add track (0,5) -> (0,0)");
+        assertTrue(Terminal.buffer.contentEquals("4"));
+//        e("delete track 1");
+//        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("create engine steam 1 1 1 true true");
+        assertTrue(Terminal.buffer.contentEquals("1-1"));
+        e("add train 1 1-1");
+        assertTrue(Terminal.buffer.contentEquals("steam engine 1-1 added to train 1"));
+        e("list tracks");
+        e("put train 1 at (0,0) in direction 0,1");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("step 2");
+        assertTrue(Terminal.buffer.contentEquals("Train 1 at (0,2)"));
+        e("delete train 1");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("add train 1 1-1");
+        e("put train 1 at (0,1) in direction 0,1");
+        e("create engine steam 1 2 1 true true");
+        e("add train 2 1-2");
+        e("put train 2 at (0,1) in direction 0,1");
+        e("step 1");
+    }
 
+    @Test
+    public void extensiveTest() {
+//        Terminal.silent = false;
+        Terminal.printLine("Zug Komposition");
+        e("create engine steam T1 Emma 1 true true");
+        assertTrue(Terminal.buffer.contentEquals("T1-Emma"));
+        e("create engine diesel T2 Emma 1 true true");
+        assertTrue(Terminal.buffer.contentEquals("T2-Emma"));
+        e("create engine electrical T3 Emma 1 false true");
+        assertTrue(Terminal.buffer.contentEquals("T3-Emma"));
+        e("add train 2 T1-Emma");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("add train 1 T1-Emma");
+        assertTrue(Terminal.buffer.contentEquals("steam engine T1-Emma added to train 1"));
+        e("add train 1 T3-Emma");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("show train 1");
+        // Überprüfung selbst vornehmen.
+        e("add train 3 T2-Emma");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("add train 2 T3-Emma");
+        assertTrue(Terminal.buffer.contentEquals("electrical engine T3-Emma added to train 2"));
+        e("add train 2 T2-Emma");
+        assertTrue(Terminal.buffer.contentEquals("diesel engine T2-Emma added to train 2"));
+        e("create coach passenger 1 true true");
+        assertTrue(Terminal.buffer.contentEquals("1"));
+        e("create coach passenger 1 true true");
+        assertTrue(Terminal.buffer.contentEquals("2"));
+        e("create coach passenger 1 true true");
+        assertTrue(Terminal.buffer.contentEquals("3"));
+        e("create coach passenger 1 true true");
+        assertTrue(Terminal.buffer.contentEquals("4"));
+        e("create coach passenger 1 true true");
+        assertTrue(Terminal.buffer.contentEquals("5"));
+        e("create coach passenger 1 true true");
+        assertTrue(Terminal.buffer.contentEquals("6"));
+        e("delete rolling stock W2");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete rolling stock W3");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete rolling stock W4");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete rolling stock W5");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("list coaches");
+        e("create coach passenger 1 true true");
+        assertTrue(Terminal.buffer.contentEquals("2"));
+        e("create coach special 1 true true");
+        assertTrue(Terminal.buffer.contentEquals("3"));
+        e("delete train 1");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete train 2");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete train 3");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("list engines");
+        assertTrue(Terminal.buffer.contentEquals(
+                "none s T1 Emma 1 true true\n" + "none d T2 Emma 1 true true\n" + "none e T3 Emma 1 false true"));
+        e("list coaches");
+        assertTrue(Terminal.buffer.contentEquals("1 none p 1 true true\n" + "2 none p 1 true true\n"
+                + "3 none s 1 true true\n" + "6 none p 1 true true"));
+        e("delete rolling stock 1");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("delete rolling stock W1");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete rolling stock W2");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete rolling stock W3");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete rolling stock W4");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("delete rolling stock W5");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("delete rolling stock W6");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+
+        e("create engine steam W Emma 1 true true");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("create engine steam T1 Emma 10 true true");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("delete rolling stock T1-Emma");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete rolling stock T2-Emma");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete rolling stock T3-Emma");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("list coaches");
+        assertTrue(Terminal.buffer.contentEquals("No coach exists"));
+        Terminal.printLine("COMPOSITION OF LONG TRAIN");
+        e("");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("create engine steam T1 Emma 1 true true");
+        e("create engine diesel T2 Emma 1 true true");
+        e("create engine electrical T$ Emma 1 true true");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("create engine electrical T3 Emma 1 true true");
+        e("create coach special 1 true true");
+        e("create coach freight 1 true true");
+        e("create coach passenger 1 true true");
+        e("create coach special 1 true true");
+        e("create coach freight 1 true true");
+        e("create coach passenger 1 true true");
+        e("create coach special 1 true true");
+        e("create coach freight 1 true true");
+        e("create coach passenger 1 true true");
+        e("list trains");
+        assertTrue(Terminal.buffer.contentEquals("No train exists"));
+        e("add train 1 T1-Emma");
+        assertTrue(Terminal.buffer.contentEquals("steam engine T1-Emma added to train 1"));
+        e("add train 1 T2-Emma");
+        assertTrue(Terminal.buffer.contentEquals("diesel engine T2-Emma added to train 1"));
+        e("add train 1 W1");
+        assertTrue(Terminal.buffer.contentEquals("special coach W1 added to train 1"));
+        e("add train 1 W2");
+        assertTrue(Terminal.buffer.contentEquals("freight coach W2 added to train 1"));
+        e("add train 1 W3");
+        assertTrue(Terminal.buffer.contentEquals("passenger coach W3 added to train 1"));
+        e("add train 1 W4");
+        assertTrue(Terminal.buffer.contentEquals("special coach W4 added to train 1"));
+        e("add train 1 W5");
+        assertTrue(Terminal.buffer.contentEquals("freight coach W5 added to train 1"));
+        e("add train 1 W6");
+        assertTrue(Terminal.buffer.contentEquals("passenger coach W6 added to train 1"));
+        e("add train 1 W7");
+        assertTrue(Terminal.buffer.contentEquals("special coach W7 added to train 1"));
+        e("add train 1 W8");
+        assertTrue(Terminal.buffer.contentEquals("freight coach W8 added to train 1"));
+        e("add train 1 W9");
+        assertTrue(Terminal.buffer.contentEquals("passenger coach W9 added to train 1"));
+        e("show train 01");
+        // Überprüfung selbst vornehmen
+        e("list trains");
+        assertTrue(Terminal.buffer.contentEquals("1 T1-Emma T2-Emma W1 W2 W3 W4 W5 W6 W7 W8 W9"));
+        Terminal.printLine("TRACK-TEST");
+        e("add track (0,1) -> (1,2)");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("add track (0,0) -> (5,0)");
+        assertTrue(Terminal.buffer.contentEquals("1"));
+        e("add switch (5,0) -> (10,0),(5,5)");
+        assertTrue(Terminal.buffer.contentEquals("2"));
+        e("add switch (0,5) -> (0,0),(0,10)");
+        assertTrue(Terminal.buffer.contentEquals("3"));
+        e("add track (10,0) -> (10,10)");
+        assertTrue(Terminal.buffer.contentEquals("4"));
+        e("add track (10,10) -> (0,10)");
+        assertTrue(Terminal.buffer.contentEquals("5"));
+        e("list tracks");
+        assertTrue(Terminal.buffer.contentEquals("t 1 (0,0) -> (5,0) 5\n" + "s 2 (5,0) -> (10,0),(5,5)\n"
+                + "s 3 (0,5) -> (0,0),(0,10)\n" + "t 4 (10,0) -> (10,10) 10\n" + "t 5 (10,10) -> (0,10) 10"));
+        e("put train 1 at (0,1) in direction 0,1");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("set switch 1 position (0,1)");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("set switch 2 position (10,0)");
+        assertTrue(Terminal.buffer.contains("OK"));
+        e("put train 1 at (0,1) in direction 0,1");
+        assertTrue(Terminal.buffer.contains("Error, "));
+        e("set switch 3 position (0,0)");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("list tracks");
+        assertTrue(Terminal.buffer.contentEquals("t 1 (0,0) -> (5,0) 5\n" + "s 2 (5,0) -> (10,0),(5,5) 5\n"
+                + "s 3 (0,5) -> (0,0),(0,10) 5\n" + "t 4 (10,0) -> (10,10) 10\n" + "t 5 (10,10) -> (0,10) 10"));
+        e("put train 1 at (0,1) in direction 0,1");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("step 1");
+        assertTrue(Terminal.buffer.contentEquals("Train 1 at (0,2)"));
+        e("step 1");
+        e("step 1");
+        e("step 1");
+
+        e("step 1");
+        assertTrue(Terminal.buffer.contentEquals("Crash of train 1"));
+
+        e("step 1");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete track 5");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete track 4");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete track 3");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete track 2");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("delete track 1");
+        assertTrue(Terminal.buffer.contentEquals("OK"));
+        e("list tracks");
+        assertTrue(Terminal.buffer.contentEquals("No track exists"));
+        e("add track (0,0) -> (0,10)");
+        assertTrue(Terminal.buffer.contentEquals("1"));
+        e("add track (0,10) -> (0,20)");
+        assertTrue(Terminal.buffer.contentEquals("2"));
+        e("add track (0,20) -> (0,30)");
+        assertTrue(Terminal.buffer.contentEquals("3"));
+        e("delete track 2");
+        assertTrue(Terminal.buffer.contains("Error, "));
+                                                
+    }
+
+    @Test 
+    public void backOnNotSetSwitch() {
+        Terminal.silent = false;
+        e("add track (0,0) -> (10,0)");
+        
+        e("create engine steam T3 Emma 5 false true");
+        e("add train 1 T3-Emma");
+        e("put train 1 at (5,0) in direction -1,0");
+        e("add switch (10,0) -> (10,3),(15,0)");
+        e("step 10");
+        e("list trains");
+        e("set switch 2 position (15,0)");
+        e("step -1");
+        e("set switch 2 position (15,0)");
+        e("step -1");
+        
+    }
+    
 }
+    
+
+

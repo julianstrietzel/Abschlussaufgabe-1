@@ -90,16 +90,20 @@ public class RollingStock {
      * @return ID des neuen Waggons
      */
     public String createCoach(String coachType, int length, boolean cFront, boolean cBack) {
+        int id = 1;
+        while (coaches.containsKey(id)) {
+            id++;
+        }
         if ("passenger".contentEquals(coachType)) {
-            coaches.put(coaches.size() + 1, new PassengerWagon(length, cFront, cBack, coaches.size() + 1));
+            coaches.put(id, new PassengerWagon(length, cFront, cBack, id));
         }
         if ("freight".contentEquals(coachType)) {
-            coaches.put(coaches.size() + 1, new FreightCar(length, cFront, cBack, coaches.size() + 1));
+            coaches.put(id, new FreightCar(length, cFront, cBack, id));
         }
         if ("special".contentEquals(coachType)) {
-            coaches.put(coaches.size() + 1, new SpecialCar(length, cFront, cBack, coaches.size() + 1));
+            coaches.put(id, new SpecialCar(length, cFront, cBack, id));
         }
-        return "" + coaches.size();
+        return "" + id;
     }
 
     /**
@@ -185,8 +189,14 @@ public class RollingStock {
             return "No coach exists";
         }
         StringBuilder sb = new StringBuilder();
-        for (int i = 1; i <= coaches.size(); i++) {
-            sb.append(coaches.get(i).toString() + "\n");
+        
+        int buffer = 0;
+        for (int i = 1; i <= coaches.size() + buffer; i++) {
+            if (coaches.get(i) != null) {
+                sb.append(coaches.get(i).toString() + "\n");
+            } else {
+                buffer++;
+            }
 
         }
         return sb.substring(0, sb.length() - 1);

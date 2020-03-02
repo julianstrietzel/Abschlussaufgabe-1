@@ -314,7 +314,7 @@ public class ModelRailWay {
      * @param id    der Weiche
      * @param point neue Einstellung der Weiche
      * @throws IllegalInputException , wenn Weiche nicht existiert oder der Punkt
-     *                               nicht auf der Weiche liegt.
+     *                               nicht auf der Weiche liegt oder die Falsche ID übergeeben wurde
      * @throws LogicalException      , wenn Fehler in markoccupied()
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {

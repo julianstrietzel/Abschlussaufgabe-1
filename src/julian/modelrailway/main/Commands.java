@@ -56,7 +56,7 @@ public enum Commands {
      * diese einem der Enden entspricht.
      * 
      * Error, wenn die Gleisweiche nicht existiert oder der Input nicht zu Zahlen
-     * verarbeitet werden kann.
+     * verarbeitet werden kann. Oder wenn die ID nicht existiert
      */
     SET_SWITCH("set switch (\\d+) position \\(([-+]?\\d+),([-+]?\\d+)\\)") {
         @Override

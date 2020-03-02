@@ -303,7 +303,7 @@ public class Railsystem {
      * 
      * @param id    der Weiche
      * @param point der das neue Ende sein soll
-     * @throws IllegalInputException , wenn Point is not an End of the Switch
+     * @throws IllegalInputException , wenn Point is not an End of the Switch oder falsche ID
      * @throws LogicalException      , wenn Fehle rim MarkOccupied
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {

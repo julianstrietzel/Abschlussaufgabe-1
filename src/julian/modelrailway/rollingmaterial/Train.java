@@ -152,7 +152,6 @@ public class Train {
         StringBuilder sb = new StringBuilder();
         for (int i = visualArray.length - 1; i > -1; i--) {
             sb.append(visualArray[i].toString());
-//            sb.append(visualArray[i].toString().replaceAll("\\s+$", ""));
             sb.append("\n");
         }
         return sb.substring(0, sb.length() - 1);

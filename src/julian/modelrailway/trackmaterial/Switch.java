@@ -73,7 +73,8 @@ public class Switch extends Rail {
      * @return die länge des zweiten Abschnitts der Weiche
      */
     public int getLengthTwo() {
-        return Math.max(getStart().getXcoord() - endTwo.getXcoord(), getStart().getYcoord() - endTwo.getYcoord());
+        return Math.max(Math.abs(getStart().getXcoord() - endTwo.getXcoord())
+                , Math.abs(getStart().getYcoord() - endTwo.getYcoord()));
     }
 
     /**

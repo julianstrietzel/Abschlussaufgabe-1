@@ -45,17 +45,20 @@ public class Testing {
      * Helper Method, to simplify writing tests.
      * 
      * @param command
+     * @throws Exception
      */
     @SuppressWarnings("static-access")
-    private void e(String command) {
+    private void e(String command) throws Exception {
         ui.execute(command, m);
     }
 
     /**
      * Example Commands from Sheet
+     * 
+     * @throws Exception
      */
     @Test
-    public void Beispielablauf() {
+    public void Beispielablauf() throws Exception {
 //        Terminal.silent = false;
         Terminal.printLine("EXAMPLE ABLAUF");
         assertTrue("EXAMPLE ABLAUF".equals(Terminal.buffer));
@@ -169,7 +172,7 @@ public class Testing {
     }
 
     @Test
-    public void testingRailSystem() {
+    public void testingRailSystem() throws Exception {
 //        Terminal.silent = true;
         e("add track (0,0) -> (10,0)");
         e("add track (0,0) -> (0,10)");
@@ -181,7 +184,7 @@ public class Testing {
     }
 
     @Test
-    public void testinDeleteTracks() {
+    public void testinDeleteTracks() throws Exception {
 //        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
 //        e("add track (10,10) -> (10,11)");
@@ -213,7 +216,7 @@ public class Testing {
     }
 
     @Test
-    public void multipleCollids() {
+    public void multipleCollids() throws Exception {
 //        e("list trains");
 //        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
@@ -271,7 +274,7 @@ public class Testing {
     }
 
     @Test
-    public void closeRoads() {
+    public void closeRoads() throws Exception {
 //        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
         e("add track (1,1) -> (1,1)");
@@ -303,7 +306,7 @@ public class Testing {
     }
 
     @Test
-    public void testPutting() {
+    public void testPutting() throws Exception {
 //        Terminal.silent = false;
         e("add track (0,0) -> (10000,0)");
         assertTrue(Terminal.buffer.equals("1"));
@@ -399,16 +402,17 @@ public class Testing {
         assertTrue(Terminal.buffer.equals("Crash of train 1,2"));
         assertTrue("Crash of train 1,2".contentEquals(Terminal.buffer));
 
-
         e("show train 2");
 
     }
 
     /**
      * Wenn einn Zug entgleist ist das Gleis immernoch besetzt
+     * 
+     * @throws Exception
      */
     @Test
-    public void backwardsANDEntgleisem() {
+    public void backwardsANDEntgleisem() throws Exception {
 //        Terminal.silent = false;
         e("add track (0,0) -> (100,0)");
         assertTrue("1".contentEquals(Terminal.buffer));
@@ -437,7 +441,7 @@ public class Testing {
     }
 
     @Test
-    public void deletingSwitches() {
+    public void deletingSwitches() throws Exception {
 //        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
         e("add switch (5,1) -> (8,1),(5,3)");
@@ -466,7 +470,7 @@ public class Testing {
     }
 
     @Test
-    public void placingTRains() {
+    public void placingTRains() throws Exception {
 //        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
         e("create engine steam T4 Emma 1 true false");
@@ -481,7 +485,7 @@ public class Testing {
     }
 
     @Test
-    public void addDublicats() {
+    public void addDublicats() throws Exception {
 //       Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
         e("add track (5,1) -> (1,1)");
@@ -489,7 +493,7 @@ public class Testing {
     }
 
     @Test
-    public void entgleisen() {
+    public void entgleisen() throws Exception {
 //        Terminal.silent = false;
         e("add switch (1,1) -> (5,1),(1,10)");
         e("set switch 1 position (5,1)");
@@ -505,9 +509,9 @@ public class Testing {
         e("step 0");
 
     }
-    
+
     @Test
-    public void testWString() {
+    public void testWString() throws Exception {
 //        Terminal.silent = false;
         e("create engine steam W Emma 10 true false");
         assertTrue(Terminal.buffer.contains("Error, "));
@@ -533,19 +537,11 @@ public class Testing {
         assertTrue("1 W1 W1-Emma\n2 W1-145 W1-146".contentEquals(Terminal.buffer));
         e("add train 2 1-147");
         assertTrue(Terminal.buffer.contains("Error, "));
-        
+
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     @Test
-    public void puttingOnCorners() {
+    public void puttingOnCorners() throws Exception {
 //        Terminal.silent = false;
         e("add track (0,0) -> (5,0)");
         assertTrue(Terminal.buffer.contentEquals("1"));
@@ -577,7 +573,7 @@ public class Testing {
     }
 
     @Test
-    public void extensiveTest() {
+    public void extensiveTest() throws Exception {
 //        Terminal.silent = false;
         Terminal.printLine("Zug Komposition");
         e("create engine steam T1 Emma 1 true true");
@@ -771,14 +767,14 @@ public class Testing {
         assertTrue(Terminal.buffer.contentEquals("3"));
         e("delete track 2");
         assertTrue(Terminal.buffer.contains("Error, "));
-                                                
+
     }
 
-    @Test 
-    public void backOnNotSetSwitch() {
-        Terminal.silent = false;
+    @Test
+    public void backOnNotSetSwitch() throws Exception {
+
         e("add track (0,0) -> (10,0)");
-        
+
         e("create engine steam T3 Emma 5 false true");
         e("add train 1 T3-Emma");
         e("put train 1 at (5,0) in direction -1,0");
@@ -789,10 +785,136 @@ public class Testing {
         e("step -1");
         e("set switch 2 position (15,0)");
         e("step -1");
-        
+
     }
-    
+
+    @Test
+    public void testcase12() throws Exception {
+
+        e("add switch (0,0) -> (10,0),(0,10)");
+        e("create engine steam T1 Emma 1 false true");
+        e("add train 1 T1-Emma");
+        e("put train 1 at (2,0) in direction 1,0");
+        e("set switch 1 position (10,0)");
+        e("put train 1 at (2,0) in direction 1,0");
+        e("step 0");
+        e("set switch 1 position (10,0)");
+        e("step 0");
+        e("exit");
+    }
+
+    @Test
+    public void tescase9maxInt() throws Exception {
+        
+        e("add track (2147483647,0) -> (0,0)");
+//        1
+        e("add track (0,0) -> (-2147483646,0)");
+//        2
+        e("list tracks");
+//        t 1 (2147483647,0) -> (0,0) 2147483647
+//        t 2 (0,0) -> (-2147483644,0) 2147483648
+        e("create engine electrical T3 Marie 1 false true");
+//        T3-Marie
+        e("add train 1 T3-Marie");
+//        electrical engine T3-Marie added to train 1
+        e("put train 1 at (0,0) in direction -1,0");
+//        OK
+        e("step 1000");
+//        Train 1 at (-1000,0)
+        e("delete train 1");
+//        OK
+        e("add train 1 T3-Marie");
+//        electrical engine T3-Marie added to train 1
+        e("put train 1 at (2147483637,0) in direction 1,0");
+//        OK
+        e("step 10");
+//        Train 1 at (2147483647,0)
+        e("step 1");
+//        Crash of train 1
+        e("exit");
+    }
+
+    @Test
+    public void somSorting() throws Exception {
+        Terminal.silent = false;
+        e("add track (0,0) -> (5,0)");
+        e("add track (5,0) -> (10,0)");
+        e("add track (10,0) -> (15,0)");
+        e("add track (15,0) -> (20,0)");
+        e("add track (20,0) -> (25,0)");
+        e("add track (25,0) -> (30,0)");
+        e("create coach passenger 1 true true");
+        e("create coach passenger 1 true true");
+        e("create coach passenger 1 true true");
+        e("create coach special 1 true true");
+        e("create coach passenger 1 true true");
+        e("create coach passenger 1 true true");
+        e("create coach passenger 1 true true");
+        e("create coach freight 1 true true");
+        e("create coach passenger 1 true true");
+        e("create coach passenger 1 true true");
+        e("create coach passenger 1 true true");
+        e("create coach passenger 1 true true");
+        e("create engine steam T3 r 1 true true");
+        e("create engine diesel T3 b 1 true true");
+        e("create engine steam T3 c 1 true true");
+        e("create engine steam T3 F 1 true true");
+        e("create engine electrical T3 e 1 true true");
+        e("create engine steam T1 o 1 true true");
+        e("create engine steam T3 g 1 true true");
+        e("create engine steam T3 a 1 true true");
+        e("create engine diesel T3 j 1 true true");
+        e("create engine steam T3 1 1 true true");
+        e("create engine electrical T3 A 1 true true");
+        e("create train-set T3 tr 1 true true");
+        e("create train-set RRR A 1 true true");
+        e("create train-set RRT A 1 true true");
+        e("create train-set RRR B 1 true true");
+        e("list coaches");
+        e("list engines");
+        e("list train-sets");
+        e("add train 1 W1");
+        e("add train 1 T1-o");
+        e("add train 1 W2");
+        e("add train 1 W3");
+        e("add train 1 T3-A");
+        e("add train 1 W8");
+        e("show train 1");
+        e("put train 1 at (3,0) in direction 1,0");
+        e("put train 1 at (3,0) in direction 0,1");
+        e("add train 1 T3-F");
+        e("show train 1");
+        e("put train 1 at (3,0) in direction 1,0");
+        e("put train 1 at (3,0) in direction -1,0");
+        e("add train 2 W5");
+        e("add train 2 T3-tr");
+        e("delete train 2");
+        e("add train 2 T3-F");
+        e("delete train 2");
+        e("add train 2 T3-g");
+        e("add train 2 T3-tr");
+        e("delete train 2");
+        e("add train 2 T3-tr");
+        e("add train 2 T3-g");
+        e("delete train 2");
+        e("add train 2 T3-tr");
+        e("add train 2 W5");
+        e("delete train 2");
+        e("add train 2 T3-tr");
+        e("add train 2 RRR-A");
+        e("delete train 2");
+        e("add train 2 RRR-B");
+        e("add train 2 RRR-A");
+        e("list trains");
+        e("add train 2 RRT-A");
+        e("list trains");
+        e("put train 1 at (20,0) in direction -1,0");
+        e("put train 2 at (5,0) in direction -1,0");
+        e("step 0");
+        e("step 3");
+        e("step 1");
+        e("put train 1 at (10,0) in direction 1,0");
+        e("put train 2 at (12,0) in direction -1,0");
+    }
+
 }
-    
-
-

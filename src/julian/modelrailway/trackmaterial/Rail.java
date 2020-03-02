@@ -421,7 +421,7 @@ public class Rail implements Comparable<Rail> {
 
     @Override
     public int compareTo(Rail o) {
-        return this.getId() - ((Rail) o).getId();
+        return this.getId() -  o.getId();
 
     }
 

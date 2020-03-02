@@ -19,7 +19,7 @@ public class DieselLocomotive extends Engine {
      * @param length      Länge
      * @param clutchFront Ob Kupplung vorne
      * @param clutchBack  Ob Kupplung hinten
-     * @throws IllegalInputException wenn Series mit W beginnt
+     * @throws IllegalInputException wenn Series mit W beginnt oder bei keiner Kupplung
      */
     public DieselLocomotive(String series, String name, int length, boolean clutchFront, boolean clutchBack) 
             throws IllegalInputException {

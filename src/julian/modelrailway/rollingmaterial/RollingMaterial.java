@@ -23,10 +23,12 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
      * @param length      Länge
      * @param clutchFront Ob Kupplung vorne
      * @param clutchBack  Ob Kupplung hinten
-     * @throws IllegalInputException
+     * @throws IllegalInputException bei keiner Kupplung
      */
-    public RollingMaterial(int length, boolean clutchFront, boolean clutchBack) {
-
+    public RollingMaterial(int length, boolean clutchFront, boolean clutchBack) throws IllegalInputException {
+        if (!(clutchFront || clutchBack)) {
+            throw new IllegalInputException("needs to have at least one clutch");
+        }
         this.length = length;
         this.clutchBack = clutchBack;
         this.clutchFront = clutchFront;

@@ -68,7 +68,7 @@ public class RollingStock {
      * @param cBack  Ob Kupplung hinten
      * @return ID des neuen Triebzuges
      * @throws LogicalException , wenn Triebzug schon existiert
-     * @throws IllegalInputException wenn Baureihe bmit W beginnt
+     * @throws IllegalInputException wenn Baureihe mit W beginnt oder keine Kupplung
      */
     public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException, IllegalInputException {
@@ -88,8 +88,10 @@ public class RollingStock {
      * @param cFront    Ob Kupplung vorne
      * @param cBack     Ob Kupplung hinten
      * @return ID des neuen Waggons
+     * @throws IllegalInputException bei Waggon ohne Kupplung
      */
-    public String createCoach(String coachType, int length, boolean cFront, boolean cBack) {
+    public String createCoach(String coachType, int length, boolean cFront, boolean cBack) 
+            throws IllegalInputException {
         int id = 1;
         while (coaches.containsKey(id)) {
             id++;

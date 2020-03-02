@@ -28,7 +28,7 @@ public class RollingMaterialComparator implements Comparator<RollingMaterial> {
         if (two == null) {
             return 1;
         }
-        return one.compareToIgnoreCase(two);
+        return one.compareTo(two);
     }
 
 }

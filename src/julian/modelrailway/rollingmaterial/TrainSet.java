@@ -19,7 +19,7 @@ public class TrainSet extends PoweredRolling {
      * @param length      Länge
      * @param clutchFront Ob Kupplung vorne
      * @param clutchBack  Ob Kupplung hinten
-     * @throws IllegalInputException wenn Series mit W beginnt
+     * @throws IllegalInputException wenn Series mit W beginnt oder nur eine Kupplung
      */
     public TrainSet(String series, String name, int length, boolean clutchFront, boolean clutchBack) 
             throws IllegalInputException {

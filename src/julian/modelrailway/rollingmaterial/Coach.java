@@ -1,6 +1,8 @@
 
 package julian.modelrailway.rollingmaterial;
 
+import julian.modelrailway.exceptions.IllegalInputException;
+
 /**
  * Repräsentiert einen Wagon.
  * 
@@ -18,8 +20,9 @@ public abstract class Coach extends RollingMaterial {
      * @param clutchFront Ob der Wagon vorne eine Kupplung hat.
      * @param clutchBack  Ob der Wagon hinten eine Kupplung hat.
      * @param id          ID des Wagons
+     * @throws IllegalInputException bei keiner Kupplung
      */
-    public Coach(int length, boolean clutchFront, boolean clutchBack, int id) {
+    public Coach(int length, boolean clutchFront, boolean clutchBack, int id) throws IllegalInputException {
         super(length, clutchFront, clutchBack);
         this.id = id;
     }

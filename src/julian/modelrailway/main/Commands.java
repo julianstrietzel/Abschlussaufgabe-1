@@ -296,8 +296,9 @@ public enum Commands {
      */
     ADD_TRACK("add track \\(([-+]?\\d+),([-+]?\\d+)\\) -> \\(([-+]?\\d+),([-+]?\\d+)\\)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model)
+        public void execute(final Matcher matcher, final ModelRailWay model) 
                 throws IllegalInputException, LogicalException {
+            
             int sx;
             int sy;
             int ex;
@@ -418,7 +419,7 @@ public enum Commands {
      * @throws IllegalInputException wenn der Input nicht den Anforderungen
      *                               entspricht
      * @throws LogicalException      wenn es in der Logik des Systems einen Fehler
-     *                               gibt
+     *                               gibt                            
      */
     public abstract void execute(Matcher matcher, ModelRailWay model)
             throws IllegalInputException, LogicalException;

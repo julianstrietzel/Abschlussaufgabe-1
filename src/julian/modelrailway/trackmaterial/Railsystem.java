@@ -77,16 +77,18 @@ public class Railsystem {
      * @throws LogicalException , wenn einer der benötigten Schienen besetzt ist
      */
     public String putTrain(SetTrain train, DirectionalVertex direc, Vertex pos) throws LogicalException {
+        if (!isAllSet()) {
+            throw new LogicalException("not all switches set yet");
+        }
         Rail track = railnet.findTrack(pos, direc);
         if (track == null) {
             throw new LogicalException("wrong placement");
         }
-        if (!isAllSet()) {
-            throw new LogicalException("not all switches set yet");
-        }
+
         if (track.isOccupied()) {
             throw new LogicalException("track occupied.");
         }
+
         if (Knode.contains(railnet.getCopyKnodes(), pos) != null) {
             train.setDirection(track.getDirectionTo(pos));
         }
@@ -303,7 +305,8 @@ public class Railsystem {
      * 
      * @param id    der Weiche
      * @param point der das neue Ende sein soll
-     * @throws IllegalInputException , wenn Point is not an End of the Switch oder falsche ID
+     * @throws IllegalInputException , wenn Point is not an End of the Switch oder
+     *                               falsche ID
      * @throws LogicalException      , wenn Fehle rim MarkOccupied
      */
     public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {

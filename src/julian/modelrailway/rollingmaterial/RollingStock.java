@@ -37,7 +37,7 @@ public class RollingStock {
      * @param cFront     Ob Kupplung vorne
      * @param cBack      Ob Kupplung hinten
      * @return ID der neuen Lokomotive
-     * @throws LogicalException , wenn Lokomotive schon existiert
+     * @throws LogicalException      , wenn Lokomotive schon existiert
      * @throws IllegalInputException wenn Baureihe mit "W" beginnt
      */
     public String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
@@ -67,7 +67,7 @@ public class RollingStock {
      * @param cFront Ob Kupplung vorne
      * @param cBack  Ob Kupplung hinten
      * @return ID des neuen Triebzuges
-     * @throws LogicalException , wenn Triebzug schon existiert
+     * @throws LogicalException      , wenn Triebzug schon existiert
      * @throws IllegalInputException wenn Baureihe mit W beginnt oder keine Kupplung
      */
     public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
@@ -90,7 +90,7 @@ public class RollingStock {
      * @return ID des neuen Waggons
      * @throws IllegalInputException bei Waggon ohne Kupplung
      */
-    public String createCoach(String coachType, int length, boolean cFront, boolean cBack) 
+    public String createCoach(String coachType, int length, boolean cFront, boolean cBack)
             throws IllegalInputException {
         int id = 1;
         while (coaches.containsKey(id)) {
@@ -143,7 +143,7 @@ public class RollingStock {
             coaches.remove(intID);
             return "OK";
         }
-        
+
     }
 
     /**
@@ -154,7 +154,10 @@ public class RollingStock {
         powered.sort(new RollingMaterialComparator());
         StringBuilder sb = new StringBuilder();
         for (PoweredRolling p : powered) {
-            if (p instanceof Engine && p != null) {
+            if (p == null) {
+                continue;
+            }
+            if (p instanceof Engine) {
                 sb.append(p.toString() + "\n");
             }
         }
@@ -191,7 +194,7 @@ public class RollingStock {
             return "No coach exists";
         }
         StringBuilder sb = new StringBuilder();
-        
+
         int buffer = 0;
         for (int i = 1; i <= coaches.size() + buffer; i++) {
             if (coaches.get(i) != null) {
@@ -208,7 +211,7 @@ public class RollingStock {
     /**
      * Sucht das Material mit der ID
      * 
-     * @param id als String
+     * @param id       als String
      * @param hasPower ob der gesuchte Waggon motorisiert ist
      * @return das gefunden Material oder null, wenn nicht existend
      */

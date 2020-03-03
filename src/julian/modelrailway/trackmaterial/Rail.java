@@ -263,7 +263,7 @@ public class Rail implements Comparable<Rail> {
         if (rail == null) {
             return false;
         }
-        if ((rail instanceof Switch)) {
+        if (rail.getClass() != this.getClass()) {
             return rail.sameRail(this);
         }
         return (this.start.sameVertex(rail.end) && this.end.sameVertex(rail.start)

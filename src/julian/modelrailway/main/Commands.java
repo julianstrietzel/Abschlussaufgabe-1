@@ -191,7 +191,7 @@ public enum Commands {
      * 
      * Error, wenn Rollmaterial mit der ID nicht existiert.
      */
-    DELETE_ROLLING_STOCK("delete rolling stock ((W?)(-|\\w)+)") {
+    DELETE_ROLLING_STOCK("delete rolling stock ((W?)[\\pL\\pM0-9-]+)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model)
                 throws IllegalInputException, LogicalException {
@@ -208,7 +208,7 @@ public enum Commands {
      * Error, wenn input nicht den Anforderungen entspricht, der Triebzug schon
      * existiert oder die Länge null besitzt
      */
-    CREATE_TRAIN_SET("create train-set (\\w+) (\\w+) (\\d+) (true|false) (true|false)") {
+    CREATE_TRAIN_SET("create train-set ([\\pL\\pM0-9]+) ([\\pL\\pM0-9]+) (\\d+) (true|false) (true|false)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model)
                 throws LogicalException, IllegalInputException {
@@ -230,7 +230,7 @@ public enum Commands {
      * Error, wenn input nicht den Anforderungen entspricht, das Material schon
      * existiert oder die Länge null besitzt
      */
-    CREATE_ENGINE("create engine (electrical|steam|diesel) (\\w+) (\\w+) (\\d+) (true|false) (true|false)") {
+    CREATE_ENGINE("create engine (electrical|steam|diesel) ([\\pL\\pM0-9]+) ([\\pL\\pM0-9]+) (\\d+) (true|false) (true|false)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model)
                 throws LogicalException, IllegalInputException {
@@ -273,7 +273,7 @@ public enum Commands {
      * Error, wenn der Input nicht valide, das Material nicht mit dem Zug
      * funktioniert oder das RollMaterial nicht existiert.
      */
-    ADD_TRAIN("add train (\\d+) ((W?)(-|\\w)+)") {
+    ADD_TRAIN("add train (\\d+) ((W?)(-|[\\pL\\pM0-9])+)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model)
                 throws IllegalInputException, LogicalException {

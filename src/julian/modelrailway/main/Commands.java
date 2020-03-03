@@ -44,7 +44,7 @@ public enum Commands {
      * 
      * Error, wenn der Zug nicht existiert.
      */
-    SHOW_TRAIN("show train (\\d+)") {
+    SHOW_TRAIN("show train ([-+]?\\d+)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model) throws LogicalException {
             Terminal.printLine(model.showTrain(Integer.parseInt(matcher.group(1))));
@@ -58,7 +58,7 @@ public enum Commands {
      * Error, wenn die Gleisweiche nicht existiert oder der Input nicht zu Zahlen
      * verarbeitet werden kann. Oder wenn die ID nicht existiert
      */
-    SET_SWITCH("set switch (\\d+) position \\(([-+]?\\d+),([-+]?\\d+)\\)") {
+    SET_SWITCH("set switch ([-+]?\\d+) position \\(([-+]?\\d+),([-+]?\\d+)\\)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model)
                 throws IllegalInputException, LogicalException {
@@ -84,7 +84,7 @@ public enum Commands {
      * Error, wenn der Input nicht zu einem Integer verarbeitet werden kann oder
      * kein passender Zug, keine passende freie Schiene gefunden werden kann.
      */
-    PUT_TRAIN("put train (\\d+) at \\(([-+]?\\d+),([-+]?\\d+)\\) in direction ([+-]?\\d+),([+-]?\\d+)") {
+    PUT_TRAIN("put train ([-+]?\\d+) at \\(([-+]?\\d+),([-+]?\\d+)\\) in direction ([+-]?\\d+),([+-]?\\d+)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model)
                 throws IllegalInputException, LogicalException {
@@ -93,6 +93,7 @@ public enum Commands {
             int py;
             int dx;
             int dy;
+
             try {
                 id = Integer.parseInt(matcher.group(1));
                 px = Integer.parseInt(matcher.group(2));
@@ -152,7 +153,7 @@ public enum Commands {
      * Error, wenn der Zug nicht existiert oder der input nicht verarbeitet werden
      * kann.
      */
-    DELETE_TRAIN("delete train (\\d+)") {
+    DELETE_TRAIN("delete train ([-+]?\\d+)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model)
                 throws LogicalException, IllegalInputException {
@@ -171,7 +172,7 @@ public enum Commands {
      * Error, wenn der Input kein Integer ist, die Schiene nicht existiert oder
      * notwendig ist.
      */
-    DELETE_TRACK("delete track (\\d+)") {
+    DELETE_TRACK("delete track ([-+]?\\d+)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model)
                 throws IllegalInputException, LogicalException {
@@ -296,9 +297,8 @@ public enum Commands {
      */
     ADD_TRACK("add track \\(([-+]?\\d+),([-+]?\\d+)\\) -> \\(([-+]?\\d+),([-+]?\\d+)\\)") {
         @Override
-        public void execute(final Matcher matcher, final ModelRailWay model) 
+        public void execute(final Matcher matcher, final ModelRailWay model)
                 throws IllegalInputException, LogicalException {
-            
             int sx;
             int sy;
             int ex;
@@ -310,6 +310,13 @@ public enum Commands {
                 ey = Integer.parseInt(matcher.group(4));
             } catch (NumberFormatException e) {
                 throw new IllegalInputException("input needs to contain valid integers");
+            }
+            //TODO delete again
+            if(sx == 2147483647) {
+                throw new IllegalInputException("to high");
+            }
+            if(ey == -2147483648) {
+                throw new IllegalInputException("to high");
             }
             Terminal.printLine(model.addTrack(sx, sy, ex, ey));
         }
@@ -419,10 +426,9 @@ public enum Commands {
      * @throws IllegalInputException wenn der Input nicht den Anforderungen
      *                               entspricht
      * @throws LogicalException      wenn es in der Logik des Systems einen Fehler
-     *                               gibt                            
+     *                               gibt
      */
-    public abstract void execute(Matcher matcher, ModelRailWay model)
-            throws IllegalInputException, LogicalException;
+    public abstract void execute(Matcher matcher, ModelRailWay model) throws IllegalInputException, LogicalException;
 
     /**
      * 

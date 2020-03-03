@@ -1,22 +1,21 @@
-/**
- * Probably marginal changes needed.
- * @author Julian Strietzel
- */
 package Tests;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.After;
-
-import edu.kit.informatik.Terminal;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import edu.kit.informatik.Terminal;
 import julian.modelrailway.main.Commands;
 import julian.modelrailway.main.ModelRailWay;
 
-public class Testing {
+/**
+ * @author Julian Strietzel
+ * @version 03.03.2020
+ */
+public class TestingTest {
 
     ModelRailWay m;
     Commands ui;
@@ -802,38 +801,7 @@ public class Testing {
         e("step 0");
         e("exit");
     }
-
-//    @Test
-//    public void tescase9maxInt() throws Exception {
-//        Terminal.silent = false;
-//        e("add track (2147483647,0) -> (0,0)");
-////        1
-////        e("add track (0,0) -> (-2147483646,0)");
-//////        2
-////        e("list tracks");
-//////        t 1 (2147483647,0) -> (0,0) 2147483647
-//////        t 2 (0,0) -> (-2147483644,0) 2147483648
-////        e("create engine electrical T3 Marie 1 false true");
-//////        T3-Marie
-////        e("add train 1 T3-Marie");
-//////        electrical engine T3-Marie added to train 1
-////        e("put train 1 at (0,0) in direction -1,0");
-//////        OK
-////        e("step 1000");
-//////        Train 1 at (-1000,0)
-////        e("delete train 1");
-//////        OK
-////        e("add train 1 T3-Marie");
-//////        electrical engine T3-Marie added to train 1
-////        e("put train 1 at (2147483637,0) in direction 1,0");
-//////        OK
-////        e("step 10");
-//////        Train 1 at (2147483647,0)
-////        e("step 1");
-//////        Crash of train 1
-////        e("exit");
-//    }
-
+    
     @Test
     public void somSorting() throws Exception {
         Terminal.silent = false;

@@ -183,7 +183,7 @@ public class ModelRailWay {
                 rSystem.removeTrain(s);
             }
         }
-        rSystem.resetMArkers();
+        rSystem.resetMarkers();
         rSystem.renewMarked();
         return ts.deleteTrain(id);
     }
@@ -246,7 +246,7 @@ public class ModelRailWay {
             sb.append(e.getMessage());
             sb.append("\n");
         }
-        rSystem.resetMArkers();
+        rSystem.resetMarkers();
         for (SetTrain train : rSystem.getToTCopy()) {
             rSystem.markBackOccupied(train, train.getPosition(), train.getDirection(), train.getRail(), false);
 

@@ -295,7 +295,7 @@ public class RailNetwork {
                         t.getModel().setInUse(false);
                         rSys.removeTrain(t);
                     }
-                    rSys.resetMArkers();
+                    rSys.resetMarkers();
                     rSys.renewMarked();
                     s.clearTrains();
                 }

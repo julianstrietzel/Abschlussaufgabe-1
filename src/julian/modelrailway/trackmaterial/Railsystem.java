@@ -30,7 +30,7 @@ public class Railsystem {
         railnet = new RailNetwork(this);
         trainsOnTrack = new LinkedList<SetTrain>();
         crashes = new LinkedList<Crash>();
-        resetMArkers();
+        resetMarkers();
     }
 
     /**
@@ -113,7 +113,7 @@ public class Railsystem {
      * @throws IllegalInputException , wenn Fehler im markoccupied()
      */
     public void move(boolean forwards) throws LogicalException, IllegalInputException {
-        resetMArkers();
+        resetMarkers();
         List<SetTrain> workTrains = new LinkedList<SetTrain>();
         for (SetTrain s : trainsOnTrack) {
             workTrains.add(s);
@@ -196,7 +196,7 @@ public class Railsystem {
     /**
      * resetted belegten Schienen
      */
-    public void resetMArkers() {
+    public void resetMarkers() {
         for (Rail rail : railnet.getCopyRails()) {
             rail.clearTrains();
         }

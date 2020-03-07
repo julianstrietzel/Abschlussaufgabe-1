@@ -230,7 +230,8 @@ public enum Commands {
      * Error, wenn input nicht den Anforderungen entspricht, das Material schon
      * existiert oder die Länge null besitzt
      */
-    CREATE_ENGINE("create engine (electrical|steam|diesel) ([\\pL\\pM0-9]+) ([\\pL\\pM0-9]+) (\\d+) (true|false) (true|false)") {
+    CREATE_ENGINE("create engine (electrical|steam|diesel) ([\\pL\\pM0-9]+) "
+            + "([\\pL\\pM0-9]+) (\\d+) (true|false) (true|false)") {
         @Override
         public void execute(final Matcher matcher, final ModelRailWay model)
                 throws LogicalException, IllegalInputException {

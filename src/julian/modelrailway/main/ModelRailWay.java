@@ -164,8 +164,9 @@ public class ModelRailWay {
      * @return Nutzerausgabe
      * @throws LogicalException , RollMaterial nicht existiert oder schon verbaut
      *                          ist, der Zug fährt oder die ID Vergabe falsch ist
+     * @throws IllegalInputException wenn id falsch
      */
-    public String addTrain(int trainID, String rollID, boolean powered) throws LogicalException {
+    public String addTrain(int trainID, String rollID, boolean powered) throws LogicalException, IllegalInputException {
         return ts.addTrain(trainID, rollID, powered);
     }
 

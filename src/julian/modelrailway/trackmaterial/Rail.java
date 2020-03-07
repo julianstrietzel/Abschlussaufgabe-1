@@ -415,6 +415,9 @@ public class Rail implements Comparable<Rail> {
         while (!posi.sameVertex(getEndInDirection(dire))) {
             i++;
             posi = posi.add(dire);
+            if(i == this.getSetLength()) {
+                break;
+            }
         }
         return i;
     }

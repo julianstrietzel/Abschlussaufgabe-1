@@ -21,7 +21,7 @@ public abstract class ListUtility {
      * @param list zu bearbeitende Liste
      * @return neue Kopie der Liste ohne Duplikate
      */
-    public static <T> List<T> copyWithoutDuplicates(List<T> list) {
+    public static <T> List<T> getCopyWithoutDuplicates(List<T> list) {
         List<T> workingList = new LinkedList<T>();
         for (T ts : list) {
             if (!workingList.contains(ts)) {

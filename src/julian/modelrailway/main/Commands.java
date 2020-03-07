@@ -311,13 +311,6 @@ public enum Commands {
             } catch (NumberFormatException e) {
                 throw new IllegalInputException("input needs to contain valid integers");
             }
-            //TODO delete again
-            if(sx == 2147483647) {
-                throw new IllegalInputException("to high");
-            }
-            if(ey == -2147483648) {
-                throw new IllegalInputException("to high");
-            }
             Terminal.printLine(model.addTrack(sx, sy, ex, ey));
         }
     },

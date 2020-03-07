@@ -36,7 +36,7 @@ public class Crash extends Event implements Comparable<Event> {
     @Override
     public String getMessage() {
         String output = "Crash of train ";
-        setInvolved(ListUtility.copyWithoutDuplicates(getInvolved()));
+        setInvolved(ListUtility.getCopyWithoutDuplicates(getInvolved()));
         for (SetTrain tr : getInvolved()) {
             output += tr.getId() + ",";
         }

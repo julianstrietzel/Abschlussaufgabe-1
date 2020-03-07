@@ -3,6 +3,7 @@ package julian.modelrailway.rollingmaterial;
 
 import java.util.HashMap;
 
+import julian.modelrailway.exceptions.IllegalInputException;
 import julian.modelrailway.exceptions.LogicalException;
 
 /**
@@ -35,11 +36,15 @@ public class TrainStock {
      * @param powered ob das gesucht eRollmaterial einen Motor hat
      * @return MatType <MatID> added to <ZugID>
      * @throws LogicalException , wenn der Waggon nicht angehängt werden darf
+     * @throws IllegalInputException wenn id unter 1
      */
-    public String addTrain(int trainID, String rollID, boolean powered) throws LogicalException {
+    public String addTrain(int trainID, String rollID, boolean powered) throws LogicalException, IllegalInputException {
         RollingMaterial r = rStock.getWagon(rollID, powered);
         if (r == null) {
             throw new LogicalException("rolling material not existing.");
+        }
+        if(trainID <= 0) {
+            throw new IllegalInputException("id to low");
         }
         if (r.isUsed()) {
             throw new LogicalException("rolling material is used.");

@@ -142,7 +142,7 @@ public class Railsystem {
      */
     public void checkCollision() {
         for (Rail r : railnet.getCopyRails()) {
-            List<SetTrain> workTrains = ListUtility.copyWithoutDuplicates(r.getCopyTrains());
+            List<SetTrain> workTrains = ListUtility.getCopyWithoutDuplicates(r.getCopyTrains());
             if (workTrains.size() > 1) {
                 crashes.add(new Crash(r.getCopyTrains()));
                 for (SetTrain t : r.getCopyTrains()) {
@@ -152,7 +152,7 @@ public class Railsystem {
             }
         }
         for (Knode k : railnet.getCopyKnodes()) {
-            List<SetTrain> workTrains = ListUtility.copyWithoutDuplicates(k.getTrains());
+            List<SetTrain> workTrains = ListUtility.getCopyWithoutDuplicates(k.getTrains());
             if (workTrains.size() > 1) {
                 crashes.add(new Crash(k.getTrains()));
                 for (SetTrain t : k.getTrains()) {

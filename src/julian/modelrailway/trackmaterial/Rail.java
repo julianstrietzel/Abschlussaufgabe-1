@@ -198,7 +198,7 @@ public class Rail implements Comparable<Rail> {
      */
     public DirectionalVertex getDirectionTo(Vertex point) {
         if (this.end.sameVertex(point)) {
-            return this.direction;
+            return this.getSetDirection();
         } else {
             return this.direction.getInverseDirection();
         }

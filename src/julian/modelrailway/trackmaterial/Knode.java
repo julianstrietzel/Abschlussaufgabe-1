@@ -153,12 +153,13 @@ public class Knode extends Vertex {
      * @throws LogicalException , wenn kein entsporechender Track verbunden ist
      */
     public Rail getTrack(DirectionalVertex direc) throws LogicalException {
-
         if (railIn != null) {
             if (this.sameVertex(railIn.getEndInDirection(direc))) {
                 return railIn;
             }
-            if (direc.compatibleDirection(railIn.getSetDirection())) {
+            if(direc.sameVertex(railIn.getDirectionFrom(this))) {
+
+//            if (direc.compatibleDirection(railIn.getSetDirection())) {
                 if (railOut != null) {
                     return railOut;
                 }
@@ -169,7 +170,9 @@ public class Knode extends Vertex {
             if (this.sameVertex(railOut.getEndInDirection(direc))) {
                 return railOut;
             }
-            if (direc.compatibleDirection(railOut.getSetDirection())) {
+            if(direc.sameVertex(railOut.getDirectionFrom(this))) {
+//            if (direc.compatibleDirection(railOut.getSetDirection())) { 
+//TODO bei Weiche nicht unbedingt die Richtung zu diesem Ounkt besser get directino to und is set direction überprfen
                 if (railIn != null) {
                     return railIn;
                 }
@@ -194,6 +197,23 @@ public class Knode extends Vertex {
             }
         }
         return null;
+    }
+    /**
+     * 
+     * @return Ob eines der beiden angrenzenden Gleise belegt ist.
+     */
+    public boolean atLeastOneRailOccu() {
+        if(railOut != null) {
+            if(railOut.isOccupied()) {
+                return true;
+            }
+        }
+        if(railIn != null) {
+            if(railIn.isOccupied()) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

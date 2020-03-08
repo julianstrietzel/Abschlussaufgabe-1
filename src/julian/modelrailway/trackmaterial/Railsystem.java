@@ -88,9 +88,12 @@ public class Railsystem {
         if (track.isOccupied()) {
             throw new LogicalException("track occupied.");
         }
-
-        if (Knode.contains(railnet.getCopyKnodes(), pos) != null) {
+        Knode knode = Knode.contains(railnet.getCopyKnodes(), pos);
+        if (knode != null) {
             train.setDirection(track.getDirectionTo(pos));
+            if(knode.atLeastOneRailOccu()) {
+                throw new LogicalException("connecting rail occupied");
+            }
         }
         try {
             if (railnet.markBackOccupied(train, train.getPosition(), train.getDirection(), track, true)) {

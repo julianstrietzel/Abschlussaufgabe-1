@@ -286,6 +286,17 @@ public class Switch extends Rail {
             }
         }
     }
+    
+    @Override
+    public DirectionalVertex getDirectionTo(Vertex point) {
+        if(this.getEnd().sameVertex(point)) {
+            return this.getDirection();
+        }
+        if(this.endTwo.sameVertex(point)) {
+            return this.directionTwo;
+        }
+        return this.getSetDirection().getInverseDirection();
+    }
 
     @Override
     public Vertex getEndInDirection(DirectionalVertex direction) throws NullPointerException {

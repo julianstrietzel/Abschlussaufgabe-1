@@ -55,16 +55,23 @@ public class Testing2 {
 
     @Test
     public void bigInt() {
-        e("add track (2147483647,0) -> (0,0)");
-        e("add track (0,0) -> (-2147483648,0)");
-        e("list tracks");
-        e("create engine electrical T3 Marie 1 false true");
-        e("add train 1 T3-Marie");
-        e("put train 1 at (0,0) in direction 0,-1");
-        e("put train 1 at (0,0) in direction -1,0");
-        e("step 1000");
+        e("add track (0,0) -> (0,0)");
+        e("add track (0,0) -> (2,0)");
+        e("add track (2,2) -> (2,0)");
+        e("add track (2,2) -> (0,2)");
+        e("add track (0,2) -> (0,0)");
+        e("add track (0,0) -> (-2,0)");
+        e("create engine diesel T3 Emma 1 false true");
+        e("create coach passenger 2 true true");
+        e("create coach passenger 3 true true");
+        e("create coach passenger 421000 true false");
+        e("add train 1 T3-Emma");
+        e("add train 1 W1");
+        e("add train 1 W2");
+        e("add train 1 W3");
+        e("put train 1 at (0,0) in direction 1,0");
+        e("exit");
         
-
     }
 
 }

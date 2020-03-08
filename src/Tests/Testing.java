@@ -218,7 +218,7 @@ public class Testing {
     @Test
     public void multipleCollids() throws Exception {
 //        e("list trains");
-        Terminal.silent = false;
+//        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
         assertTrue("1".equals(Terminal.buffer));
         e("add track (10,10) -> (10,11)");
@@ -275,7 +275,7 @@ public class Testing {
 
     @Test
     public void closeRoads() throws Exception {
-//        Terminal.silent = false;
+        Terminal.silent = false;
         e("add track (1,1) -> (5,1)");
         e("add track (1,1) -> (1,1)");
         assertTrue(Terminal.buffer.contains("Error, "));
@@ -293,8 +293,8 @@ public class Testing {
         assertTrue(Terminal.buffer.equals("t 1 (1,1) -> (5,1) 4\n"+ "t 2 (1,1) -> (1,0) 1\n"+ "t 3 (2,0) -> (1,0) 1\n"
                 + "t 4 (5,0) -> (2,0) 3\n"+ "t 5 (10,0) -> (5,0) 5\n"+ "t 6 (10,0) -> (11,0) 1\n"
                 + "t 7 (11,0) -> (11,1) 1\n"+ "t 8 (11,1) -> (5,1) 6"));
-        e("create coach passenger 3 true true");
-        e("add train 1 W0001");
+//        e("create coach passenger 3 true true");
+//        e("add train 1 W0001");
         e("create engine steam T3 Emma 20 true false");
         e("add train 1 T3-Emma");
         e("put train 1 at (1,1) in direction 1,0");

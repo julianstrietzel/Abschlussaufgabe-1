@@ -223,28 +223,36 @@ public class RailNetwork {
             Knode newLy = Knode.contains(knodes, train.getPosition());
             newLy.addTrain(train);
         }
-        int i = rail.getSpaceLeftBehind(pos, direc, train.getLength());
+        long i = rail.getSpaceLeftBehind(pos, direc, train.getLength());
         LinkedList<Rail> newlyOccupied = new LinkedList<Rail>();
         newlyOccupied.add(rail);
         train.setRail(rail);
         Rail next = rail;
         Rail previous;
+        direc = direc.getInverseDirection();
         while (i < train.getLength()) {
             previous = next;
-            next = previous.getNextInDirection(direc.getInverseDirection());
+            next = previous.getNextInDirection(direc);
             if (next == null) {
                 throw new LogicalException("train to long for rails");
             }
-            direc = next.getDirectionFrom(previous.getEndInDirection(direc.getInverseDirection()));
-            i += next.getSetLength();
+            direc = next.getDirectionFrom(previous.getEndInDirection(direc));
+            i = i + next.getSetLength();
             if (next.isOccupied() && breakUp) {
+                return true;
+            }
+            if(newlyOccupied.contains(next)) {
                 return true;
             }
             newlyOccupied.add(next);
             if (i == train.getLength()) {
                 Knode.contains(knodes, next.getEndInDirection(direc)).addTrain(train);
-            }
+            }   
+//            if(i >= train.getLength()) {
+//                break;
+//            }
         }
+        
         for (Rail newRail : newlyOccupied) {
             newRail.addTrain(train);
         }

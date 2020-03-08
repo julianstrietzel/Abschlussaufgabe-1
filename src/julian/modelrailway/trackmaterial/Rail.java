@@ -154,15 +154,16 @@ public class Rail implements Comparable<Rail> {
      * 
      * @return Länge der Schiene
      */
-    public int getLength() {
-        return Math.max(Math.abs(start.getXcoord() - end.getXcoord()), Math.abs(start.getYcoord() - end.getYcoord()));
+    public long getLength() {
+        return Math.max(Math.abs((long) start.getXcoord() - (long) end.getXcoord()),
+                Math.abs((long) start.getYcoord() - (long) end.getYcoord()));
     }
-    
+
     /**
      * 
      * @return bei einer normalen Schiene die einfache Länge
      */
-    public int getSetLength() {
+    public long getSetLength() {
         return getLength();
     }
 
@@ -408,14 +409,14 @@ public class Rail implements Comparable<Rail> {
      * @param direc Fahrtrichtung des Zuges
      * @return ANzahl freier Plätze behind
      */
-    public int getSpaceLeftBehind(Vertex pos, DirectionalVertex direc) {
+    public int getSpaceLeftBehind(Vertex pos, DirectionalVertex direc, int trainLength) {
         DirectionalVertex dire = direc.getInverseDirection();
         Vertex posi = pos.clone();
         int i = 0;
         while (!posi.sameVertex(getEndInDirection(dire))) {
             i++;
             posi = posi.add(dire);
-            if (i == this.getSetLength()) {
+            if (i == this.getSetLength() || i >= trainLength) {
                 break;
             }
         }
@@ -424,7 +425,7 @@ public class Rail implements Comparable<Rail> {
 
     @Override
     public int compareTo(Rail o) {
-        return this.getId() -  o.getId();
+        return this.getId() - o.getId();
 
     }
 

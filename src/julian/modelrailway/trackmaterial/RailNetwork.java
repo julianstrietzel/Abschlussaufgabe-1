@@ -223,7 +223,7 @@ public class RailNetwork {
             Knode newLy = Knode.contains(knodes, train.getPosition());
             newLy.addTrain(train);
         }
-        int i = rail.getSpaceLeftBehind(pos, direc);
+        int i = rail.getSpaceLeftBehind(pos, direc, train.getLength());
         LinkedList<Rail> newlyOccupied = new LinkedList<Rail>();
         newlyOccupied.add(rail);
         train.setRail(rail);
@@ -327,21 +327,21 @@ public class RailNetwork {
         if (!rails.isEmpty()) {
             newSw.setSwitch(newSw.getEnd());
             // Es wird geprüft, ob es irgendwelche kollisionen mit anderen Schienen gibt
-            Vertex checker = newSw.getStart();
-            for (int i = 1; i < newSw.getSetLength(); i++) {
-                checker.add(newSw.getDirection());
-                if (knodes.contains(checker)) {
-                    throw new LogicalException("Switch cutting another Rail");
-                }
-            }
-            newSw.setSwitch(newSw.getEndTwo());
-            checker = newSw.getStart();
-            for (int i = 1; i < newSw.getSetLength(); i++) {
-                checker.add(newSw.getDirectionTwo());
-                if (knodes.contains(checker)) {
-                    throw new LogicalException("Switch cutting another Rail");
-                }
-            }
+//            Vertex checker = newSw.getStart();
+//            for (int i = 1; i < newSw.getSetLength(); i++) {
+//                checker.add(newSw.getDirection());
+//                if (knodes.contains(checker)) {
+//                    throw new LogicalException("Switch cutting another Rail");
+//                }
+//            }
+//            newSw.setSwitch(newSw.getEndTwo());
+//            checker = newSw.getStart();
+//            for (int i = 1; i < newSw.getSetLength(); i++) {
+//                checker.add(newSw.getDirectionTwo());
+//                if (knodes.contains(checker)) {
+//                    throw new LogicalException("Switch cutting another Rail");
+//                }
+//            }
             newSw.unSet();
             if (checkTrackCollision(newSw.getStart(), newSw.getEnd())
                     || checkTrackCollision(newSw.getStart(), newSw.getEndTwo())) {
@@ -406,17 +406,17 @@ public class RailNetwork {
             throw new IllegalInputException("length needs to be not null.");
         }
         if (!rails.isEmpty()) {
-            // Es wird geprüft, ob es irgendwelche kollisionen mit anderen Schienen gibt
-            Vertex checker = newRail.getStart();
-            for (int i = 1; i < newRail.getLength(); i++) {
-                checker.add(newRail.getDirection());
-                if (knodes.contains(checker)) {
-                    throw new LogicalException("rail cutting another Rail");
-                }
-            }
-            if (checkTrackCollision(newRail.getStart(), newRail.getEnd())) {
-                throw new LogicalException("rail cutting another Rail");
-            }
+//            // Es wird geprüft, ob es irgendwelche kollisionen mit anderen Schienen gibt
+//            Vertex checker = newRail.getStart();
+//            for (int i = 1; i < newRail.getLength(); i++) {
+//                checker.add(newRail.getDirection());
+//                if (knodes.contains(checker)) {
+//                    throw new LogicalException("rail cutting another Rail");
+//                }
+//            }
+//            if (checkTrackCollision(newRail.getStart(), newRail.getEnd())) {
+//                throw new LogicalException("rail cutting another Rail");
+//            }
             // Überprüft, ob die Knoten nocht frei sind, an die die Weiche andocken soll
             checkFreeKnodes(newRail.getKnodes());
             // Alle Knoten werden mit der Schiene verbunden

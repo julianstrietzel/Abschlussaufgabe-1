@@ -77,10 +77,15 @@ public class Vertex {
      */
     public DirectionalVertex normedDirection(Vertex vertex) {
         if (vertex.getXcoord() == this.xcoord) {
-            return new DirectionalVertex(0, Math.abs(vertex.ycoord - this.ycoord) / (vertex.ycoord - this.ycoord));
+            return new DirectionalVertex(0,
+                    (int) Math.signum((long) vertex.ycoord - (long) this.ycoord));
+//                    ((int) Math.abs( vertex.ycoord -  this.ycoord) / ( vertex.ycoord -  this.ycoord)));
         }
         if (vertex.getYcoord() == this.ycoord) {
-            return new DirectionalVertex(Math.abs(vertex.xcoord - this.xcoord) / (vertex.xcoord - this.xcoord), 0);
+            return new DirectionalVertex(
+                    (int) Math.signum((long) vertex.xcoord - (long) this.xcoord),
+//                    Math.abs( vertex.xcoord -  this.xcoord) / ( vertex.xcoord -  this.xcoord),
+                    0);
         }
         return new DirectionalVertex(0, 0);
     }

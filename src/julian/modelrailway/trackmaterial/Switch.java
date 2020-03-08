@@ -72,16 +72,16 @@ public class Switch extends Rail {
      * 
      * @return die länge des zweiten Abschnitts der Weiche
      */
-    public int getLengthTwo() {
-        return Math.max(Math.abs(getStart().getXcoord() - endTwo.getXcoord())
-                , Math.abs(getStart().getYcoord() - endTwo.getYcoord()));
+    public long getLengthTwo() {
+        return Math.max(Math.abs((long) getStart().getXcoord() - (long) endTwo.getXcoord()),
+                Math.abs((long) getStart().getYcoord() - (long) endTwo.getYcoord()));
     }
 
     /**
      * 
      * @return die Länge des aktuell gesetzten Schienenabschnittes
      */
-    public int getSetLength() {
+    public long getSetLength() {
         if (!set) {
             return getMinLength();
         }
@@ -180,9 +180,9 @@ public class Switch extends Rail {
      * 
      * @return die minimale Länge beider Schienenabschnitte
      */
-    public int getMinLength() {
-        return Math.min(getLength(), Math.max(Math.abs(getStart().getXcoord() - endTwo.getXcoord()),
-                Math.abs(getStart().getYcoord() - endTwo.getYcoord())));
+    public long getMinLength() {
+        return Math.min(getLength(), Math.max(Math.abs((long) getStart().getXcoord() - (long) endTwo.getXcoord()),
+                Math.abs((long) getStart().getYcoord() - (long) endTwo.getYcoord())));
     }
 
     /**

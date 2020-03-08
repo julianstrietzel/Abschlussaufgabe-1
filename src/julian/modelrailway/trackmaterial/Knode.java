@@ -157,9 +157,7 @@ public class Knode extends Vertex {
             if (this.sameVertex(railIn.getEndInDirection(direc))) {
                 return railIn;
             }
-            if(direc.sameVertex(railIn.getDirectionFrom(this))) {
-
-//            if (direc.compatibleDirection(railIn.getSetDirection())) {
+            if (direc.sameVertex(railIn.getDirectionFrom(this))) {
                 if (railOut != null) {
                     return railOut;
                 }
@@ -170,9 +168,7 @@ public class Knode extends Vertex {
             if (this.sameVertex(railOut.getEndInDirection(direc))) {
                 return railOut;
             }
-            if(direc.sameVertex(railOut.getDirectionFrom(this))) {
-//            if (direc.compatibleDirection(railOut.getSetDirection())) { 
-//TODO bei Weiche nicht unbedingt die Richtung zu diesem Ounkt besser get directino to und is set direction überprfen
+            if (direc.sameVertex(railOut.getDirectionFrom(this))) {
                 if (railIn != null) {
                     return railIn;
                 }
@@ -198,18 +194,19 @@ public class Knode extends Vertex {
         }
         return null;
     }
+
     /**
      * 
      * @return Ob eines der beiden angrenzenden Gleise belegt ist.
      */
     public boolean atLeastOneRailOccu() {
-        if(railOut != null) {
-            if(railOut.isOccupied()) {
+        if (railOut != null) {
+            if (railOut.isOccupied()) {
                 return true;
             }
         }
-        if(railIn != null) {
-            if(railIn.isOccupied()) {
+        if (railIn != null) {
+            if (railIn.isOccupied()) {
                 return true;
             }
         }

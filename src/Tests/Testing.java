@@ -404,7 +404,7 @@ public class Testing {
      */
     @Test
     public void backwardsANDEntgleisem() throws Exception {
-        Terminal.silent = false;
+//        Terminal.silent = false;
         e("add track (0,0) -> (100,0)");
         assertTrue("1".contentEquals(Terminal.buffer));
         e("add track (0,0) -> (-100,0)");

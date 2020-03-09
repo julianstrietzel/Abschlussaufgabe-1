@@ -69,7 +69,7 @@ public class Knode extends Vertex {
      * 
      * @return WW, ob noch ein Anschluss frei.
      */
-    public boolean isFree() {
+    public boolean isFreeforConnection() {
         return railOut == null || railIn == null;
     }
 

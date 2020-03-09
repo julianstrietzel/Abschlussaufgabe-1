@@ -94,6 +94,11 @@ public class RailNetwork {
         if (dRail.isOccupied()) {
             throw new LogicalException("track occupied");
         }
+        for (Vertex connectedPoint : dRail.getKnodes()) {
+            if (Knode.contains(knodes, connectedPoint).hasTrain()) {
+                throw new LogicalException("connected knode occupied");
+            }
+        }
         if (dRail.wayWithout(this)) {
             rails.remove(dRail);
             switches.remove(dRail);
@@ -190,7 +195,7 @@ public class RailNetwork {
         for (Knode knode : this.knodes) {
             if (contains(knodes, knode)) {
                 freeKnodes++;
-                if (!knode.isFree()) {
+                if (!knode.isFreeforConnection()) {
                     throw new LogicalException("knodes occupied.");
                 }
             }
@@ -230,6 +235,9 @@ public class RailNetwork {
         Rail next = rail;
         Rail previous;
         direc = direc.getInverseDirection();
+        if (i == train.getLength()) {
+            Knode.contains(knodes, next.getEndInDirection(direc)).addTrain(train);
+        }
         while (i < train.getLength()) {
             previous = next;
             next = previous.getNextInDirection(direc);
@@ -246,13 +254,12 @@ public class RailNetwork {
             }
             newlyOccupied.add(next);
             if (i == train.getLength()) {
+                if (Knode.contains(knodes, next.getEndInDirection(direc)).hasTrain()) {
+                    return true;
+                }
                 Knode.contains(knodes, next.getEndInDirection(direc)).addTrain(train);
             }
-//            if(i >= train.getLength()) {
-//                break;
-//            }
         }
-
         for (Rail newRail : newlyOccupied) {
             newRail.addTrain(train);
         }
@@ -265,7 +272,8 @@ public class RailNetwork {
      * @param pos   Position der Schiene
      * @param direc Richtung
      * @return gefunde Schiene
-     * @throws LogicalException , wenn Schiene nicht existiert
+     * @throws LogicalException , wenn Schiene nicht existiert oder der Punkt nicht
+     *                          auf dem eingestellten Weichenteil liegt
      */
     public Rail findTrack(Vertex pos, DirectionalVertex direc) throws LogicalException {
         for (Knode knode : knodes) {
@@ -273,6 +281,9 @@ public class RailNetwork {
                 Rail r = knode.getTrack(direc);
                 if (r == null) {
                     throw new LogicalException("track not found");
+                }
+                if (!r.contains(pos)) {
+                    throw new LogicalException("wrong placement");
                 }
                 return r;
             }
@@ -311,7 +322,7 @@ public class RailNetwork {
                         rSys.removeTrain(t);
                     }
                 }
-                rSys.resetMarkers();
+                rSys.clearMarkers();
                 rSys.renewMarked();
                 return;
             }

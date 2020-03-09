@@ -329,14 +329,15 @@ public class Rail implements Comparable<Rail> {
      * @return WW, ob auf Strecke ( inkl. ENde und Start)
      */
     public boolean contains(Vertex v) {
-        Vertex point = new Vertex(start.getXcoord(), start.getYcoord());
-        for (int i = 0; i <= this.getLength(); i++) {
-            if (point.sameVertex(v)) {
-                return true;
-            }
-            point = point.add(getSetDirection());
-        }
-        return false;
+        boolean betweenX = (start.getXcoord() <= v.getXcoord()
+                && v.getXcoord() <= this.getEndInDirection(getSetDirection()).getXcoord()) 
+                || (start.getXcoord() >= v.getXcoord()
+                && v.getXcoord() >= this.getEndInDirection(getSetDirection()).getXcoord());
+        boolean betweenY = (start.getYcoord() <= v.getYcoord()
+                && v.getYcoord() <= this.getEndInDirection(getSetDirection()).getYcoord()) 
+                || (start.getYcoord() >= v.getYcoord()
+                && v.getYcoord() >= this.getEndInDirection(getSetDirection()).getYcoord());
+        return (betweenY && betweenX);
     }
 
     /**
@@ -407,6 +408,7 @@ public class Rail implements Comparable<Rail> {
      * 
      * @param pos   Position von der aus gesucht werdensoll
      * @param direc Fahrtrichtung des Zuges
+     * @param trainLength länge des Zuges
      * @return ANzahl freier Plätze behind
      */
     public int getSpaceLeftBehind(Vertex pos, DirectionalVertex direc, int trainLength) {
@@ -416,7 +418,7 @@ public class Rail implements Comparable<Rail> {
         while (!posi.sameVertex(getEndInDirection(dire))) {
             i++;
             posi = posi.add(dire);
-            if (i == this.getSetLength() || i >= trainLength) {
+            if (i == this.getSetLength() || i > trainLength) {
                 break;
             }
         }
@@ -428,5 +430,4 @@ public class Rail implements Comparable<Rail> {
         return this.getId() - o.getId();
 
     }
-
 }

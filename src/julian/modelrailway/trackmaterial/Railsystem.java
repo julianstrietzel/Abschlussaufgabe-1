@@ -30,7 +30,7 @@ public class Railsystem {
         railnet = new RailNetwork(this);
         trainsOnTrack = new LinkedList<SetTrain>();
         crashes = new LinkedList<Crash>();
-        resetMarkers();
+        clearMarkers();
     }
 
     /**
@@ -77,6 +77,7 @@ public class Railsystem {
      * @throws LogicalException , wenn einer der benötigten Schienen besetzt ist
      */
     public String putTrain(SetTrain train, DirectionalVertex direc, Vertex pos) throws LogicalException {
+
         if (!isAllSet()) {
             throw new LogicalException("not all switches set yet");
         }
@@ -86,24 +87,27 @@ public class Railsystem {
         }
 
         if (track.isOccupied()) {
-            throw new LogicalException("track occupied.");
+            throw new LogicalException("track occupied");
         }
         Knode knode = Knode.contains(railnet.getCopyKnodes(), pos);
         if (knode != null) {
             train.setDirection(track.getDirectionTo(pos));
-            if(knode.atLeastOneRailOccu()) {
+            if (knode.atLeastOneRailOccu()) {
                 throw new LogicalException("connecting rail occupied");
             }
         }
         try {
             if (railnet.markBackOccupied(train, train.getPosition(), train.getDirection(), track, true)) {
+                renewMarked();
                 throw new LogicalException("tracks behind occupied.");
             } else {
                 trainsOnTrack.add(train);
             }
         } catch (IllegalInputException e) {
+            renewMarked();
             throw new LogicalException("wrong set.");
         }
+        
         return "" + train.getId();
 
     }
@@ -116,7 +120,7 @@ public class Railsystem {
      * @throws IllegalInputException , wenn Fehler im markoccupied()
      */
     public void move(boolean forwards) throws LogicalException, IllegalInputException {
-        resetMarkers();
+        clearMarkers();
         List<SetTrain> workTrains = new LinkedList<SetTrain>();
         for (SetTrain s : trainsOnTrack) {
             workTrains.add(s);
@@ -186,7 +190,7 @@ public class Railsystem {
      * @throws LogicalException , wenn interner Fehler
      */
     public void renewMarked() throws LogicalException {
-
+        clearMarkers();
         for (SetTrain s : trainsOnTrack) {
             try {
                 railnet.markBackOccupied(s, s.getPosition(), s.getDirection(), s.getRail(), false);
@@ -199,7 +203,7 @@ public class Railsystem {
     /**
      * resetted belegten Schienen
      */
-    public void resetMarkers() {
+    public void clearMarkers() {
         for (Rail rail : railnet.getCopyRails()) {
             rail.clearTrains();
         }
@@ -272,6 +276,7 @@ public class Railsystem {
      * @throws LogicalException , wenn Schiene notwendig oder besetzt
      */
     public void deleteTrack(int id) throws LogicalException {
+        renewMarked();
         railnet.deleteTrack(id);
     }
 

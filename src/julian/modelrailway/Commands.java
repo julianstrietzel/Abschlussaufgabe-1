@@ -1,4 +1,4 @@
-package julian.modelrailway.main;
+package julian.modelrailway;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

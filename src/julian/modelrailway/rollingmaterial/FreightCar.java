@@ -9,7 +9,7 @@ import julian.modelrailway.exceptions.IllegalInputException;
  * @author Julian Strietzel
  * @version 1.0
  */
-public final class FreightCar extends Coach {
+final class FreightCar extends Coach {
 
     /**
      * Erstellt einen neuen Güterwaggon mit ID, Länge und Kupplungen.
@@ -20,7 +20,7 @@ public final class FreightCar extends Coach {
      * @param id          des Wagons
      * @throws IllegalInputException bei keiner Kupplung
      */
-    public FreightCar(int length, boolean clutchFront, boolean clutchBack, int id) throws IllegalInputException {
+    FreightCar(int length, boolean clutchFront, boolean clutchBack, int id) throws IllegalInputException {
         super(length, clutchFront, clutchBack, id);
     }
 

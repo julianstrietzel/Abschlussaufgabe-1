@@ -1,7 +1,8 @@
 package julian.modelrailway.main;
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.main.ModelRailWay;
+import julian.modelrailway.Commands;
+import julian.modelrailway.ModelRailWay;
 
 /**
  * Main-Klasse, die die Modelleisenbahn laufen lässt

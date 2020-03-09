@@ -9,7 +9,7 @@ import julian.modelrailway.exceptions.IllegalInputException;
  * @author Julian Strietzel
  * @version 1.0
  */
-public class SteamLocomotive extends Engine {
+final class SteamLocomotive extends Engine {
 
     /**
      * Erstellt eine neue Dampflokomotive mit Baureihe, NAme, Länge und Kupplungen.
@@ -21,7 +21,7 @@ public class SteamLocomotive extends Engine {
      * @param clutchBack  Ob Kupplung hinten
      * @throws IllegalInputException wenn Series mit W beginnt
      */
-    public SteamLocomotive(String series, String name, int length, boolean clutchFront, boolean clutchBack) 
+    SteamLocomotive(String series, String name, int length, boolean clutchFront, boolean clutchBack) 
             throws IllegalInputException {
         super(series, name, length, clutchFront, clutchBack);
     }

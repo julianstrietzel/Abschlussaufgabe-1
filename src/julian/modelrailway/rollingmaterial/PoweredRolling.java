@@ -9,7 +9,7 @@ import julian.modelrailway.exceptions.IllegalInputException;
  * @author Julian Strietzel
  * @version 1.0
  */
-public abstract class PoweredRolling extends RollingMaterial {
+abstract class PoweredRolling extends RollingMaterial {
 
     private final String series;
     private final String name;
@@ -24,7 +24,7 @@ public abstract class PoweredRolling extends RollingMaterial {
      * @param clutchBack  Ob Kupplung hinten
      * @throws IllegalInputException wenn Baureihe = "W"
      */
-    public PoweredRolling(String series, String name, int length, boolean clutchFront, boolean clutchBack) 
+    PoweredRolling(String series, String name, int length, boolean clutchFront, boolean clutchBack) 
             throws IllegalInputException {
         super(length, clutchFront, clutchBack);
         if ("W".contentEquals(series)) {

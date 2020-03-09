@@ -4,12 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.main.Commands;
-import julian.modelrailway.main.ModelRailWay;
+import julian.modelrailway.Commands;
+import julian.modelrailway.ModelRailWay;
 
 /**
  * @author Julian Strietzel
@@ -55,6 +54,8 @@ public class Testing2 {
 
     @Test
     public void bigInt() {
+        c("");
+        iE();
         e("add track (0,0) -> (2,0)");
         e("add switch (2,0) -> (6,1),(2,3)");
         e("add switch (2,0) -> (6,0),(2,3)");
@@ -119,7 +120,7 @@ public class Testing2 {
         e("list tracks");
         e("put train 1 at (1,0) in direction -1,0");
         e("set switch 2 position (6,0)");
-        
+
         e("put train 1 at (1,0) in direction -1,0");
         e("put train 3 at (0,5) in direction -1,0");
         e("add train 3 12AB-Berta");

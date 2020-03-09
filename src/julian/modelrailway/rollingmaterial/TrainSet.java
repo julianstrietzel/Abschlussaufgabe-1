@@ -9,7 +9,7 @@ import julian.modelrailway.exceptions.IllegalInputException;
  * @author Julian Strietzel
  * @version 1.0
  */
-public class TrainSet extends PoweredRolling {
+final class TrainSet extends PoweredRolling {
 
     /**
      * Erstellt einen neuen Triebzug mit Baureihe, NAme, Länge und Kupplungen.
@@ -21,7 +21,7 @@ public class TrainSet extends PoweredRolling {
      * @param clutchBack  Ob Kupplung hinten
      * @throws IllegalInputException wenn Series mit W beginnt oder nur eine Kupplung
      */
-    public TrainSet(String series, String name, int length, boolean clutchFront, boolean clutchBack) 
+    TrainSet(String series, String name, int length, boolean clutchFront, boolean clutchBack) 
             throws IllegalInputException {
         super(series, name, length, clutchFront, clutchBack);
     }

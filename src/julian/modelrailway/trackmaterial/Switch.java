@@ -13,7 +13,7 @@ import julian.modelrailway.exceptions.LogicalException;
  * @author Julian Strietzel
  * @version 1.0
  */
-public class Switch extends Rail {
+class Switch extends Rail {
     private Rail nextTwo;
     private final Vertex endTwo;
     private boolean set;
@@ -30,7 +30,7 @@ public class Switch extends Rail {
      * @param id     Identifikator der Schiene
      * @throws IllegalInputException , wenn Punkte nciht richtig.
      */
-    public Switch(Vertex start, Vertex end, Vertex endTwo, int id) throws IllegalInputException {
+    Switch(Vertex start, Vertex end, Vertex endTwo, int id) throws IllegalInputException {
         super(start, end, id);
         this.endTwo = endTwo;
         this.set = false;

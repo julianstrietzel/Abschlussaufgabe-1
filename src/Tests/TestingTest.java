@@ -4,12 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.kit.informatik.Terminal;
-import julian.modelrailway.main.Commands;
-import julian.modelrailway.main.ModelRailWay;
+import julian.modelrailway.Commands;
+import julian.modelrailway.ModelRailWay;
 
 /**
  * @author Julian Strietzel
@@ -801,7 +800,7 @@ public class TestingTest {
         e("step 0");
         e("exit");
     }
-    
+
     @Test
     public void somSorting() throws Exception {
         Terminal.silent = false;

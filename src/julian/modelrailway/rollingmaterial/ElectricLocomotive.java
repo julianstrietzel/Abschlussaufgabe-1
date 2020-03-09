@@ -9,7 +9,7 @@ import julian.modelrailway.exceptions.IllegalInputException;
  * @author Julian Strietzel
  * @version 1.0
  */
-public class ElectricLocomotive extends Engine {
+final class ElectricLocomotive extends Engine {
 
     /**
      * Erstellt eine neue Elektroloko mit Baureihe, NAme, Länge und Kupplungen.

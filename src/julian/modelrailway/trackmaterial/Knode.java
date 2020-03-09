@@ -14,7 +14,7 @@ import julian.modelrailway.rollingmaterial.SetTrain;
  * @author Julian Strietzel
  * @version 1.0
  */
-public class Knode extends Vertex {
+class Knode extends Vertex {
 
     private Rail railIn;
     private Rail railOut;
@@ -27,7 +27,7 @@ public class Knode extends Vertex {
      * @param pos    Position als Vektor
      * @param railIn eingehende Verbindung
      */
-    public Knode(Vertex pos, Rail railIn) {
+    Knode(Vertex pos, Rail railIn) {
         super(pos.getXcoord(), pos.getYcoord());
         this.railIn = railIn;
         trains = new LinkedList<SetTrain>();
@@ -78,7 +78,7 @@ public class Knode extends Vertex {
      * 
      * @param t neuer Zug
      */
-    public void addTrain(SetTrain t) {
+    void addTrain(SetTrain t) {
         trains.add(t);
     }
 
@@ -95,7 +95,7 @@ public class Knode extends Vertex {
     /**
      * Löscht die Liste an Zügen
      */
-    public void clearTrains() {
+    void clearTrains() {
         trains.clear();
     }
 
@@ -103,7 +103,7 @@ public class Knode extends Vertex {
      * 
      * @return Ob Knoten mit Zug besetzt ist.
      */
-    public boolean hasTrain() {
+    boolean hasTrain() {
         return !trains.isEmpty();
     }
 
@@ -112,7 +112,7 @@ public class Knode extends Vertex {
      * 
      * @param r , Schiene deren Verbindung entfernt werden soll.
      */
-    public void deconnect(Rail r) {
+    void deconnect(Rail r) {
         if (r.sameRail(railIn)) {
             railIn = railOut;
             railOut = null;
@@ -133,26 +133,12 @@ public class Knode extends Vertex {
 
     /**
      * 
-     * @param railone nciht interessierende Schiene
-     * @return interessierende Schiene
-     */
-    public Rail getNext(Rail railone) {
-        if (railone.sameRail(railIn)) {
-            return railOut;
-        } else if (railone.sameRail(railOut)) {
-            return railIn;
-        }
-        return null;
-    }
-
-    /**
-     * 
      * @param direc Ricchtung, zu der der Track passen soll
      * @return gesuchter Trakc, bei entsprechneder Richtung, oder null, falls nicht
      *         kompatibel
      * @throws LogicalException , wenn kein entsporechender Track verbunden ist
      */
-    public Rail getTrack(DirectionalVertex direc) throws LogicalException {
+    Rail getTrack(DirectionalVertex direc) throws LogicalException {
         if (railIn != null) {
             if (this.sameVertex(railIn.getEndInDirection(direc))) {
                 return railIn;
@@ -186,7 +172,7 @@ public class Knode extends Vertex {
      * @param object , nach dem gesucht werden soll
      * @return Knoten, nach dem gesucht wurde, wenn dieser existiert, sonst null.
      */
-    public static Knode contains(List<Knode> list, Vertex object) {
+    static Knode contains(List<Knode> list, Vertex object) {
         for (Knode obj : list) {
             if (obj.sameVertex(object)) {
                 return obj;
@@ -199,7 +185,7 @@ public class Knode extends Vertex {
      * 
      * @return Ob eines der beiden angrenzenden Gleise belegt ist.
      */
-    public boolean atLeastOneRailOccu() {
+    boolean atLeastOneRailOccu() {
         if (railOut != null) {
             if (railOut.isOccupied()) {
                 return true;

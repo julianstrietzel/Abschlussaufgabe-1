@@ -1,5 +1,5 @@
 
-package julian.modelrailway.main;
+package julian.modelrailway;
 
 import java.util.LinkedList;
 
@@ -44,7 +44,7 @@ public class ModelRailWay {
      * @throws LogicalException      , wenn es logische Fehler in der Interaktion
      *                               mit dem restlichen Schienennetz gibt.
      */
-    public String addTrack(int startX, int startY, int endX, int endY) throws IllegalInputException, LogicalException {
+    String addTrack(int startX, int startY, int endX, int endY) throws IllegalInputException, LogicalException {
         return "" + rSystem.addRail(new Vertex(startX, startY), new Vertex(endX, endY));
     }
 
@@ -62,7 +62,7 @@ public class ModelRailWay {
      * @throws LogicalException      , wenn es logische Fehler in der Interaktion
      *                               mit dem restlichen Schienennetz gibt.
      */
-    public String addSwitch(int startX, int startY, int endX, int endY, int end2x, int end2y)
+    String addSwitch(int startX, int startY, int endX, int endY, int end2x, int end2y)
             throws IllegalInputException, LogicalException {
 
         return "" + rSystem.addSwitch(new Vertex(startX, startY), new Vertex(endX, endY), new Vertex(end2x, end2y));
@@ -79,7 +79,7 @@ public class ModelRailWay {
      * @return Ausgabe für den Nutzer
      * @throws IllegalInputException , wenn Länge = null
      */
-    public String createCoach(String coachType, int length, boolean cFront, boolean cBack)
+    String createCoach(String coachType, int length, boolean cFront, boolean cBack)
             throws IllegalInputException {
         if (length == 0) {
             throw new IllegalInputException("length null not allowed.");
@@ -100,7 +100,7 @@ public class ModelRailWay {
      * @throws LogicalException , wenn Lok schon existiert oder Länge gliech null
      * @throws IllegalInputException wenn Series mit W beginnt
      */
-    public String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
+    String createEngine(String engineType, String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException, IllegalInputException {
         if (length == 0) {
             throw new LogicalException("length null not allowed.");
@@ -121,7 +121,7 @@ public class ModelRailWay {
      *                          null
      * @throws IllegalInputException wenn Series mit W beginnt
      */
-    public String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
+    String createTrainSet(String series, String name, int length, boolean cFront, boolean cBack)
             throws LogicalException, IllegalInputException {
         if (length == 0) {
             throw new LogicalException("length null not allowed.");
@@ -138,7 +138,7 @@ public class ModelRailWay {
      * @throws IllegalInputException , wenn ID für Waggon kein Integer.
      * @throws LogicalException      , Material in Benutzung oder nicht existiert.
      */
-    public String delete(boolean isPowered, String id) throws IllegalInputException, LogicalException {
+    String delete(boolean isPowered, String id) throws IllegalInputException, LogicalException {
         return rstock.delete(isPowered, id);
     }
 
@@ -149,7 +149,7 @@ public class ModelRailWay {
      * @return Nutzerausgbae
      * @throws LogicalException , wenn die Schiene für den Zusammenhalt nötig ist.
      */
-    public String deleteTrack(int id) throws LogicalException {
+    String deleteTrack(int id) throws LogicalException {
         rSystem.deleteTrack(id);
         return "OK";
     }
@@ -166,7 +166,7 @@ public class ModelRailWay {
      *                          ist, der Zug fährt oder die ID Vergabe falsch ist
      * @throws IllegalInputException wenn id falsch
      */
-    public String addTrain(int trainID, String rollID, boolean powered) throws LogicalException, IllegalInputException {
+    String addTrain(int trainID, String rollID, boolean powered) throws LogicalException, IllegalInputException {
         return ts.addTrain(trainID, rollID, powered);
     }
 
@@ -177,7 +177,7 @@ public class ModelRailWay {
      * @return Nutzerausgabe
      * @throws LogicalException , wenn Zug nicht existiert.
      */
-    public String deleteTrain(int id) throws LogicalException {
+    String deleteTrain(int id) throws LogicalException {
         for (SetTrain s : rSystem.getToTCopy()) {
             if (s.getId() == id) {
                 rSystem.removeTrain(s);
@@ -197,7 +197,7 @@ public class ModelRailWay {
      * @return Nutzerausgabe
      * @throws LogicalException , wenn Zug schon existiert, oder auf dem Netz steht
      */
-    public String putTrain(int id, Vertex pos, DirectionalVertex direction) throws LogicalException {
+    String putTrain(int id, Vertex pos, DirectionalVertex direction) throws LogicalException {
         Train model = ts.getTrain(id);
         if (model == null) {
             throw new LogicalException("train does not exist.");
@@ -224,7 +224,7 @@ public class ModelRailWay {
      * @throws LogicalException      , wenn Weichen noch nicht gesetzt wurden
      * @throws IllegalInputException , wenn Fehler im Schienennetz
      */
-    public String move(short speed) throws LogicalException, IllegalInputException {
+    String move(short speed) throws LogicalException, IllegalInputException {
         rSystem.clearCrashes();
         if (!rSystem.isAllSet()) {
             throw new LogicalException("position of switches not set.");
@@ -258,7 +258,7 @@ public class ModelRailWay {
      * 
      * @return Listet alle Schienen auf
      */
-    public String listTracks() {
+    String listTracks() {
         return rSystem.listRailNet();
     }
 
@@ -266,7 +266,7 @@ public class ModelRailWay {
      * 
      * @return Liste aller Züge
      */
-    public String listTrains() {
+    String listTrains() {
         return ts.toString();
     }
 
@@ -277,7 +277,7 @@ public class ModelRailWay {
      * @return STring Visualisierung eines Zuges
      * @throws LogicalException , wenn Zug nicht existiert
      */
-    public String showTrain(int trainID) throws LogicalException {
+    String showTrain(int trainID) throws LogicalException {
         try {
             return ts.getTrain(trainID).getRepre();
         } catch (NullPointerException e) {
@@ -289,7 +289,7 @@ public class ModelRailWay {
      * 
      * @return Stringrepräsentation aller Waggons
      */
-    public String coachestoString() {
+    String coachestoString() {
         return rstock.coachestoString();
     }
 
@@ -297,7 +297,7 @@ public class ModelRailWay {
      * 
      * @return Liste aller Lokomotiven
      */
-    public String enginestoString() {
+    String enginestoString() {
         return rstock.enginestoString();
     }
 
@@ -305,7 +305,7 @@ public class ModelRailWay {
      * 
      * @return Liste aller Triebzüge
      */
-    public String trainSettoString() {
+    String trainSettoString() {
         return rstock.trainSettoString();
     }
 
@@ -318,7 +318,7 @@ public class ModelRailWay {
      *                               nicht auf der Weiche liegt oder die Falsche ID übergeeben wurde
      * @throws LogicalException      , wenn Fehler in markoccupied()
      */
-    public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
+    void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
         rSystem.setSwitch(id, point);
     }
 

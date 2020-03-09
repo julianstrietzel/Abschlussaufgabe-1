@@ -10,12 +10,12 @@ import java.util.Comparator;
  * @author Julian Strietzel
  * @version 1.0
  */
-public class RollingMaterialComparator implements Comparator<RollingMaterial> {
+final class RollingMaterialComparator implements Comparator<RollingMaterial> {
 
     /**
      * Erstellt einen neuen RollingMaterialCompaarator
      */
-    public RollingMaterialComparator() {
+    RollingMaterialComparator() {
     }
 
     @Override

@@ -32,7 +32,7 @@ public class Rail implements Comparable<Rail> {
      * @param id    die ID
      * @throws IllegalInputException , falls Start und Ende inkompatibel
      */
-    public Rail(Vertex start, Vertex end, int id) throws IllegalInputException {
+    Rail(Vertex start, Vertex end, int id) throws IllegalInputException {
         this.end = end;
         this.id = id;
         this.start = start;
@@ -47,7 +47,7 @@ public class Rail implements Comparable<Rail> {
      * 
      * @return Eine Kopie der Liste an Zügen, die auf dem Gleis stehen.
      */
-    public List<SetTrain> getCopyTrains() {
+    List<SetTrain> getCopyTrains() {
         List<SetTrain> l = new LinkedList<SetTrain>();
         l.addAll(trains);
         return l;
@@ -82,7 +82,7 @@ public class Rail implements Comparable<Rail> {
     /**
      * Löscht die Liste an Zügen
      */
-    public void clearTrains() {
+    void clearTrains() {
         trains.clear();
     }
 
@@ -275,7 +275,7 @@ public class Rail implements Comparable<Rail> {
      * 
      * @return Die verbundenen Punkte
      */
-    public LinkedList<Vertex> getKnodes() {
+    LinkedList<Vertex> getKnodes() {
         LinkedList<Vertex> list = new LinkedList<Vertex>();
         list.add(start);
         list.add(end);
@@ -304,7 +304,7 @@ public class Rail implements Comparable<Rail> {
      * @param notThisOne außer diesem
      * @return Liste aller verbundenen außer <notThisOne>
      */
-    public LinkedList<Rail> getConnected(Rail notThisOne) {
+    LinkedList<Rail> getConnected(Rail notThisOne) {
         LinkedList<Rail> list = new LinkedList<Rail>();
         list.add(next);
         list.add(previous);
@@ -328,15 +328,15 @@ public class Rail implements Comparable<Rail> {
      * @param v gesuchter Punkt
      * @return WW, ob auf Strecke ( inkl. ENde und Start)
      */
-    public boolean contains(Vertex v) {
+    boolean contains(Vertex v) {
         boolean betweenX = (start.getXcoord() <= v.getXcoord()
-                && v.getXcoord() <= this.getEndInDirection(getSetDirection()).getXcoord()) 
+                && v.getXcoord() <= this.getEndInDirection(getSetDirection()).getXcoord())
                 || (start.getXcoord() >= v.getXcoord()
-                && v.getXcoord() >= this.getEndInDirection(getSetDirection()).getXcoord());
+                        && v.getXcoord() >= this.getEndInDirection(getSetDirection()).getXcoord());
         boolean betweenY = (start.getYcoord() <= v.getYcoord()
-                && v.getYcoord() <= this.getEndInDirection(getSetDirection()).getYcoord()) 
+                && v.getYcoord() <= this.getEndInDirection(getSetDirection()).getYcoord())
                 || (start.getYcoord() >= v.getYcoord()
-                && v.getYcoord() >= this.getEndInDirection(getSetDirection()).getYcoord());
+                        && v.getYcoord() >= this.getEndInDirection(getSetDirection()).getYcoord());
         return (betweenY && betweenX);
     }
 
@@ -346,7 +346,7 @@ public class Rail implements Comparable<Rail> {
      * @param direc , die auf Übereinstimmung überprüft wird
      * @return WW, ob Richtung compatibel
      */
-    public boolean isCorrectDirec(DirectionalVertex direc) {
+    boolean isCorrectDirec(DirectionalVertex direc) {
         return direc.compatibleDirection(getSetDirection());
     }
 
@@ -355,7 +355,7 @@ public class Rail implements Comparable<Rail> {
      * 
      * @param knodes aus diesen Knoten werden alle Verbindungen gelöscht
      */
-    public void deleteConnections(List<Knode> knodes) {
+    void deleteConnections(List<Knode> knodes) {
         Knode endK = Knode.contains(knodes, end);
         endK.deconnect(this);
         if (endK.isUseless()) {
@@ -380,7 +380,7 @@ public class Rail implements Comparable<Rail> {
      * @param rn Netzwerk in dem überpürüft werden soll
      * @return WW, ob nicht nötig
      */
-    public boolean wayWithout(RailNetwork rn) {
+    boolean wayWithout(RailNetwork rn) {
         if (getConnected(null).size() < 2) {
             return true;
         }
@@ -394,7 +394,7 @@ public class Rail implements Comparable<Rail> {
      * 
      * @param r Schiene zu der Verbindungen gelöscht werden sollen
      */
-    protected void deleteConnectionsTo(Rail r) {
+    void deleteConnectionsTo(Rail r) {
         if (r.sameRail(next)) {
             next = null;
         }
@@ -406,12 +406,12 @@ public class Rail implements Comparable<Rail> {
     /**
      * Guckt wie viele Wagenlängen hinter der Position platz haben
      * 
-     * @param pos   Position von der aus gesucht werdensoll
-     * @param direc Fahrtrichtung des Zuges
+     * @param pos         Position von der aus gesucht werdensoll
+     * @param direc       Fahrtrichtung des Zuges
      * @param trainLength länge des Zuges
      * @return ANzahl freier Plätze behind
      */
-    public int getSpaceLeftBehind(Vertex pos, DirectionalVertex direc, int trainLength) {
+    int getSpaceLeftBehind(Vertex pos, DirectionalVertex direc, int trainLength) {
         DirectionalVertex dire = direc.getInverseDirection();
         Vertex posi = pos.clone();
         int i = 0;

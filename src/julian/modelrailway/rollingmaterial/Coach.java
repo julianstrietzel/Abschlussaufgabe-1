@@ -9,7 +9,7 @@ import julian.modelrailway.exceptions.IllegalInputException;
  * @author Julian Strietzel
  * @version 1.0
  */
-public abstract class Coach extends RollingMaterial {
+abstract class Coach extends RollingMaterial {
 
     private final int id;
 
@@ -22,7 +22,7 @@ public abstract class Coach extends RollingMaterial {
      * @param id          ID des Wagons
      * @throws IllegalInputException bei keiner Kupplung
      */
-    public Coach(int length, boolean clutchFront, boolean clutchBack, int id) throws IllegalInputException {
+    Coach(int length, boolean clutchFront, boolean clutchBack, int id) throws IllegalInputException {
         super(length, clutchFront, clutchBack);
         this.id = id;
     }

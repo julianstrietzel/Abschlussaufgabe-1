@@ -9,7 +9,7 @@ import julian.modelrailway.exceptions.IllegalInputException;
  * @author Julian Strietzel
  * @version 1.0
  */
-public abstract class Engine extends PoweredRolling {
+abstract class Engine extends PoweredRolling {
 
     /**
      * Erstellt eine neue Lokomotive mit Baureihe, NAme, Länge und Kupplungen.
@@ -22,7 +22,7 @@ public abstract class Engine extends PoweredRolling {
      * @throws IllegalInputException bei keiner Kupplung oder wenn Baureihe nur
      *                               "W"
      */
-    public Engine(String series, String name, int length, boolean clutchFront, boolean clutchBack)
+    Engine(String series, String name, int length, boolean clutchFront, boolean clutchBack)
             throws IllegalInputException {
         super(series, name, length, clutchFront, clutchBack);
     }

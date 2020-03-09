@@ -9,7 +9,7 @@ import julian.modelrailway.exceptions.IllegalInputException;
  * @author Julian Strietzel
  * @version 1.0
  */
-public class DieselLocomotive extends Engine {
+final class DieselLocomotive extends Engine {
 
     /**
      * Erstellt eine neue Diesellokomotive mit Baureihe, NAme, Länge und Kupplungen.

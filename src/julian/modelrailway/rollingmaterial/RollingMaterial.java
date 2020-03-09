@@ -9,7 +9,7 @@ import julian.modelrailway.exceptions.IllegalInputException;
  * @author Julian Strietzel
  * @version 1.0
  */
-public abstract class RollingMaterial implements Comparable<RollingMaterial> {
+abstract class RollingMaterial implements Comparable<RollingMaterial> {
 
     private boolean used;
     private final int length;
@@ -25,7 +25,7 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
      * @param clutchBack  Ob Kupplung hinten
      * @throws IllegalInputException bei keiner Kupplung
      */
-    public RollingMaterial(int length, boolean clutchFront, boolean clutchBack) throws IllegalInputException {
+    RollingMaterial(int length, boolean clutchFront, boolean clutchBack) throws IllegalInputException {
         if (!(clutchFront || clutchBack)) {
             throw new IllegalInputException("needs to have at least one clutch");
         }
@@ -99,7 +99,7 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
      * 
      * @param t neuer Zug
      */
-    public void concat(Train t) {
+    void concat(Train t) {
         this.used = true;
         setTrain(t);
     }
@@ -107,7 +107,7 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
     /**
      * Baut das Material aus dem Zug wieder aus.
      */
-    public void unconcat() {
+    void unconcat() {
         this.used = false;
         this.train = null;
     }
@@ -171,7 +171,7 @@ public abstract class RollingMaterial implements Comparable<RollingMaterial> {
      * @param id   zu suchende String ID
      * @return PoweredRolling, falls dieses existiert.
      */
-    public static PoweredRolling exists(Iterable<PoweredRolling> list, String id) {
+    static PoweredRolling exists(Iterable<PoweredRolling> list, String id) {
         for (PoweredRolling p : list) {
             if (id.contentEquals(p.getStringID())) {
                 return p;

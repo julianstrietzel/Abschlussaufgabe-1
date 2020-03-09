@@ -147,7 +147,7 @@ public class Railsystem {
      * hinzu.
      * 
      */
-    public void checkCollision() {
+    private void checkCollision() {
         for (Rail r : railnet.getCopyRails()) {
             List<SetTrain> workTrains = ListUtility.getCopyWithoutDuplicates(r.getCopyTrains());
             if (workTrains.size() > 1) {

@@ -4,7 +4,6 @@
  */
 package Tests;
 
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,21 +29,24 @@ public class ListUtilityTest {
 //     }
 
     /**
-     * Test method for {@link julian.modelrailway.trackmaterial.ListUtility#contains(java.util.LinkedList, julian.modelrailway.trackmaterial.Vertex)}.
+     * Test method for
+     * {@link julian.modelrailway.trackmaterial.ListUtility#contains(java.util.LinkedList, julian.modelrailway.trackmaterial.Vertex)}.
      */
     @Test
     public void testContainsLinkedListOfKnodeVertex() {
-     }
+    }
 
     /**
-     * Test method for {@link julian.modelrailway.trackmaterial.ListUtility#contains(java.util.LinkedList, julian.modelrailway.trackmaterial.Knode)}.
+     * Test method for
+     * {@link julian.modelrailway.trackmaterial.ListUtility#contains(java.util.LinkedList, julian.modelrailway.trackmaterial.Knode)}.
      */
     @Test
     public void testContainsLinkedListOfVertexKnode() {
-     }
+    }
 
     /**
-     * Test method for {@link julian.modelrailway.trackmaterial.ListUtility#deleteDuplicates(java.util.LinkedList)}.
+     * Test method for
+     * {@link julian.modelrailway.trackmaterial.ListUtility#deleteDuplicates(java.util.LinkedList)}.
      */
     @Test
     public void testDeleteDuplicates() {

@@ -13,8 +13,8 @@ import edu.kit.informatik.Terminal;
 import org.junit.Before;
 import org.junit.Test;
 
-import julian.modelrailway.main.Commands;
-import julian.modelrailway.main.ModelRailWay;
+import julian.modelrailway.Commands;
+import julian.modelrailway.ModelRailWay;
 
 public class Testing {
 
@@ -179,8 +179,8 @@ public class Testing {
         e("add track (10,10) -> (10,0)");
         e("add track (10,10) -> (0,10)");
         e("list tracks");
-        assertTrue(Terminal.buffer.contentEquals("t 1 (0,0) -> (10,0) 10\n"+ "t 2 (0,0) -> (0,10) 10\n"
-                + "t 3 (10,10) -> (10,0) 10\n"+ "t 4 (10,10) -> (0,10) 10"));
+        assertTrue(Terminal.buffer.contentEquals("t 1 (0,0) -> (10,0) 10\n" + "t 2 (0,0) -> (0,10) 10\n"
+                + "t 3 (10,10) -> (10,0) 10\n" + "t 4 (10,10) -> (0,10) 10"));
     }
 
     @Test
@@ -267,7 +267,7 @@ public class Testing {
         e("put train 2 at (2,1) in direction -1,0");
         e("put train 3 at (5,-3) in direction -1,0");
         e("step 1");
-        assertTrue(Terminal.buffer.contentEquals("Crash of train 1,2\n"+ "Train 3 at (4,-3)"));
+        assertTrue(Terminal.buffer.contentEquals("Crash of train 1,2\n" + "Train 3 at (4,-3)"));
         e("set switch 2 position (5,3)");
         e("set switch 9 position (14,3)");
         e("step 32767");
@@ -291,9 +291,9 @@ public class Testing {
         e("delete track 2");
         e("add track (1,1) -> (1,0)");
         e("list tracks");
-        assertTrue(Terminal.buffer.equals("t 1 (1,1) -> (5,1) 4\n"+ "t 2 (1,1) -> (1,0) 1\n"+ "t 3 (2,0) -> (1,0) 1\n"
-                + "t 4 (5,0) -> (2,0) 3\n"+ "t 5 (10,0) -> (5,0) 5\n"+ "t 6 (10,0) -> (11,0) 1\n"
-                + "t 7 (11,0) -> (11,1) 1\n"+ "t 8 (11,1) -> (5,1) 6"));
+        assertTrue(Terminal.buffer.equals("t 1 (1,1) -> (5,1) 4\n" + "t 2 (1,1) -> (1,0) 1\n" + "t 3 (2,0) -> (1,0) 1\n"
+                + "t 4 (5,0) -> (2,0) 3\n" + "t 5 (10,0) -> (5,0) 5\n" + "t 6 (10,0) -> (11,0) 1\n"
+                + "t 7 (11,0) -> (11,1) 1\n" + "t 8 (11,1) -> (5,1) 6"));
 //        e("create coach passenger 3 true true");
 //        e("add train 1 W0001");
         e("create engine steam T3 Emma 20 true false");
@@ -302,7 +302,7 @@ public class Testing {
         assertTrue(Terminal.buffer.equals("OK"));
         e("create engine diesel 1 Tom 6 true true");
         e("list engines");
-        assertTrue(Terminal.buffer.equals("none d 1 Tom 6 true true\n"+ "1 s T3 Emma 20 true false"));
+        assertTrue(Terminal.buffer.equals("none d 1 Tom 6 true true\n" + "1 s T3 Emma 20 true false"));
         e("show train 000001");
     }
 
@@ -366,12 +366,12 @@ public class Testing {
         e("step -1");
         assertTrue(Terminal.buffer.contains("Crash of train 1"));
         e("list trains");
-        assertTrue(Terminal.buffer.equals("1 W1 W2 W3 T4-Emma 1-Tom T3-Emma\n"+ "2 T5-Emma T5-Emma2"));
+        assertTrue(Terminal.buffer.equals("1 W1 W2 W3 T4-Emma 1-Tom T3-Emma\n" + "2 T5-Emma T5-Emma2"));
         e("jbeufbeuf");
         assertTrue(Terminal.buffer.contains("Error, "));
         e("list engines");
         assertTrue(Terminal.buffer
-                .equals("1 d 1 Tom 6 true true\n"+ "1 s T3 Emma 20 true false\n"+ "1 e T4 Emma 1 true true"));
+                .equals("1 d 1 Tom 6 true true\n" + "1 s T3 Emma 20 true false\n" + "1 e T4 Emma 1 true true"));
         e("list train-sets");
         e("list coaches");
         assertTrue(Terminal.buffer.equals("1 1 s 1 true true\n2 1 p 1 true true\n3 1 f 1 true true"));
@@ -620,10 +620,10 @@ public class Testing {
         assertTrue(Terminal.buffer.contains("Error, "));
         e("list engines");
         assertTrue(Terminal.buffer.contentEquals(
-                "none s T1 Emma 1 true true\n"+ "none d T2 Emma 1 true true\n"+ "none e T3 Emma 1 false true"));
+                "none s T1 Emma 1 true true\n" + "none d T2 Emma 1 true true\n" + "none e T3 Emma 1 false true"));
         e("list coaches");
-        assertTrue(Terminal.buffer.contentEquals("1 none p 1 true true\n"+ "2 none p 1 true true\n"
-                + "3 none s 1 true true\n"+ "6 none p 1 true true"));
+        assertTrue(Terminal.buffer.contentEquals("1 none p 1 true true\n" + "2 none p 1 true true\n"
+                + "3 none s 1 true true\n" + "6 none p 1 true true"));
         e("delete rolling stock 1");
         assertTrue(Terminal.buffer.contains("Error, "));
         e("delete rolling stock W1");
@@ -710,8 +710,8 @@ public class Testing {
         e("add track (10,10) -> (0,10)");
         assertTrue(Terminal.buffer.contentEquals("5"));
         e("list tracks");
-        assertTrue(Terminal.buffer.contentEquals("t 1 (0,0) -> (5,0) 5\n"+ "s 2 (5,0) -> (10,0),(5,5)\n"
-                + "s 3 (0,5) -> (0,0),(0,10)\n"+ "t 4 (10,0) -> (10,10) 10\n"+ "t 5 (10,10) -> (0,10) 10"));
+        assertTrue(Terminal.buffer.contentEquals("t 1 (0,0) -> (5,0) 5\n" + "s 2 (5,0) -> (10,0),(5,5)\n"
+                + "s 3 (0,5) -> (0,0),(0,10)\n" + "t 4 (10,0) -> (10,10) 10\n" + "t 5 (10,10) -> (0,10) 10"));
         e("put train 1 at (0,1) in direction 0,1");
         assertTrue(Terminal.buffer.contains("Error, "));
         e("set switch 1 position (0,1)");
@@ -723,8 +723,8 @@ public class Testing {
         e("set switch 3 position (0,0)");
         assertTrue(Terminal.buffer.contentEquals("OK"));
         e("list tracks");
-        assertTrue(Terminal.buffer.contentEquals("t 1 (0,0) -> (5,0) 5\n"+ "s 2 (5,0) -> (10,0),(5,5) 5\n"
-                + "s 3 (0,5) -> (0,0),(0,10) 5\n"+ "t 4 (10,0) -> (10,10) 10\n"+ "t 5 (10,10) -> (0,10) 10"));
+        assertTrue(Terminal.buffer.contentEquals("t 1 (0,0) -> (5,0) 5\n" + "s 2 (5,0) -> (10,0),(5,5) 5\n"
+                + "s 3 (0,5) -> (0,0),(0,10) 5\n" + "t 4 (10,0) -> (10,10) 10\n" + "t 5 (10,10) -> (0,10) 10"));
         e("put train 1 at (0,1) in direction 0,1");
         assertTrue(Terminal.buffer.contentEquals("OK"));
         e("step 1");
@@ -793,8 +793,6 @@ public class Testing {
         e("step 0");
         e("exit");
     }
-
-
 
     @Test
     public void somSorting() throws Exception {
@@ -878,30 +876,30 @@ public class Testing {
         e("put train 1 at (10,0) in direction 1,0");
         e("put train 2 at (12,0) in direction -1,0");
     }
-    
-    
+
     @Test
     public void largGen() throws Exception {
 //        Terminal.silent = false;
         ////// Setup track network");
-        /////// Simple illustration: https://cloud.schwaerzle.net/index.php/s/B4KoWC55EkQPtjq");
-        //e("add");
+        /////// Simple illustration:
+        ////// https://cloud.schwaerzle.net/index.php/s/B4KoWC55EkQPtjq");
+        // e("add");
 
 //        //e("add track");
 //        assertTrue(Terminal.buffer.contains("Error,"));
 //        //e("add track () -> ()");
 //        assertTrue(Terminal.buffer.contains("Error,"));
         e("list tracks");
-        //No track exists");
+        // No track exists");
         e("add track (5,0) -> (16,0)");
-        //1");
+        // 1");
         e("add track (16,3) -> (16,0)");
-        //2");
+        // 2");
         e("add switch (16,3) -> (14,3),(18,3)");
-        //3");
+        // 3");
         e("list tracks");
-        //t 1 (5,0) -> (16,0) 11");
-        //t 2 (16,3) -> (16,0) 3");
+        // t 1 (5,0) -> (16,0) 11");
+        // t 2 (16,3) -> (16,0) 3");
         Terminal.printLine(">s 3 (16,3) -> (14,3),(18,3)");
         e("set switch 3 position (14,3)");
         Terminal.printLine(">OK");
@@ -938,7 +936,7 @@ public class Testing {
         Terminal.printLine(">12");
         e("add track (18,11) -> (18,3)");
         Terminal.printLine(">13");
-        ////");
+        //// ");
         //// Coaches");
         e("list coaches");
         Terminal.printLine(">No coach exists");
@@ -964,10 +962,10 @@ public class Testing {
         e("delete rolling stock W1");
         assertTrue(Terminal.buffer.contains("Error,"));
         e("delete train 1");
-        //OK");
+        // OK");
         e("delete rolling stock W1");
         Terminal.printLine(">OK");
-        ////");
+        //// ");
         //// Engines");
         e("list engines");
         Terminal.printLine(">No engine exists");
@@ -1000,10 +998,10 @@ public class Testing {
         e("delete rolling stock T3-Küstenwagen");
         assertTrue(Terminal.buffer.contains("Error,"));
         e("delete train 1");
-        //OK");
+        // OK");
         e("delete rolling stock T3-Küstenwagen");
         Terminal.printLine(">OK");
-        ////");
+        //// ");
         //// Train-Sets");
         e("list train-sets");
         Terminal.printLine(">No train-set exists");
@@ -1026,7 +1024,7 @@ public class Testing {
         e("list train-sets");
         Terminal.printLine(">none KIT Exprεss 3 true true");
         e("add train 1 KIT-Exprεss");
-        //train-set KIT-Exprεss added to train 1");
+        // train-set KIT-Exprεss added to train 1");
         e("list train-sets");
         Terminal.printLine(">1 KIT Exprεss 3 true true");
         //// Engine in use");
@@ -1036,7 +1034,7 @@ public class Testing {
         Terminal.printLine(">OK");
         e("delete rolling stock KIT-Exprεss");
         Terminal.printLine(">OK");
-        ////");
+        //// ");
         //// Trains");
         //// Create some rolling stock");
         e("create coach passenger 1 true true");
@@ -1080,12 +1078,12 @@ public class Testing {
         e("add train 1 T3-Emma");
         assertTrue(Terminal.buffer.contains("Error,"));
         e("add train 1 KIT-Rennmühle");
-        //steam engine KIT-Rennmühle added to train 1");
+        // steam engine KIT-Rennmühle added to train 1");
         //// No connection");
         e("add train 1 W6");
         assertTrue(Terminal.buffer.contains("Error,"));
         e("add train 1 W2");
-        //passenger coach W2 added to train 1");
+        // passenger coach W2 added to train 1");
         e("list trains");
         Terminal.printLine(">1 KIT-Rennmühle W2");
         e("add train 2 VVS-W1");
@@ -1108,34 +1106,34 @@ public class Testing {
         e("add train 4 VVS-W1");
         assertTrue(Terminal.buffer.contains("Error,"));
         e("add train 2 VVS-W1");
-        //train-set VVS-W1 added to train 2");
+        // train-set VVS-W1 added to train 2");
         e("list trains");
-        //1 KIT-Rennmühle W2");
-        //2 VVS-W1");
-        //3 KVV-W1 KVV-W2");
-        ////");
+        // 1 KIT-Rennmühle W2");
+        // 2 VVS-W1");
+        // 3 KVV-W1 KVV-W2");
+        //// ");
         e("add train 4 W3");
-        //passenger coach W3 added to train 4");
+        // passenger coach W3 added to train 4");
         e("add train 4 KIT-Defekt");
-        //electrical engine KIT-Defekt added to train 4");
+        // electrical engine KIT-Defekt added to train 4");
         e("add train 4 W5");
-        //special coach W5 added to train 4");
-        ////");
+        // special coach W5 added to train 4");
+        //// ");
         //// Unset switch");
         e("step 1");
         assertTrue(Terminal.buffer.contains("Error,"));
         e("put train 1 at (5,2) in direction 0,1");
         assertTrue(Terminal.buffer.contains("Error,"));
-        ////");
+        //// ");
         e("set switch 11 position (14,11)");
-        //OK");
+        // OK");
         e("set switch 8 position (5,11)");
-        //OK");
+        // OK");
         e("step 0");
-        //OK");
+        // OK");
         e("step 1");
-        //OK");
-        ////");
+        // OK");
+        //// ");
         //// Invalid data");
         e("put train 1 at (5,2) in direction ,1");
         assertTrue(Terminal.buffer.contains("Error,"));
@@ -1149,26 +1147,26 @@ public class Testing {
         assertTrue(Terminal.buffer.contains("Error,"));
         e("put train 1 at (5,2) in direction 1,0");
         assertTrue(Terminal.buffer.contains("Error,"));
-        ////");
+        //// ");
         //// Invalid train");
         e("put train 4 at (5,2) in direction 0,1");
         assertTrue(Terminal.buffer.contains("Error,"));
         e("add train 4 KIT-42");
-        //diesel engine KIT-42 added to train 4");
+        // diesel engine KIT-42 added to train 4");
         //// No coupling");
         e("add train 4 W4");
         assertTrue(Terminal.buffer.contains("Error,"));
         //// Train setup finished");
         //// Lengths: 4, 3, 4, 10");
-        ////");
+        //// ");
         e("put train 4 at (5,2) in direction 0,1");
-        //OK");
+        // OK");
         e("step 6");
-        //Train 4 at (5,8)");
+        // Train 4 at (5,8)");
         //// One round");
         e("step 58");
-        //Train 4 at (5,8)");
-        ////");
+        // Train 4 at (5,8)");
+        //// ");
         //// Invalid syntax");
         e("delete track -20");
         assertTrue(Terminal.buffer.contains("Error,"));
@@ -1182,7 +1180,7 @@ public class Testing {
         e("delete track 4");
         assertTrue(Terminal.buffer.contains("Error,"));
         e("delete track 2");
-        //OK");
+        // OK");
         //// This would split the network");
         e("delete track 10");
         assertTrue(Terminal.buffer.contains("Error,"));
@@ -1192,212 +1190,223 @@ public class Testing {
         assertTrue(Terminal.buffer.contains("Error,"));
         //// But this switch can still be removed");
         e("delete track 3");
-        //OK");
-        ////");
+        // OK");
+        //// ");
         //// Restore network");
         e("add track (16,3) -> (16,0)");
-        //2");
+        // 2");
         e("add switch (16,3) -> (14,3),(18,3)");
-        //3");
+        // 3");
         e("step 1");
         assertTrue(Terminal.buffer.contains("Error,"));
         e("set switch 3 position (14,3)");
-        //OK");
+        // OK");
         //// Another round");
         e("step 58");
-        //Train 4 at (5,8)");
+        // Train 4 at (5,8)");
         //// train is on connection to track");
         e("delete track 4");
         assertTrue(Terminal.buffer.contains("Error,"));
-        ////");
+        //// ");
         //// Derail the train");
         e("set switch 8 position (2,13)");
-        //OK");
+        // OK");
         e("step 9");
-        //Train 4 at (5,11)");
+        // Train 4 at (5,11)");
         e("step 1");
-        //Crash of train 4");
+        // Crash of train 4");
         e("step 1");
-        //OK");
+        // OK");
         e("set switch 8 position (5,11)");
-        //OK");
-        ////");
+        // OK");
+        //// ");
         //// Lengths: 4, 3, 4, 10");
-        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11) -> [14,11],(18,11)");
+        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11)
+        // -> [14,11],(18,11)");
         //// Frontal collision at connection");
         e("put train 1 at (8,0) in direction 0,1");
         //// Wrong direction");
         assertTrue(Terminal.buffer.contains("Error,"));
         e("put train 1 at (8,0) in direction -1,0");
-        //OK");
+        // OK");
         //// Already on track");
         e("put train 1 at (2,11) in direction 1,0");
         assertTrue(Terminal.buffer.contains("Error,"));
         e("put train 2 at (5,3) in direction 0,-1");
-        //OK");
+        // OK");
         e("step 3");
-        //Crash of train 1,2");
-        ////");
+        // Crash of train 1,2");
+        //// ");
         //// Lengths: 4, 3, 4, 10");
-        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11) -> [14,11],(18,11)");
+        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11)
+        // -> [14,11],(18,11)");
         //// Frontal collision on track");
         e("put train 1 at (12,0) in direction -1,0");
-        //OK");
+        // OK");
         e("put train 2 at (5,3) in direction 0,-1");
-        //OK");
+        // OK");
         e("step 3");
-        //Train 1 at (9,0)");
-        //Train 2 at (5,0)");
+        // Train 1 at (9,0)");
+        // Train 2 at (5,0)");
         e("step 1");
-        //Crash of train 1,2");
-        ////");
+        // Crash of train 1,2");
+        //// ");
         //// Lengths: 4, 3, 4, 10");
-        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11) -> [14,11],(18,11)");
+        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11)
+        // -> [14,11],(18,11)");
         //// Frontal to back collision on track (on connection not possible anymore)");
         e("put train 1 at (16,1) in direction 0,1");
-        //OK");
+        // OK");
         e("put train 2 at (5,1) in direction 0,-1");
-        //OK");
+        // OK");
         e("step 1");
-        //Train 1 at (16,2)");
-        //Train 2 at (5,0)");
+        // Train 1 at (16,2)");
+        // Train 2 at (5,0)");
         e("step 1");
-        //Crash of train 1,2");
-        ////");
+        // Crash of train 1,2");
+        //// ");
         //// Lengths: 4, 3, 4, 10");
-        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11) -> [14,11],(18,11)");
+        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11)
+        // -> [14,11],(18,11)");
         //// Almost a front to back collision");
         e("put train 1 at (16,2) in direction 0,1");
-        //OK");
+        // OK");
         e("put train 2 at (5,1) in direction 0,-1");
-        //OK");
+        // OK");
         e("step 1");
-        //Train 1 at (16,3)");
-        //Train 2 at (5,0)");
+        // Train 1 at (16,3)");
+        // Train 2 at (5,0)");
         e("step 1");
-        //Train 1 at (15,3)");
-        //Train 2 at (6,0)");
+        // Train 1 at (15,3)");
+        // Train 2 at (6,0)");
         //// Crash both trains");
         e("set switch 11 position (18,11)");
-        //OK");
+        // OK");
         e("step 24");
-        //Crash of train 1");
-        //Crash of train 2");
+        // Crash of train 1");
+        // Crash of train 2");
         //// Reset switch");
         e("set switch 11 position (14,11)");
-        //OK");
-        ////");
+        // OK");
+        //// ");
         //// Lengths: 4, 3, 4, 10");
-        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11) -> [14,11],(18,11)");
+        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11)
+        // -> [14,11],(18,11)");
         //// Three trains can go without collision");
         e("put train 1 at (5,0) in direction 0,-1");
-        //OK");
+        // OK");
         e("put train 2 at (14,11) in direction 0,1");
-        //OK");
+        // OK");
         e("put train 3 at (5,11) in direction 0,-1");
-        //OK");
+        // OK");
         e("step 58");
-        //Train 1 at (5,0)");
-        //Train 2 at (14,11)");
-        //Train 3 at (5,11)");
+        // Train 1 at (5,0)");
+        // Train 2 at (14,11)");
+        // Train 3 at (5,11)");
         //// Train 2 will derail");
         e("set switch 11 position (18,11)");
-        //OK");
+        // OK");
         e("step 58");
-        //Crash of train 1");
-        //Crash of train 3");
+        // Crash of train 1");
+        // Crash of train 3");
         //// Reset switch");
         e("set switch 11 position (14,11)");
-        //OK");
-        ////");
+        // OK");
+        //// ");
         //// Lengths: 4, 3, 4, 10");
-        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11) -> [14,11],(18,11)");
+        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11)
+        // -> [14,11],(18,11)");
         //// Quadruple collision");
         e("put train 1 at (5,1) in direction 0,-1");
-        //OK");
+        // OK");
         e("put train 2 at (10,0) in direction 1,0");
-        //OK");
+        // OK");
         e("put train 3 at (16,1) in direction 0,-1");
-        //OK");
+        // OK");
         e("put train 4 at (4,8) in direction 1,0");
-        //OK");
+        // OK");
         e("step 1");
-        //Train 1 at (5,0)");
-        //Train 2 at (11,0)");
-        //Train 3 at (16,0)");
-        //Train 4 at (5,8)");
+        // Train 1 at (5,0)");
+        // Train 2 at (11,0)");
+        // Train 3 at (16,0)");
+        // Train 4 at (5,8)");
         e("step 1");
-        //Crash of train 1,2,3,4");
-        ////");
+        // Crash of train 1,2,3,4");
+        //// ");
         //// Lengths: 4, 3, 4, 10");
-        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11) -> [14,11],(18,11)");
+        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11)
+        // -> [14,11],(18,11)");
         //// Two independent collisions");
         e("put train 1 at (5,1) in direction 0,-1");
-        //OK");
+        // OK");
         e("put train 2 at (5,12) in direction 0,1");
-        //OK");
+        // OK");
         e("put train 3 at (10,0) in direction 1,0");
-        //OK");
+        // OK");
         e("put train 4 at (16,11) in direction -1,0");
-        //OK");
+        // OK");
         e("step 5");
-        //Crash of train 1,3");
-        //Crash of train 2,4");
-        ////");
+        // Crash of train 1,3");
+        // Crash of train 2,4");
+        //// ");
         //// Lengths: 4, 3, 4, 10");
-        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11) -> [14,11],(18,11)");
+        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> [5,11],(2,13), 11 (16,11)
+        // -> [14,11],(18,11)");
         //// Two collisions and later two collisions");
         e("put train 1 at (5,5) in direction 0,-1");
-        //OK");
+        // OK");
         e("put train 2 at (5,12) in direction 0,1");
-        //OK");
+        // OK");
         e("put train 3 at (10,0) in direction 1,0");
-        //OK");
+        // OK");
         e("put train 4 at (16,11) in direction -1,0");
-        //OK");
+        // OK");
         e("step 5");
-        //Train 1 at (5,0)");
-        //Crash of train 2,4");
-        //Train 3 at (15,0)");
+        // Train 1 at (5,0)");
+        // Crash of train 2,4");
+        // Train 3 at (15,0)");
         e("step 1");
-        //Crash of train 1,3");
-        ////");
+        // Crash of train 1,3");
+        //// ");
         //// Lengths: 4, 3, 4, 10");
         e("set switch 8 position (2,13)");
-        //OK");
-        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> (5,11),[2,13], 11 (16,11) -> [14,11],(18,11)");
+        // OK");
+        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> (5,11),[2,13], 11 (16,11)
+        // -> [14,11],(18,11)");
         //// Collision and end of track");
         e("put train 4 at (3,13) in direction -1,0");
-        //OK");
+        // OK");
         e("put train 2 at (16,12) in direction 0,1");
-        //OK");
+        // OK");
         e("step 1");
-        //Train 2 at (16,13)");
-        //Train 4 at (2,13)");
+        // Train 2 at (16,13)");
+        // Train 4 at (2,13)");
         e("step 1");
-        //Crash of train 2,4");
-        ////");
+        // Crash of train 2,4");
+        //// ");
         //// Lengths: 4, 3, 4, 10");
-        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> (5,11),[2,13], 11 (16,11) -> [14,11],(18,11)");
+        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> (5,11),[2,13], 11 (16,11)
+        // -> [14,11],(18,11)");
         //// End of track before collision");
         e("put train 4 at (3,13) in direction -1,0");
-        //OK");
+        // OK");
         e("put train 2 at (16,11) in direction 0,1");
-        //OK");
+        // OK");
         e("step 1");
-        //Train 2 at (16,12)");
-        //Train 4 at (2,13)");
+        // Train 2 at (16,12)");
+        // Train 4 at (2,13)");
         e("step 1");
-        //Train 2 at (16,13)");
-        //Crash of train 4");
+        // Train 2 at (16,13)");
+        // Crash of train 4");
         e("step 20");
-        //Crash of train 2");
-        ////");
+        // Crash of train 2");
+        //// ");
         //// Lengths: 4, 3, 4, 10");
-        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> (5,11),[2,13], 11 (16,11) -> [14,11],(18,11)");
+        //// Switches: 3 (16,3) -> [14,3],(18,3); 8 (5,13) -> (5,11),[2,13], 11 (16,11)
+        // -> [14,11],(18,11)");
         //// put train would collide");
         e("put train 1 at (5,0) in direction 0,1");
-        //OK");
+        // OK");
         e("list tracks");
         e("put train 2 at (5,8) in direction 0,-1");
 //        assertTrue(Terminal.buffer.contains("Error,"));
@@ -1464,7 +1473,5 @@ public class Testing {
 //        e("put train 2 at (5,12) in direction 0,1");
 //        assertTrue(Terminal.buffer.contains("Error,"));
     }
-    
-    
 
 }

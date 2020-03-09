@@ -14,7 +14,7 @@ import julian.modelrailway.rollingmaterial.SetTrain;
  * @author Julian Strietzel
  * @version 1.0
  */
-public class RailNetwork {
+class RailNetwork {
 
     private final LinkedList<Rail> rails;
     private final List<Knode> knodes;
@@ -26,7 +26,7 @@ public class RailNetwork {
      * 
      * @param rSys gekoppeltes Schienennetz
      */
-    public RailNetwork(Railsystem rSys) {
+    RailNetwork(Railsystem rSys) {
         rails = new LinkedList<Rail>();
         this.rSys = rSys;
         knodes = new LinkedList<Knode>();
@@ -89,7 +89,7 @@ public class RailNetwork {
      * @param id der Schiene
      * @throws LogicalException , wenn Schiene notwendig oder besetzt
      */
-    public void deleteTrack(int id) throws LogicalException {
+    void deleteTrack(int id) throws LogicalException {
         Rail dRail = getRailinSystem(id);
         if (dRail.isOccupied()) {
             throw new LogicalException("track occupied");
@@ -119,7 +119,7 @@ public class RailNetwork {
      * @param now    aktuelle Schiene
      * @return WW, ob weg ohne
      */
-    public boolean wayWithout(List<Rail> notUse, Rail from, Rail to, Rail now) {
+    boolean wayWithout(List<Rail> notUse, Rail from, Rail to, Rail now) {
         if (from == null) {
             return false;
         }
@@ -221,7 +221,7 @@ public class RailNetwork {
      * @throws IllegalInputException , wenn interner Fehler
      * @throws LogicalException      , wenn Zug zu lang für Schienennetz
      */
-    public boolean markBackOccupied(SetTrain train, Vertex pos, DirectionalVertex dire, Rail rail, boolean breakUp)
+    boolean markBackOccupied(SetTrain train, Vertex pos, DirectionalVertex dire, Rail rail, boolean breakUp)
             throws IllegalInputException, LogicalException {
         DirectionalVertex direc = dire;
         if (Knode.contains(knodes, train.getPosition()) != null) {
@@ -275,7 +275,7 @@ public class RailNetwork {
      * @throws LogicalException , wenn Schiene nicht existiert oder der Punkt nicht
      *                          auf dem eingestellten Weichenteil liegt
      */
-    public Rail findTrack(Vertex pos, DirectionalVertex direc) throws LogicalException {
+    Rail findTrack(Vertex pos, DirectionalVertex direc) throws LogicalException {
         for (Knode knode : knodes) {
             if (knode.sameVertex(pos)) {
                 Rail r = knode.getTrack(direc);
@@ -305,7 +305,7 @@ public class RailNetwork {
      *                               die ID nicht existiert
      * @throws LogicalException      , wenn Fehle rim MarkOccupied
      */
-    public void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
+    void setSwitch(int id, Vertex point) throws IllegalInputException, LogicalException {
         for (Switch s : switches) {
             if (id == s.getId()) {
                 s.setSwitch(point);
@@ -341,7 +341,7 @@ public class RailNetwork {
      * @throws LogicalException      , wenn der Track schon existiert oder bei
      *                               Schienennetzkollisioen
      */
-    public int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
+    int addSwitch(Vertex start, Vertex endOne, Vertex endTwo) throws IllegalInputException, LogicalException {
         Switch newSw = new Switch(start, endOne, endTwo, getNextFreeID());
         if (contains(rails, newSw)) {
             throw new LogicalException("track existing");
@@ -406,7 +406,7 @@ public class RailNetwork {
      * @throws LogicalException      , wenn der Track schon existiert oder bei
      *                               Schienennetzkollisioen
      */
-    public int addRail(Vertex start, Vertex end) throws IllegalInputException, LogicalException {
+    int addRail(Vertex start, Vertex end) throws IllegalInputException, LogicalException {
         Rail newRail = new Rail(start, end, getNextFreeID());
         if (contains(rails, newRail)) {
             throw new LogicalException("track existing.");
@@ -467,7 +467,7 @@ public class RailNetwork {
      * @param object nachdem gesucht werden soll
      * @return WW, ob die Liste die Schiene enthält
      */
-    public boolean contains(List<Rail> list, Rail object) {
+    private boolean contains(List<Rail> list, Rail object) {
         for (Rail obj : list) {
             if (object.sameRail(obj)) {
                 return true;
@@ -484,7 +484,7 @@ public class RailNetwork {
      * @param object nachdem gesucht werden soll
      * @return WW, ob die Liste den Knoten enthält
      */
-    public boolean contains(List<Vertex> list, Knode object) {
+    private boolean contains(List<Vertex> list, Knode object) {
         for (Vertex obj : list) {
             if (obj.sameVertex(object)) {
                 return true;

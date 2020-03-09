@@ -24,7 +24,7 @@ public class Train {
      * @param id    Id des Zuges
      * @throws LogicalException , wenn first schon benutzt wird
      */
-    public Train(RollingMaterial first, int id) throws LogicalException {
+    Train(RollingMaterial first, int id) throws LogicalException {
         wagons = new LinkedList<RollingMaterial>();
         if (first.isUsed()) {
             throw new LogicalException("wagon is already in use.");
@@ -43,7 +43,7 @@ public class Train {
      * @throws LogicalException , wenn Kupplungen nicht kompatibel oder falscher
      *                          Triebzug
      */
-    public String add(RollingMaterial newWagon) throws LogicalException {
+    String add(RollingMaterial newWagon) throws LogicalException {
         // Überprüfung nach passenden Clutches
         if (!(wagons.getLast().isClutchBack() && newWagon.isClutchFront())) {
             throw new LogicalException("clutches not compatible.");
@@ -171,7 +171,7 @@ public class Train {
      * Wenn der Zug gelöscht wird, werden alle verwendeten MAterialien als unused
      * markiert.
      */
-    public void markUnUsed() {
+    void markUnUsed() {
         while (!wagons.isEmpty()) {
             wagons.getFirst().unconcat();
             wagons.removeFirst();

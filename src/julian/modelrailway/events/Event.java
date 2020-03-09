@@ -21,7 +21,7 @@ public abstract class Event implements Comparable<Event> {
      * 
      * @param invol beteiligter Zug
      */
-    public Event(SetTrain invol) {
+    Event(SetTrain invol) {
         involved = new LinkedList<SetTrain>();
         involved.add(invol);
     }
@@ -31,7 +31,7 @@ public abstract class Event implements Comparable<Event> {
      * 
      * @param invol alle involvierten Züge
      */
-    public Event(List<SetTrain> invol) {
+    Event(List<SetTrain> invol) {
         involved = new LinkedList<SetTrain>();
         involved.addAll(invol);
         involved.sort(null);
@@ -55,18 +55,6 @@ public abstract class Event implements Comparable<Event> {
     protected void setInvolved(List<SetTrain> newly) {
         involved.clear();
         involved.addAll(newly);
-    }
-
-    /**
-     * Fügt einen neuen Zug zu den beteiligten hinzu.
-     * 
-     * @param tr neuer gesetzter Zug
-     */
-    public void addInvolved(SetTrain tr) {
-        if (!involved.contains(tr)) {
-            involved.add(tr);
-        }
-        involved.sort(null);
     }
 
     /**
